@@ -1,0 +1,714 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f5f7fb">
+  <meta name="description" content="Overzichtelijk Kanbanbord voor de vernieuwing van de schoolwebsite.">
+  <title>Project Kanban — Vernieuwing schoolwebsite</title>
+  <style>
+    :root{--ink:#1e293b;--muted:#68758a;--line:#e4e9f1;--surface:#fff;--bg:#f5f7fb;--purple:#6558d3;--purple-soft:#eeecff;--blue:#3878d8;--blue-soft:#e8f1ff;--green:#23865d;--green-soft:#e6f6ee;--amber:#b7791f;--amber-soft:#fff4d8;--red:#b83a45;--red-soft:#fff0f0;--shadow:0 8px 25px rgba(25,39,67,.055);--radius:16px}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.45}
+    button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #b2aaff;outline-offset:2px}button:disabled{opacity:.5;cursor:not-allowed}
+    .app{max-width:1600px;margin:auto;padding:30px clamp(14px,3vw,42px) 44px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px;min-width:250px}.brand-mark{display:grid;place-items:center;width:47px;height:47px;border-radius:15px;background:linear-gradient(140deg,#7265eb,#5145b8);box-shadow:0 7px 18px #6558d333;color:white;font-size:23px;font-weight:850;letter-spacing:-1px}.brand-copy h1{font-size:clamp(21px,2.4vw,29px);letter-spacing:-.8px;line-height:1.15;margin:0 0 5px;font-weight:790}.subtitle{color:var(--muted);font-size:13px}.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;color:#48556a;font-size:12px;font-weight:700}.pill-dot{width:7px;height:7px;border-radius:50%;background:#d29a3e}.pill.online .pill-dot{background:#2ca675}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #dbe1eb;background:white;border-radius:10px;padding:10px 13px;font-weight:700;font-size:13px;color:#344156;transition:transform .12s,border-color .12s,background .12s;white-space:nowrap}.btn:hover{border-color:#bfc8d8;background:#fbfcfe;transform:translateY(-1px)}.btn.primary{background:var(--purple);border-color:var(--purple);color:white;box-shadow:0 4px 10px #6558d326}.btn.primary:hover{background:#5749c3}.btn.subtle{background:transparent;border-color:transparent;color:#59677c}.btn.danger{border-color:#f2c8cb;color:var(--red);background:#fffafa}.btn.small{padding:7px 9px;font-size:12px}.icon{font-size:16px;line-height:1}
+    .notice{display:flex;align-items:flex-start;gap:10px;padding:12px 15px;border:1px solid #e6e1ff;background:#f5f3ff;border-radius:12px;color:#504b80;margin:0 0 17px;font-size:12.5px}.notice strong{color:#363061}.notice .notice-icon{font-size:17px;line-height:1.15}.notice a{color:inherit;font-weight:700}
+    .overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 19px 16px;margin-bottom:19px;box-shadow:var(--shadow)}.overview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.section-title{font-size:14px;font-weight:800;letter-spacing:-.15px;margin:0}.progress-copy{font-size:12px;color:var(--muted)}.progress-track{height:7px;border-radius:999px;overflow:hidden;background:#eef1f6;margin-bottom:17px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#6e63df,#3aaf80);border-radius:999px;transition:width .25s}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.metric{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 13px;border:1px solid #edf0f5;border-radius:12px;background:#fcfdff}.metric-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:var(--purple-soft);color:var(--purple);font-size:18px}.metric:nth-child(2) .metric-icon{background:var(--blue-soft);color:var(--blue)}.metric:nth-child(3) .metric-icon{background:var(--green-soft);color:var(--green)}.metric:nth-child(4) .metric-icon{background:var(--amber-soft);color:var(--amber)}.metric-label{font-size:11.5px;color:var(--muted);font-weight:650;margin-bottom:1px}.metric-value{font-size:23px;font-weight:820;letter-spacing:-.75px;line-height:1.1;font-variant-numeric:tabular-nums}.metric-detail{font-size:10.5px;color:#8290a3;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:19px 0 14px}.search-wrap{position:relative;flex:1 1 255px;max-width:480px}.search-wrap .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#8792a5;font-size:16px;pointer-events:none}.control{border:1px solid #dfe5ee;background:white;border-radius:10px;color:#364258;padding:10px 12px;min-height:41px}.search{width:100%;padding-left:38px}.filter{min-width:165px}.toolbar-end{margin-left:auto;display:flex;align-items:center;gap:8px}.archive-toggle{display:flex;align-items:center;gap:7px;color:#667388;font-size:12px;user-select:none;white-space:nowrap}.archive-toggle input{accent-color:var(--purple)}.result-count{font-size:12px;color:#8190a5;white-space:nowrap}
+    .board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;align-items:start}.column{min-width:0;border:1px solid var(--line);background:#edf1f7a8;border-radius:15px;padding:12px;min-height:360px;transition:border-color .15s,background .15s}.column.drag-active{border-color:#958bfb;background:#f0eeff}.column-header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 6px 13px}.column-heading{display:flex;align-items:center;gap:9px;min-width:0}.column-dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}.todo .column-dot{background:#9aa4b6}.doing .column-dot{background:#4985df}.done .column-dot{background:#31a579}.column-title{margin:0;font-size:13px;font-weight:850;letter-spacing:.2px}.column-subtitle{font-size:10.5px;color:#8590a3;margin-top:2px}.column-count{display:grid;place-items:center;min-width:27px;height:26px;padding:0 7px;border-radius:9px;background:white;color:#657187;border:1px solid #e7ebf2;font-size:12px;font-weight:800}.task-list{display:flex;flex-direction:column;gap:10px;min-height:285px}.task-card{background:#fff;border:1px solid #e3e8f0;border-radius:12px;padding:13px 13px 11px;box-shadow:0 2px 5px rgba(31,47,77,.025);cursor:grab;transition:transform .13s,box-shadow .13s,border-color .13s;position:relative}.task-card:hover{border-color:#cfd6e5;box-shadow:0 6px 17px rgba(31,47,77,.07);transform:translateY(-1px)}.task-card:active{cursor:grabbing}.task-card.dragging{opacity:.42;transform:rotate(1deg)}.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.task-id{font-size:10.5px;font-weight:800;color:#8792a5;letter-spacing:.3px}.req-tag{border-radius:6px;padding:4px 7px;font-size:10px;font-weight:750;color:#6558c7;background:#f0eeff;white-space:nowrap}.task-card h3{font-size:13px;line-height:1.35;letter-spacing:-.1px;margin:0 0 6px;font-weight:780}.task-code{display:inline-block;font-size:10.5px;color:#65728a;font-weight:700;margin-bottom:6px}.task-desc{font-size:12px;color:#667388;line-height:1.5;margin:0 0 13px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:9px;border-top:1px solid #f0f2f6}.owner{min-width:0;display:flex;align-items:center;gap:7px;color:#69768a;font-size:11px}.avatar{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;border-radius:50%;background:#edf0f6;color:#67738a;font-size:10px;font-weight:800}.owner-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.owner.unassigned .avatar{background:#fff5dd;color:#9b722d}.edit-hint{font-size:10px;color:#9aa4b5;white-space:nowrap}.empty-column{display:grid;place-items:center;text-align:center;min-height:180px;padding:18px;color:#919bad;font-size:12px;border:1px dashed #d5dce7;border-radius:11px;background:#ffffff5e}.empty-icon{font-size:22px;display:block;margin-bottom:7px;color:#a4aec0}.board-help{display:flex;align-items:center;gap:7px;font-size:11px;color:#8692a6;margin:12px 4px 0}.archived-section{margin-top:19px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.archived-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.archived-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.archived-card{opacity:.82}
+    dialog{border:0;border-radius:18px;padding:0;width:min(600px,calc(100% - 26px));max-width:600px;box-shadow:0 22px 80px #11182745;color:var(--ink)}dialog::backdrop{background:#19223882;backdrop-filter:blur(3px)}.dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px 16px;border-bottom:1px solid var(--line)}.dialog-head h2{margin:0 0 5px;font-size:20px;letter-spacing:-.5px}.dialog-head p{margin:0;color:var(--muted);font-size:12px}.close-btn{display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;width:34px;height:34px;background:white;color:#647087;font-size:20px}.dialog-form{padding:19px 24px 22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750;color:#4d5a70}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #dfe5ee;border-radius:9px;background:#fff;padding:10px 11px;color:#263247}.field textarea{min-height:110px;resize:vertical;line-height:1.5}.field .hint{font-size:10.5px;color:#8a96a8}.dialog-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:21px;padding-top:15px;border-top:1px solid var(--line)}.right-actions{display:flex;gap:8px}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);z-index:20;padding:11px 16px;border-radius:11px;background:#202b40;color:white;font-size:12px;box-shadow:0 7px 24px #17203333;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:min(90vw,620px)}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{background:#9c313b}.auth-gate{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#192238b8;backdrop-filter:blur(6px);padding:18px}.auth-gate[hidden]{display:none}.auth-card{width:min(420px,100%);background:white;border-radius:18px;padding:25px;box-shadow:0 24px 80px #11182745}.auth-card .brand-mark{margin-bottom:17px}.auth-card h2{font-size:22px;margin:0 0 6px;letter-spacing:-.5px}.auth-card p{font-size:12px;color:var(--muted);margin:0 0 18px}.auth-card .field{margin-bottom:12px}.auth-error{color:var(--red)!important;min-height:16px;margin:10px 0 0!important}.footer-note{font-size:11px;text-align:center;color:#929daf;margin:24px 0 0}.hidden{display:none!important}
+    @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.board{gap:10px}.column{padding:9px}.task-card{padding:11px}.toolbar-end{margin-left:0}}
+    @media(max-width:760px){.app{padding-top:18px}.topbar{align-items:flex-start}.top-actions{width:100%}.top-actions .btn{flex:1}.brand{min-width:0}.board{grid-template-columns:1fr;gap:12px}.column{min-height:auto}.task-list{min-height:90px}.empty-column{min-height:95px}.metrics{gap:8px}.metric{padding:10px;gap:9px}.metric-icon{width:33px;height:33px;flex-basis:33px;border-radius:10px}.metric-value{font-size:20px}.toolbar{gap:8px}.search-wrap{max-width:none;flex-basis:100%}.filter{flex:1;min-width:0}.toolbar-end{width:100%;justify-content:space-between}.archived-list{grid-template-columns:1fr}.dialog-head{padding:18px 18px 14px}.dialog-form{padding:17px 18px 19px}}
+    @media(max-width:420px){.metrics{grid-template-columns:1fr 1fr}.metric{align-items:flex-start;flex-direction:column;gap:7px}.metric-detail{white-space:normal}.top-actions .btn{padding:9px 8px;font-size:11px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.dialog-actions{flex-wrap:wrap}.dialog-actions>.btn{order:2}.right-actions{margin-left:auto}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">K</div>
+        <div class="brand-copy"><h1>Project Kanban</h1><div class="subtitle">Vernieuwing schoolwebsite · teamoverzicht</div></div>
+      </div>
+      <div class="top-actions">
+        <div id="connectionPill" class="pill"><span class="pill-dot"></span><span id="connectionText">Lokaal opgeslagen</span></div>
+        <button class="btn" id="exportBtn" type="button" title="Download een volledige JSON-back-up"><span class="icon">↧</span> Back-up</button>
+        <button class="btn" id="importBtn" type="button" title="Importeer een eerdere JSON-back-up"><span class="icon">↥</span> Importeren</button>
+        <button class="btn" id="csvBtn" type="button" title="Download een CSV voor Excel"><span class="icon">▤</span> CSV</button>
+        <input id="importFile" class="hidden" type="file" accept=".json,application/json">
+        <button class="btn primary" id="newTaskBtn" type="button"><span class="icon">＋</span> Nieuwe taak</button>
+        <button class="btn small hidden" id="signOutBtn" type="button">Uitloggen</button>
+      </div>
+    </header>
+
+    <div id="modeNotice" class="notice"><span class="notice-icon">ⓘ</span><div><strong>Browseropslag actief.</strong> Wijzigingen worden automatisch in deze browser bewaard. Om ze op een ander apparaat te zetten, exporteer je een back-up en laat je die importeren. Voor directe gedeelde updates tussen teamleden is de optionele Supabase-configuratie nodig.</div></div>
+
+    <section class="overview" aria-label="Projectvoortgang">
+      <div class="overview-head"><h2 class="section-title">Project in één oogopslag</h2><div id="progressCopy" class="progress-copy">0% afgerond</div></div>
+      <div class="progress-track" role="progressbar" aria-label="Percentage afgeronde taken" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="metrics">
+        <div class="metric"><div class="metric-icon">▦</div><div><div class="metric-label">Actieve taken</div><div class="metric-value" id="totalCount">39</div><div class="metric-detail">Exclusief gearchiveerde taken</div></div></div>
+        <div class="metric"><div class="metric-icon">↗</div><div><div class="metric-label">In behandeling</div><div class="metric-value" id="doingCount">0</div><div class="metric-detail">Taken waar nu aan gewerkt wordt</div></div></div>
+        <div class="metric"><div class="metric-icon">✓</div><div><div class="metric-label">Afgerond</div><div class="metric-value" id="doneCount">1</div><div class="metric-detail">Voltooide projecttaken</div></div></div>
+        <div class="metric"><div class="metric-icon">♙</div><div><div class="metric-label">Zonder eigenaar</div><div class="metric-value" id="unassignedCount">39</div><div class="metric-detail">Nog aan een teamlid toe te wijzen</div></div></div>
+      </div>
+    </section>
+
+    <section class="toolbar" aria-label="Taken zoeken en filteren">
+      <div class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><input class="control search" id="searchInput" type="search" placeholder="Zoek taak, requirement of omschrijving…" aria-label="Zoek taken"></div>
+      <select class="control filter" id="requirementFilter" aria-label="Filter op requirement"><option value="">Alle requirements</option></select>
+      <select class="control filter" id="assigneeFilter" aria-label="Filter op eigenaar"><option value="">Alle teamleden</option><option value="__unassigned">Niet toegewezen</option></select>
+      <div class="toolbar-end"><label class="archive-toggle"><input id="showArchived" type="checkbox"> Toon archief</label><span id="resultsCount" class="result-count">39 taken</span></div>
+    </section>
+
+    <section class="board" id="board" aria-label="Kanbanbord">
+      <div class="column todo" data-status="To-Do"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">TE DOEN</h2><div class="column-subtitle">Nog op te pakken</div></div></div><span class="column-count" id="count-todo">38</span></div><div class="task-list" id="list-todo" data-status="To-Do"></div></div>
+      <div class="column doing" data-status="In behandeling"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">IN BEHANDELING</h2><div class="column-subtitle">Actief werk</div></div></div><span class="column-count" id="count-doing">0</span></div><div class="task-list" id="list-doing" data-status="In behandeling"></div></div>
+      <div class="column done" data-status="Afgerond"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">AFGEROND</h2><div class="column-subtitle">Klaar en gecontroleerd</div></div></div><span class="column-count" id="count-done">1</span></div><div class="task-list" id="list-done" data-status="Afgerond"></div></div>
+    </section>
+    <div class="board-help"><span>↔</span> Sleep een kaart naar een andere kolom om de status te wijzigen. Klik op een kaart om details aan te passen.</div>
+
+    <section id="archivedSection" class="archived-section hidden"><div class="archived-head"><h2 class="section-title">Gearchiveerde taken</h2><span class="result-count" id="archivedCount">0 taken</span></div><div id="archivedList" class="archived-list"></div></section>
+    <p class="footer-note">Back-ups bevatten alle taken inclusief archief. Bewaar regelmatig een kopie van het JSON-bestand.</p>
+  </main>
+
+  <dialog id="taskDialog" aria-labelledby="dialogTitle">
+    <div class="dialog-head"><div><h2 id="dialogTitle">Taak aanpassen</h2><p id="dialogSubtitle">Werk details bij. Veranderingen worden automatisch bewaard.</p></div><button class="close-btn" id="closeDialogBtn" type="button" aria-label="Venster sluiten">×</button></div>
+    <form class="dialog-form" id="taskForm">
+      <input id="taskId" type="hidden">
+      <div class="form-grid">
+        <div class="field"><label for="taskRequirement">Requirement</label><select id="taskRequirement" required></select></div>
+        <div class="field"><label for="taskCode">Taaklabel</label><input id="taskCode" required maxlength="60" placeholder="Bijv. Taak 2"></div>
+        <div class="field full"><label for="taskDescription">Omschrijving</label><textarea id="taskDescription" required maxlength="2000" placeholder="Wat moet er precies gebeuren?"></textarea><div class="hint">Gebruik een concrete omschrijving zodat iedereen weet wanneer de taak klaar is.</div></div>
+        <div class="field"><label for="taskStatus">Status</label><select id="taskStatus"><option value="To-Do">Te doen</option><option value="In behandeling">In behandeling</option><option value="Afgerond">Afgerond</option></select></div>
+        <div class="field"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="100" list="assigneeSuggestions" placeholder="Naam teamlid (optioneel)"><datalist id="assigneeSuggestions"></datalist></div>
+      </div>
+      <div class="dialog-actions"><button id="archiveBtn" class="btn danger" type="button">Archiveren</button><div class="right-actions"><button id="cancelBtn" class="btn" type="button">Annuleren</button><button class="btn primary" type="submit">Opslaan</button></div></div>
+    </form>
+  </dialog>
+
+  <div id="authGate" class="auth-gate" hidden>
+    <div class="auth-card"><div class="brand-mark" aria-hidden="true">K</div><h2>Inloggen op het teamboard</h2><p>Dit bord gebruikt gedeelde opslag. Log in met het account dat de beheerder voor je heeft aangemaakt.</p>
+      <form id="loginForm"><div class="field"><label for="loginEmail">E-mailadres</label><input id="loginEmail" type="email" autocomplete="username" required></div><div class="field"><label for="loginPassword">Wachtwoord</label><input id="loginPassword" type="password" autocomplete="current-password" required></div><button id="loginBtn" class="btn primary" type="submit" style="width:100%;margin-top:4px">Inloggen</button></form><p id="authError" class="auth-error" role="alert"></p>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // OPTIONEEL: vul hier de Supabase Project URL en publiceerbare/anon key in om gedeelde, live synchronisatie te activeren.
+    // Gebruik NOOIT een service_role- of secret key in deze browsercode.
+    const SUPABASE_CONFIG = { url: "", anonKey: "" };
+
+    const INITIAL_TASKS = [
+  {
+    "id": 1,
+    "requirement": "Requirement 8",
+    "taskCode": "Taak 1",
+    "description": "Analyse & Voorbereiding: Huidige site onderzoeken, knelpunten inventariseren en content verzamelen.",
+    "status": "Afgerond",
+    "assignee": "",
+    "sortOrder": 1,
+    "archived": false
+  },
+  {
+    "id": 2,
+    "requirement": "Requirement 1",
+    "taskCode": "Taak 1",
+    "description": "Onderzoeken van de huidige website om complexe beheerelementen te identificeren.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 2,
+    "archived": false
+  },
+  {
+    "id": 3,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 3",
+    "description": "Opstellen van een stijlgids met schoolkleuren, lettertypes, iconen en huisstijl.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 3,
+    "archived": false
+  },
+  {
+    "id": 4,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 5",
+    "description": "Inventariseren en stroomlijnen van de menustructuur (belangrijke info binnen 2 à 3 klikken).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 4,
+    "archived": false
+  },
+  {
+    "id": 5,
+    "requirement": "Requirement 5",
+    "taskCode": "Taak 3",
+    "description": "Verzamelen, controleren en integreren van officiële links naar sociale-mediakanalen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 5,
+    "archived": false
+  },
+  {
+    "id": 6,
+    "requirement": "Requirement 7",
+    "taskCode": "Taak 2",
+    "description": "Controleren en vastleggen van beeldrechten, licenties en een procedure om foto's eenvoudig te verwijderen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 6,
+    "archived": false
+  },
+  {
+    "id": 7,
+    "requirement": "Requirement 3",
+    "taskCode": "Taak 1",
+    "description": "Verzamelen van authentieke schoolfoto's en korte teksten/video's om het dagelijkse schoolleven te tonen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 7,
+    "archived": false
+  },
+  {
+    "id": 8,
+    "requirement": "Requirement 1",
+    "taskCode": "Taak 2",
+    "description": "Selecteren en inrichten van een gebruiksvriendelijk CMS met een visuele pagebuilder (inclusief drag-and-dropfunctionaliteit).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 8,
+    "archived": false
+  },
+  {
+    "id": 9,
+    "requirement": "Requirement 1",
+    "taskCode": "Taak 3",
+    "description": "Instellen van herbruikbare sjablonen voor terugkerende onderdelen (nieuws, studierichtingen, evenementen).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 9,
+    "archived": false
+  },
+  {
+    "id": 10,
+    "requirement": "Requirement 1",
+    "taskCode": "Taak 4",
+    "description": "Configureren van gebruikersrollen en toegangsrechten (beheerder, leerkrachten, redacteurs) en deze testen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 10,
+    "archived": false
+  },
+  {
+    "id": 11,
+    "requirement": "Requirement 1",
+    "taskCode": "Taak 5",
+    "description": "Instellen van een onderhoudsarm platform met een testomgeving, automatische back-ups en beveiligingsupdates.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 11,
+    "archived": false
+  },
+  {
+    "id": 12,
+    "requirement": "Requirement 7",
+    "taskCode": "Taak 3",
+    "description": "Instellen van een beveiligde HTTPS-verbinding (TLS-certificaat) en sterke beveiliging voor de beheerdersomgeving (incl. 2FA).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 12,
+    "archived": false
+  },
+  {
+    "id": 13,
+    "requirement": "Requirement 3",
+    "taskCode": "Taak 3",
+    "description": "Inrichten van een overzichtelijke mediabibliotheek in het CMS voor het eenvoudig beheren en vervangen van foto's.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 13,
+    "archived": false
+  },
+  {
+    "id": 14,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 1",
+    "description": "Realiseren van volledige responsiviteit (automatische schaalbaarheid voor smartphones, tablets en pc's).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 14,
+    "archived": false
+  },
+  {
+    "id": 15,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 2",
+    "description": "Ontwikkelen van een compact uitklapbaar mobiel menu en grote, touch-vriendelijke knoppen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 15,
+    "archived": false
+  },
+  {
+    "id": 16,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 4",
+    "description": "Ontwerpen van een heldere homepage met duidelijke introductie, snelkoppelingen en doelgroep-ingangen (leerlingen, ouders, personeel, sollicitanten).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 16,
+    "archived": false
+  },
+  {
+    "id": 17,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 6",
+    "description": "Implementeren van WCAG-richtlijnen voor toegankelijkheid (kleurcontrast, leesbare lettergroottes, alt-teksten, focusmarkeringen).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 17,
+    "archived": false
+  },
+  {
+    "id": 18,
+    "requirement": "Requirement 2",
+    "taskCode": "Taak 7",
+    "description": "Vormgeven en testen van de Google Maps-locatiekaart in de huisstijl.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 18,
+    "archived": false
+  },
+  {
+    "id": 19,
+    "requirement": "Requirement 3",
+    "taskCode": "Taak 2",
+    "description": "Visueel uitwerken van de vier kernwaarden (Eigentijds leren, Zelfstandigheid, Samen, Betrokken) met iconen en beelden.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 19,
+    "archived": false
+  },
+  {
+    "id": 20,
+    "requirement": "Requirement 3",
+    "taskCode": "Taak 4",
+    "description": "Toevoegen van interactieve elementen aan afbeeldingen (zoals aanklikbare zones of verhalen uit de praktijk).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 20,
+    "archived": false
+  },
+  {
+    "id": 21,
+    "requirement": "Requirement 4",
+    "taskCode": "Taak 1",
+    "description": "Groeperen van graden, studierichtingen en lessentabellen in een uniforme, mobiel-vriendelijke structuur.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 21,
+    "archived": false
+  },
+  {
+    "id": 22,
+    "requirement": "Requirement 5",
+    "taskCode": "Taak 1",
+    "description": "Aanmaken van een overzichtelijke 'Ons Team'-pagina met profielsjablonen per personeelslid (functie, vakken, foto, contactopties).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 22,
+    "archived": false
+  },
+  {
+    "id": 23,
+    "requirement": "Requirement 5",
+    "taskCode": "Taak 2",
+    "description": "Inrichten van een centrale contactpagina ingedeeld op onderwerp (inschrijvingen, administratie, begeleiding) en opnemen in de footer.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 23,
+    "archived": false
+  },
+  {
+    "id": 24,
+    "requirement": "Requirement 7",
+    "taskCode": "Taak 1",
+    "description": "Implementeren van een correcte cookiebanner en AVG/GDPR-compatibel privacybeleid.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 24,
+    "archived": false
+  },
+  {
+    "id": 25,
+    "requirement": "Requirement 4",
+    "taskCode": "Taak 2",
+    "description": "Bouwen van een vergelijkingsfunctie voor studierichtingen (vakken, uren, vervolgtrajecten).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 25,
+    "archived": false
+  },
+  {
+    "id": 26,
+    "requirement": "Requirement 4",
+    "taskCode": "Taak 3",
+    "description": "Ontwikkelen van de interactieve keuzehulp 'Kies je Spoor' (gebaseerd op een treintjes- en statenthema).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 26,
+    "archived": false
+  },
+  {
+    "id": 27,
+    "requirement": "Requirement 4",
+    "taskCode": "Taak 4",
+    "description": "Implementeren van een op interesses gebaseerde vragenlijst in de keuzehulp met vrijblijvende suggesties.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 27,
+    "archived": false
+  },
+  {
+    "id": 28,
+    "requirement": "Requirement 6",
+    "taskCode": "Taak 5",
+    "description": "Bouwen van een geavanceerde zoekbalk in de header met directe zoeksuggesties en ondersteuning voor alle apparaten.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 28,
+    "archived": false
+  },
+  {
+    "id": 29,
+    "requirement": "Requirement 7",
+    "taskCode": "Taak 4",
+    "description": "Bouwen van een online vacaturepagina en digitaal sollicitatieformulier met beveiligde doorsturing naar de directie.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 29,
+    "archived": false
+  },
+  {
+    "id": 30,
+    "requirement": "Requirement 7",
+    "taskCode": "Taak 5",
+    "description": "Structureren van de pagina voor inschrijvingen en administratieve aanvragen met duidelijke instructies en bevestigingsmeldingen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 30,
+    "archived": false
+  },
+  {
+    "id": 31,
+    "requirement": "Requirement 6",
+    "taskCode": "Taak 1",
+    "description": "Integreren van een subtiel, niet-storend chatboticoon onderaan de website.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 31,
+    "archived": false
+  },
+  {
+    "id": 32,
+    "requirement": "Requirement 6",
+    "taskCode": "Taak 2",
+    "description": "Koppelen van een centrale kennisbank (schoolreglement, kalender, FAQ's) aan de chatbot voor betrouwbare antwoorden buiten de openingsuren.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 32,
+    "archived": false
+  },
+  {
+    "id": 33,
+    "requirement": "Requirement 6",
+    "taskCode": "Taak 3",
+    "description": "Vormgeven van het chatbotvenster met de schoolrobot (inclusief eigen naam en vriendelijke begroeting).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 33,
+    "archived": false
+  },
+  {
+    "id": 34,
+    "requirement": "Requirement 6",
+    "taskCode": "Taak 4",
+    "description": "Instellen van een e-mailfallback / doorverwijsformulier wanneer de chatbot de vraag niet kan beantwoorden.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 34,
+    "archived": false
+  },
+  {
+    "id": 35,
+    "requirement": "Requirement 8",
+    "taskCode": "Taak 2",
+    "description": "Ontwikkeling: CMS inrichten, design bouwen, content migreren en technische features (chatbot, spoor, zoekfunctie) koppelen.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 35,
+    "archived": false
+  },
+  {
+    "id": 36,
+    "requirement": "Requirement 4",
+    "taskCode": "Taak 5",
+    "description": "Testen van de studiekeuzehulp met leerlingen en ouders.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 36,
+    "archived": false
+  },
+  {
+    "id": 37,
+    "requirement": "Requirement 8",
+    "taskCode": "Taak 3",
+    "description": "Testfase: Uitvoeren van responsive tests, linkchecks, laadsnelheidsoptimalisatie en gebruikersgroep-tests (leerlingen/ouders).",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 37,
+    "archived": false
+  },
+  {
+    "id": 38,
+    "requirement": "Requirement 1",
+    "taskCode": "Taak 6",
+    "description": "Opstellen van een handleiding en organiseren van een praktijktest voor het schoolteam.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 38,
+    "archived": false
+  },
+  {
+    "id": 39,
+    "requirement": "Requirement 8",
+    "taskCode": "Taak 4",
+    "description": "Oplevering & Onderhoud: Volledige back-up maken, website publiceren, schoolteam opleiden en een vaste beheerder aanwijzen voor updates.",
+    "status": "To-Do",
+    "assignee": "",
+    "sortOrder": 39,
+    "archived": false
+  }
+];
+    const STORAGE_KEY = "schoolwebsite-kanban-v1";
+    const STATUS_ORDER = ["To-Do", "In behandeling", "Afgerond"];
+    const STATUS_LABELS = {"To-Do":"Te doen", "In behandeling":"In behandeling", "Afgerond":"Afgerond"};
+    const REQUIREMENTS = Array.from({length:8}, (_,i)=>`Requirement ${i+1}`);
+    const $ = (id) => document.getElementById(id);
+    let tasks = [];
+    let supabaseClient = null;
+    let syncMode = false;
+    let currentUser = null;
+    let activeTaskId = null;
+    let toastTimer = null;
+
+    function clone(value){return JSON.parse(JSON.stringify(value));}
+    function normalizeTask(t, i=0){
+      const rawStatus = t.status || "To-Do";
+      return {
+        id: Number(t.id), requirement: String(t.requirement || "Requirement 1"),
+        taskCode: String(t.taskCode ?? t.task_code ?? "Taak 1"),
+        description: String(t.description || ""),
+        status: STATUS_ORDER.includes(rawStatus) ? rawStatus : (rawStatus === "Te doen" ? "To-Do" : "To-Do"),
+        assignee: String(t.assignee ?? t.toegewezenAan ?? ""),
+        sortOrder: Number.isFinite(Number(t.sortOrder ?? t.sort_order)) ? Number(t.sortOrder ?? t.sort_order) : (Number(t.id)||i+1),
+        archived: Boolean(t.archived)
+      };
+    }
+    function getActiveTasks(){return tasks.filter(t=>!t.archived);}
+    function persistLocal(){
+      try{localStorage.setItem(STORAGE_KEY, JSON.stringify({version:1,savedAt:new Date().toISOString(),tasks}));}
+      catch(e){showToast("Opslaan in browser mislukt. Download een back-up.",true);}
+    }
+    function showToast(message, error=false){
+      const el=$("toast");el.textContent=message;el.classList.toggle("error",error);el.classList.add("show");
+      clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove("show"),3200);
+    }
+    function sorted(list){return [...list].sort((a,b)=>(a.sortOrder-b.sortOrder)||(a.id-b.id));}
+    function escapeHTML(value){return String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+    function ownerInitial(name){const words=String(name||"").trim().split(/\s+/).filter(Boolean);return words.length>1?(words[0][0]+words[words.length-1][0]).toUpperCase():(words[0]||"?").slice(0,2).toUpperCase();}
+    function getFilters(){return {q:$('searchInput').value.trim().toLocaleLowerCase('nl'),req:$('requirementFilter').value,owner:$('assigneeFilter').value};}
+    function matches(t, filters){
+      if(filters.req && t.requirement!==filters.req)return false;
+      if(filters.owner==='__unassigned' && t.assignee.trim())return false;
+      if(filters.owner && filters.owner!=='__unassigned' && t.assignee!==filters.owner)return false;
+      if(filters.q){const hay=[t.id,t.requirement,t.taskCode,t.description,t.assignee].join(' ').toLocaleLowerCase('nl');if(!hay.includes(filters.q))return false;}
+      return true;
+    }
+    function cardHTML(t){
+      const owner=t.assignee.trim();
+      return `<article class="task-card" draggable="true" tabindex="0" role="button" aria-label="Taak ${t.id}: ${escapeHTML(t.description)}. Klik om te bewerken." data-task-id="${t.id}">
+        <div class="card-top"><span class="task-id">#${t.id}</span><span class="req-tag">${escapeHTML(t.requirement)}</span></div>
+        <span class="task-code">${escapeHTML(t.taskCode)}</span><h3>${escapeHTML(t.description)}</h3>
+        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(owner)):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div><span class="edit-hint">Bewerken ↗</span></div>
+      </article>`;
+    }
+    function fillFilterOptions(){
+      const oldReq=$('requirementFilter').value, oldOwner=$('assigneeFilter').value;
+      const requirements=[...new Set(tasks.map(t=>t.requirement).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl',{numeric:true}));
+      $('requirementFilter').innerHTML='<option value="">Alle requirements</option>'+requirements.map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(r)}</option>`).join('');
+      $('taskRequirement').innerHTML=[...new Set([...REQUIREMENTS,...requirements])].sort((a,b)=>a.localeCompare(b,'nl',{numeric:true})).map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(r)}</option>`).join('');
+      const owners=[...new Set(tasks.map(t=>t.assignee.trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl'));
+      $('assigneeFilter').innerHTML='<option value="">Alle teamleden</option><option value="__unassigned">Niet toegewezen</option>'+owners.map(o=>`<option value="${escapeHTML(o)}">${escapeHTML(o)}</option>`).join('');
+      $('assigneeSuggestions').innerHTML=owners.map(o=>`<option value="${escapeHTML(o)}"></option>`).join('');
+      if([...$('requirementFilter').options].some(o=>o.value===oldReq))$('requirementFilter').value=oldReq;
+      if([...$('assigneeFilter').options].some(o=>o.value===oldOwner))$('assigneeFilter').value=oldOwner;
+    }
+    function render(){
+      const active=getActiveTasks();
+      const counts={"To-Do":active.filter(t=>t.status==='To-Do').length,"In behandeling":active.filter(t=>t.status==='In behandeling').length,"Afgerond":active.filter(t=>t.status==='Afgerond').length};
+      $('totalCount').textContent=active.length;$('doingCount').textContent=counts['In behandeling'];$('doneCount').textContent=counts['Afgerond'];$('unassignedCount').textContent=active.filter(t=>!t.assignee.trim()).length;
+      const pct=active.length?Math.round(counts['Afgerond']/active.length*100):0;$('progressFill').style.width=pct+'%';$('progressCopy').textContent=`${pct}% afgerond`;$('progressTrack').setAttribute('aria-valuenow',pct);
+      const filters=getFilters();let visible=0;
+      for(const status of STATUS_ORDER){
+        const colId=status==='To-Do'?'todo':status==='In behandeling'?'doing':'done';
+        const list=sorted(active.filter(t=>t.status===status&&matches(t,filters)));
+        visible+=list.length;$('count-'+colId).textContent=list.length;
+        $('list-'+colId).innerHTML=list.length?list.map(cardHTML).join(''):`<div class="empty-column"><div><span class="empty-icon">${status==='Afgerond'?'✓':'＋'}</span>${filters.q||filters.req||filters.owner?'Geen taken gevonden met deze filters.':status==='To-Do'?'Alles opgepakt — goed bezig!':status==='In behandeling'?'Er wordt momenteel niet aan taken gewerkt.':'Nog geen taken afgerond.'}</div></div>`;
+      }
+      const archives=sorted(tasks.filter(t=>t.archived&&matches(t,filters)));
+      $('resultsCount').textContent=`${visible} van ${active.length} actieve taken`;
+      $('archivedSection').classList.toggle('hidden',!$('showArchived').checked);
+      $('archivedCount').textContent=`${archives.length} taken`;
+      $('archivedList').innerHTML=archives.length?archives.map(t=>`<div class="archived-card">${cardHTML(t)}</div>`).join(''):'<div class="empty-column">Geen gearchiveerde taken gevonden.</div>';
+      bindCards();
+    }
+    function bindCards(){
+      document.querySelectorAll('[data-task-id]').forEach(card=>{
+        card.addEventListener('click',()=>openTask(Number(card.dataset.taskId)));
+        card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openTask(Number(card.dataset.taskId));}});
+        card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',card.dataset.taskId);e.dataTransfer.effectAllowed='move';card.classList.add('dragging');});
+        card.addEventListener('dragend',()=>{card.classList.remove('dragging');document.querySelectorAll('.column.drag-active').forEach(c=>c.classList.remove('drag-active'));});
+      });
+    }
+    async function persistTask(task){
+      if(!syncMode){persistLocal();return;}
+      const row={id:task.id,requirement:task.requirement,task_code:task.taskCode,description:task.description,status:task.status,assignee:task.assignee,sort_order:task.sortOrder,archived:task.archived};
+      const {error}=await supabaseClient.from('tasks').upsert(row,{onConflict:'id'});
+      if(error)throw error;
+    }
+    async function changeStatus(id,status){
+      if(!STATUS_ORDER.includes(status))return;
+      const ix=tasks.findIndex(t=>t.id===id);if(ix<0||tasks[ix].status===status)return;
+      const before=clone(tasks[ix]);tasks[ix].status=status;render();if(!syncMode)persistLocal();
+      try{if(syncMode)await persistTask(tasks[ix]);showToast(`Taak #${id} verplaatst naar ${STATUS_LABELS[status].toLowerCase()}.`);}
+      catch(err){tasks[ix]=before;render();showToast('Status niet opgeslagen: '+(err.message||'controleer de verbinding'),true);}
+    }
+    async function saveTask(evt){
+      evt.preventDefault();
+      const idVal=$('taskId').value;const isNew=idVal==='';const id=isNew?Math.max(0,...tasks.map(t=>t.id))+1:Number(idVal);
+      const previous=tasks.find(t=>t.id===id);const task=normalizeTask({id,requirement:$('taskRequirement').value,taskCode:$('taskCode').value.trim(),description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignee:$('taskAssignee').value.trim(),sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
+      if(!task.taskCode||!task.description){showToast('Vul zowel het taaklabel als de omschrijving in.',true);return;}
+      try{
+        if(syncMode)await persistTask(task);
+        const ix=tasks.findIndex(t=>t.id===id);if(ix>=0)tasks[ix]=task;else tasks.push(task);
+        if(!syncMode)persistLocal();fillFilterOptions();render();$('taskDialog').close();showToast(isNew?'Nieuwe taak toegevoegd.':'Taak opgeslagen.');
+      }catch(err){showToast('Opslaan mislukt: '+(err.message||'controleer de verbinding'),true);}
+    }
+    function openTask(id){
+      const t=id===null?null:tasks.find(x=>x.id===id);if(id!==null&&!t)return;activeTaskId=id;
+      $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of eigenaar bij.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
+      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||'Requirement 1';$('taskCode').value=t?.taskCode||'Taak 1';$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||'To-Do';$('taskAssignee').value=t?.assignee||'';
+      $('archiveBtn').textContent=t?(t.archived?'Herstellen uit archief':'Archiveren'):'Annuleren';$('archiveBtn').classList.toggle('danger',!t||!t.archived);$('archiveBtn').disabled=false;
+      if(t&&t.archived){$('taskStatus').disabled=true;}else{$('taskStatus').disabled=false;}
+      $('taskDialog').showModal();
+    }
+    async function archiveActive(){
+      const id=$('taskId').value;if(id===''){ $('taskDialog').close();return; }
+      const task=tasks.find(t=>t.id===Number(id));if(!task)return;
+      const next={...task,archived:!task.archived};
+      try{if(syncMode)await persistTask(next);Object.assign(task,next);if(!syncMode)persistLocal();fillFilterOptions();render();$('taskDialog').close();showToast(next.archived?'Taak gearchiveerd.':'Taak teruggezet op het bord.');}
+      catch(err){showToast('Wijziging mislukt: '+(err.message||'controleer de verbinding'),true);}
+    }
+    function exportBackup(){
+      const content={format:'schoolwebsite-kanban',version:1,exportedAt:new Date().toISOString(),tasks:sorted(tasks).map(t=>({...t}))};
+      downloadBlob(JSON.stringify(content,null,2),'kanban-schoolwebsite-backup-'+new Date().toISOString().slice(0,10)+'.json','application/json;charset=utf-8');showToast('Back-up gedownload, inclusief archief.');
+    }
+    function downloadBlob(content,filename,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
+    function exportCSV(){
+      const headers=['Nr','Requirement','Taak','Omschrijving','Status','Toegewezen aan','Gearchiveerd'];
+      const rows=[headers,...sorted(tasks).map(t=>[t.id,t.requirement,t.taskCode,t.description,t.status,t.assignee,t.archived?'Ja':'Nee'])];
+      const csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');
+      downloadBlob('\ufeff'+csv,'kanban-schoolwebsite-'+new Date().toISOString().slice(0,10)+'.csv','text/csv;charset=utf-8');showToast('CSV gedownload.');
+    }
+    async function importBackup(file){
+      try{
+        const parsed=JSON.parse(await file.text());const incoming=Array.isArray(parsed)?parsed:parsed.tasks;
+        if(!Array.isArray(incoming))throw new Error('Dit bestand bevat geen takenlijst.');
+        const clean=incoming.map((t,i)=>normalizeTask(t,i));
+        if(clean.some(t=>!Number.isFinite(t.id)||t.id<1))throw new Error('Een of meer taken hebben geen geldig nummer.');
+        if(!confirm(`${clean.length} taken gevonden. De taken uit deze back-up worden op basis van taaknummer toegevoegd of bijgewerkt. Bestaande taken die niet in de back-up staan, blijven behouden. Doorgaan?`))return;
+        const map=new Map(tasks.map(t=>[t.id,t]));clean.forEach(t=>map.set(t.id,t));const merged=sorted([...map.values()]);
+        if(syncMode){
+          // Upsert one by one so any rejected row is clearly reported; existing non-imported rows remain untouched.
+          for(const task of clean)await persistTask(task);
+          const {data,error}=await supabaseClient.from('tasks').select('*').order('sort_order',{ascending:true});if(error)throw error;
+          tasks=data.map(row=>normalizeTask({id:row.id,requirement:row.requirement,taskCode:row.task_code,description:row.description,status:row.status,assignee:row.assignee,sortOrder:row.sort_order,archived:row.archived}));
+        }else{tasks=merged;persistLocal();}
+        fillFilterOptions();render();showToast(`Back-up verwerkt: ${clean.length} taken geïmporteerd.`);
+      }catch(err){showToast('Importeren mislukt: '+(err.message||'onbekend formaat'),true);}
+      finally{$('importFile').value='';}
+    }
+    async function loadRemoteTasks(){
+      const {data,error}=await supabaseClient.from('tasks').select('*').order('sort_order',{ascending:true});
+      if(error)throw error;
+      tasks=(data||[]).map(row=>normalizeTask({id:row.id,requirement:row.requirement,taskCode:row.task_code,description:row.description,status:row.status,assignee:row.assignee,sortOrder:row.sort_order,archived:row.archived}));
+      fillFilterOptions();render();
+    }
+    function setRemoteStatus(user){
+      $('connectionPill').classList.add('online');$('connectionText').textContent=user?`Live · ${user.email||'ingelogd'}`:'Live synchronisatie';
+      $('modeNotice').innerHTML='<span class="notice-icon">✓</span><div><strong>Gedeelde live-opslag actief.</strong> Wijzigingen worden in de database opgeslagen en verschijnen ook bij ingelogde teamleden. Maak alsnog af en toe een JSON-back-up.</div>';
+      $('signOutBtn').classList.toggle('hidden',!user);
+    }
+    async function initializeSync(){
+      syncMode=true;
+      if(!window.supabase?.createClient){$('authGate').hidden=false;$('authError').textContent='De synchronisatiebibliotheek kon niet worden geladen. Controleer de internetverbinding.';return;}
+      supabaseClient=window.supabase.createClient(SUPABASE_CONFIG.url,SUPABASE_CONFIG.anonKey);
+      const {data,error}=await supabaseClient.auth.getSession();
+      if(error){$('authGate').hidden=false;$('authError').textContent=error.message;return;}
+      if(data.session){currentUser=data.session.user;await afterLogin();}
+      else{$('authGate').hidden=false;}
+      supabaseClient.auth.onAuthStateChange((_event,session)=>{
+        if(session&&(!currentUser||currentUser.id!==session.user.id)){currentUser=session.user;setTimeout(()=>afterLogin().catch(e=>showToast('Laden mislukt: '+e.message,true)),0);}
+        else if(!session&&currentUser){currentUser=null;tasks=[];render();$('authGate').hidden=false;$('signOutBtn').classList.add('hidden');}
+      });
+    }
+    async function afterLogin(){
+      $('authGate').hidden=true;setRemoteStatus(currentUser);$('authError').textContent='';
+      try{await loadRemoteTasks();}catch(err){$('authGate').hidden=false;$('authError').textContent='Kan het bord niet laden. Controleer de database-instellingen. '+err.message;return;}
+      if(!supabaseClient._kanbanChannel){supabaseClient._kanbanChannel=supabaseClient.channel('schoolwebsite-kanban-live').on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{loadRemoteTasks().catch(e=>showToast('Live-update mislukt: '+e.message,true));}).subscribe();}
+    }
+
+    // Event wiring
+    $('searchInput').addEventListener('input',render);$('requirementFilter').addEventListener('change',render);$('assigneeFilter').addEventListener('change',render);$('showArchived').addEventListener('change',render);
+    $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
+    $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('csvBtn').addEventListener('click',exportCSV);$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
+    // CSV export is available via Ctrl/Cmd+Shift+E to keep the top bar uncluttered.
+    document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();exportCSV();}});
+    document.querySelectorAll('.task-list').forEach(list=>{
+      list.addEventListener('dragover',e=>{e.preventDefault();const col=list.closest('.column');if(col)col.classList.add('drag-active');e.dataTransfer.dropEffect='move';});
+      list.addEventListener('dragleave',e=>{if(!list.contains(e.relatedTarget)){const col=list.closest('.column');if(col)col.classList.remove('drag-active');}});
+      list.addEventListener('drop',e=>{e.preventDefault();const col=list.closest('.column');if(col)col.classList.remove('drag-active');const id=Number(e.dataTransfer.getData('text/plain'));const status=list.dataset.status;if(id)changeStatus(id,status);});
+    });
+    $('loginForm').addEventListener('submit',async e=>{
+      e.preventDefault();$('authError').textContent='';$('loginBtn').disabled=true;$('loginBtn').textContent='Bezig met inloggen…';
+      try{if(!supabaseClient)throw new Error('Supabase is niet correct geconfigureerd.');const {error}=await supabaseClient.auth.signInWithPassword({email:$('loginEmail').value.trim(),password:$('loginPassword').value});if(error)throw error;}
+      catch(err){$('authError').textContent=err.message||'Inloggen mislukt.';}
+      finally{$('loginBtn').disabled=false;$('loginBtn').textContent='Inloggen';}
+    });
+    $('signOutBtn').addEventListener('click',async()=>{if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)showToast(error.message,true);}});
+
+    async function init(){
+      let saved=null;
+      try{saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');}catch(_e){}
+      tasks=(saved&&Array.isArray(saved.tasks)?saved.tasks:INITIAL_TASKS).map((t,i)=>normalizeTask(t,i));
+      if(!saved)persistLocal();fillFilterOptions();render();
+      if(SUPABASE_CONFIG.url.trim()&&SUPABASE_CONFIG.anonKey.trim()){
+        $('connectionText').textContent='Verbinding maken…';
+        try{await initializeSync();}catch(err){$('authGate').hidden=false;$('authError').textContent='Verbinding mislukt: '+err.message;}
+      }
+    }
+    init();
+  </script>
+</body>
+</html>
