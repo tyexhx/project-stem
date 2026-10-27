@@ -1,5 +1,5 @@
 -- Kanbanbord vernieuwing schoolwebsite — optionele gedeelde Supabase-opslag
--- Voer dit script 1 keer uit in Supabase > SQL Editor.
+-- Voer dit script uit in Supabase > SQL Editor; opnieuw uitvoeren is veilig voor bestaande taken.
 -- RLS staat aan; alleen ingelogde accounts kunnen het bord lezen of wijzigen.
 -- Maak teamaccounts aan via Supabase Auth en schakel openbare registraties uit.
 
@@ -10,10 +10,22 @@ create table if not exists public.tasks (
   description text not null,
   status text not null check (status in ('To-Do', 'In behandeling', 'Afgerond')),
   assignee text not null default '',
+  assignees text[] not null default '{}'::text[],
   sort_order integer not null default 0,
   archived boolean not null default false,
   updated_at timestamptz not null default now()
 );
+
+alter table public.tasks
+  add column if not exists assignees text[] not null default '{}'::text[];
+
+update public.tasks
+set assignees = array(
+  select btrim(member)
+  from unnest(string_to_array(regexp_replace(assignee, '\s*[,;]\s*', ',', 'g'), ',')) as names(member)
+  where btrim(member) <> ''
+)
+where cardinality(assignees) = 0 and btrim(assignee) <> '';
 
 alter table public.tasks enable row level security;
 revoke all on table public.tasks from anon;
@@ -25,6 +37,15 @@ drop policy if exists "Signed-in team can update tasks" on public.tasks;
 create policy "Signed-in team can read tasks" on public.tasks for select to authenticated using (true);
 create policy "Signed-in team can add tasks" on public.tasks for insert to authenticated with check (true);
 create policy "Signed-in team can update tasks" on public.tasks for update to authenticated using (true) with check (true);
+
+-- Private Realtime access: only authenticated team accounts can see online presence.
+alter table realtime.messages enable row level security;
+drop policy if exists "Signed-in team can view kanban presence" on realtime.messages;
+drop policy if exists "Signed-in team can publish kanban presence" on realtime.messages;
+create policy "Signed-in team can view kanban presence" on realtime.messages
+  for select to authenticated using (realtime.topic() = 'schoolwebsite-kanban-live');
+create policy "Signed-in team can publish kanban presence" on realtime.messages
+  for insert to authenticated with check (realtime.topic() = 'schoolwebsite-kanban-live');
 
 -- Seed 39 oorspronkelijke taken. Bestaande taaknummers worden NIET overschreven,
 -- dus dit script overschrijft geen later aangepaste status of eigenaar.

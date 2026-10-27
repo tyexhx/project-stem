@@ -16,6 +16,50 @@
     .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:19px 0 14px}.search-wrap{position:relative;flex:1 1 255px;max-width:480px}.search-wrap .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#8792a5;font-size:16px;pointer-events:none}.control{border:1px solid #dfe5ee;background:white;border-radius:10px;color:#364258;padding:10px 12px;min-height:41px}.search{width:100%;padding-left:38px}.filter{min-width:165px}.toolbar-end{margin-left:auto;display:flex;align-items:center;gap:8px}.archive-toggle{display:flex;align-items:center;gap:7px;color:#667388;font-size:12px;user-select:none;white-space:nowrap}.archive-toggle input{accent-color:var(--purple)}.result-count{font-size:12px;color:#8190a5;white-space:nowrap}
     .board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;align-items:start}.column{min-width:0;border:1px solid var(--line);background:#edf1f7a8;border-radius:15px;padding:12px;min-height:360px;transition:border-color .15s,background .15s}.column.drag-active{border-color:#958bfb;background:#f0eeff}.column-header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 6px 13px}.column-heading{display:flex;align-items:center;gap:9px;min-width:0}.column-dot{width:10px;height:10px;border-radius:50%;flex:0 0 10px}.todo .column-dot{background:#9aa4b6}.doing .column-dot{background:#4985df}.done .column-dot{background:#31a579}.column-title{margin:0;font-size:13px;font-weight:850;letter-spacing:.2px}.column-subtitle{font-size:10.5px;color:#8590a3;margin-top:2px}.column-count{display:grid;place-items:center;min-width:27px;height:26px;padding:0 7px;border-radius:9px;background:white;color:#657187;border:1px solid #e7ebf2;font-size:12px;font-weight:800}.task-list{display:flex;flex-direction:column;gap:10px;min-height:285px}.task-card{background:#fff;border:1px solid #e3e8f0;border-radius:12px;padding:13px 13px 11px;box-shadow:0 2px 5px rgba(31,47,77,.025);cursor:grab;transition:transform .13s,box-shadow .13s,border-color .13s;position:relative}.task-card:hover{border-color:#cfd6e5;box-shadow:0 6px 17px rgba(31,47,77,.07);transform:translateY(-1px)}.task-card:active{cursor:grabbing}.task-card.dragging{opacity:.42;transform:rotate(1deg)}.card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}.task-id{font-size:10.5px;font-weight:800;color:#8792a5;letter-spacing:.3px}.req-tag{border-radius:6px;padding:4px 7px;font-size:10px;font-weight:750;color:#6558c7;background:#f0eeff;white-space:nowrap}.task-card h3{font-size:13px;line-height:1.35;letter-spacing:-.1px;margin:0 0 6px;font-weight:780}.task-code{display:inline-block;font-size:10.5px;color:#65728a;font-weight:700;margin-bottom:6px}.task-desc{font-size:12px;color:#667388;line-height:1.5;margin:0 0 13px;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.card-footer{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:9px;border-top:1px solid #f0f2f6}.owner{min-width:0;display:flex;align-items:center;gap:7px;color:#69768a;font-size:11px}.avatar{display:grid;place-items:center;flex:0 0 23px;width:23px;height:23px;border-radius:50%;background:#edf0f6;color:#67738a;font-size:10px;font-weight:800}.owner-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.owner.unassigned .avatar{background:#fff5dd;color:#9b722d}.edit-hint{font-size:10px;color:#9aa4b5;white-space:nowrap}.empty-column{display:grid;place-items:center;text-align:center;min-height:180px;padding:18px;color:#919bad;font-size:12px;border:1px dashed #d5dce7;border-radius:11px;background:#ffffff5e}.empty-icon{font-size:22px;display:block;margin-bottom:7px;color:#a4aec0}.board-help{display:flex;align-items:center;gap:7px;font-size:11px;color:#8692a6;margin:12px 4px 0}.archived-section{margin-top:19px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px}.archived-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}.archived-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.archived-card{opacity:.82}
     dialog{border:0;border-radius:18px;padding:0;width:min(600px,calc(100% - 26px));max-width:600px;box-shadow:0 22px 80px #11182745;color:var(--ink)}dialog::backdrop{background:#19223882;backdrop-filter:blur(3px)}.dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:22px 24px 16px;border-bottom:1px solid var(--line)}.dialog-head h2{margin:0 0 5px;font-size:20px;letter-spacing:-.5px}.dialog-head p{margin:0;color:var(--muted);font-size:12px}.close-btn{display:grid;place-items:center;border:1px solid var(--line);border-radius:9px;width:34px;height:34px;background:white;color:#647087;font-size:20px}.dialog-form{padding:19px 24px 22px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{display:flex;flex-direction:column;gap:6px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:750;color:#4d5a70}.field input,.field select,.field textarea{width:100%;min-width:0;border:1px solid #dfe5ee;border-radius:9px;background:#fff;padding:10px 11px;color:#263247}.field textarea{min-height:110px;resize:vertical;line-height:1.5}.field .hint{font-size:10.5px;color:#8a96a8}.dialog-actions{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:21px;padding-top:15px;border-top:1px solid var(--line)}.right-actions{display:flex;gap:8px}.toast{position:fixed;bottom:18px;left:50%;transform:translate(-50%,20px);z-index:20;padding:11px 16px;border-radius:11px;background:#202b40;color:white;font-size:12px;box-shadow:0 7px 24px #17203333;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:min(90vw,620px)}.toast.show{opacity:1;transform:translate(-50%,0)}.toast.error{background:#9c313b}.auth-gate{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#192238b8;backdrop-filter:blur(6px);padding:18px}.auth-gate[hidden]{display:none}.auth-card{width:min(420px,100%);background:white;border-radius:18px;padding:25px;box-shadow:0 24px 80px #11182745}.auth-card .brand-mark{margin-bottom:17px}.auth-card h2{font-size:22px;margin:0 0 6px;letter-spacing:-.5px}.auth-card p{font-size:12px;color:var(--muted);margin:0 0 18px}.auth-card .field{margin-bottom:12px}.auth-error{color:var(--red)!important;min-height:16px;margin:10px 0 0!important}.footer-note{font-size:11px;text-align:center;color:#929daf;margin:24px 0 0}.hidden{display:none!important}
+    :root[data-theme="dark"]{color-scheme:dark;--ink:#e5eaf3;--muted:#a3aec0;--line:#354155;--surface:#202a3a;--bg:#151c28;--purple-soft:#332f57;--blue-soft:#253b5a;--green-soft:#203f37;--amber-soft:#493b24;--red-soft:#492b32;--shadow:0 8px 25px rgba(0,0,0,.2)}
+    :root[data-theme="dark"] .pill,:root[data-theme="dark"] .btn,:root[data-theme="dark"] .control,:root[data-theme="dark"] .column-count,:root[data-theme="dark"] .task-card,:root[data-theme="dark"] dialog,:root[data-theme="dark"] .close-btn,:root[data-theme="dark"] .auth-card{background-color:var(--surface);color:var(--ink)}
+    :root[data-theme="dark"] .pill,:root[data-theme="dark"] .btn,:root[data-theme="dark"] .control,:root[data-theme="dark"] .column-count,:root[data-theme="dark"] .task-card,:root[data-theme="dark"] dialog,:root[data-theme="dark"] .close-btn,:root[data-theme="dark"] .auth-card{border-color:var(--line)}
+    :root[data-theme="dark"] .notice{background:#292744;border-color:#46406d;color:#d0cafa}
+    :root[data-theme="dark"] .notice strong{color:#f0edff}
+    :root[data-theme="dark"] .notice.storage-warning{background:#3d3024;border-color:#765632;color:#f0d0a4}
+    :root[data-theme="dark"] .notice.storage-warning strong{color:#ffe0b0}
+    :root[data-theme="dark"] .metric{background:#1b2533;border-color:var(--line)}
+    :root[data-theme="dark"] .progress-track{background:#303b4d}
+    :root[data-theme="dark"] .column{background:#1c2635}
+    :root[data-theme="dark"] .column.drag-active{background:#292744}
+    :root[data-theme="dark"] .task-card:hover{border-color:#56647b}
+    :root[data-theme="dark"] .card-footer{border-color:#354155}
+    :root[data-theme="dark"] .avatar{background:#354155;color:#d0d8e6}
+    :root[data-theme="dark"] .owner.unassigned .avatar{background:#493b24;color:#f2d18f}
+    :root[data-theme="dark"] .req-tag{background:#332f57;color:#c7c0ff}
+    :root[data-theme="dark"] .empty-column{background:#1b253380;border-color:#465268}
+    :root[data-theme="dark"] .archived-section{background:var(--surface);border-color:var(--line)}
+    :root[data-theme="dark"] .btn:hover,:root[data-theme="dark"] .close-btn:hover{background:#2b374a}
+    :root[data-theme="dark"] .btn.primary,:root[data-theme="dark"] .btn.primary:hover{background:var(--purple);border-color:var(--purple);color:white}
+    :root[data-theme="dark"] .btn.danger{background:#35242b;border-color:#6b3b43}
+    :root[data-theme="dark"] .btn.subtle{background:transparent}
+    :root[data-theme="dark"] .field label{color:#c8d0de}
+    :root[data-theme="dark"] .field input,:root[data-theme="dark"] .field select,:root[data-theme="dark"] .field textarea{background:#182230;border-color:#3a465a;color:var(--ink)}
+    :root[data-theme="dark"] .team-panel{background:#1b2533;border-color:var(--line)}
+    :root[data-theme="dark"] .member-progress-track{background:#354155}
+    :root[data-theme="dark"] .online-avatar{background:#293b37;color:#a6e2c7}
+    .team-insights{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.8fr);gap:12px;margin-top:16px}
+    .team-panel{min-width:0;padding:13px;border:1px solid #edf0f5;border-radius:12px;background:#fcfdff}
+    .team-panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:10px}
+    .team-panel-title{font-size:12px;font-weight:800;margin:0}
+    .team-panel-note{font-size:10px;color:var(--muted)}
+    .online-members{display:flex;flex-wrap:wrap;gap:7px}
+    .online-member{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--ink)}
+    .online-avatar{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e6f6ee;color:#23865d;font-size:9px;font-weight:800}
+    .online-dot{width:7px;height:7px;border-radius:50%;background:#2ca675}
+    .team-empty{font-size:11px;color:var(--muted)}
+    .member-progress-list{display:grid;gap:9px}
+    .member-progress-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(90px,2fr) auto;align-items:center;gap:10px;font-size:11px}
+    .member-progress-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+    .member-progress-track{height:7px;border-radius:999px;overflow:hidden;background:#eef1f6}
+    .member-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#6e63df,#3aaf80)}
+    .member-progress-value{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+    @media(max-width:760px){.team-insights{grid-template-columns:1fr}.member-progress-row{grid-template-columns:minmax(75px,1fr) minmax(70px,1.4fr) auto}}
     @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.board{gap:10px}.column{padding:9px}.task-card{padding:11px}.toolbar-end{margin-left:0}}
     @media(max-width:760px){.app{padding-top:18px}.topbar{align-items:flex-start}.top-actions{width:100%}.top-actions .btn{flex:1}.brand{min-width:0}.board{grid-template-columns:1fr;gap:12px}.column{min-height:auto}.task-list{min-height:90px}.empty-column{min-height:95px}.metrics{gap:8px}.metric{padding:10px;gap:9px}.metric-icon{width:33px;height:33px;flex-basis:33px;border-radius:10px}.metric-value{font-size:20px}.toolbar{gap:8px}.search-wrap{max-width:none;flex-basis:100%}.filter{flex:1;min-width:0}.toolbar-end{width:100%;justify-content:space-between}.archived-list{grid-template-columns:1fr}.dialog-head{padding:18px 18px 14px}.dialog-form{padding:17px 18px 19px}}
     @media(max-width:420px){.metrics{grid-template-columns:1fr 1fr}.metric{align-items:flex-start;flex-direction:column;gap:7px}.metric-detail{white-space:normal}.top-actions .btn{padding:9px 8px;font-size:11px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.dialog-actions{flex-wrap:wrap}.dialog-actions>.btn{order:2}.right-actions{margin-left:auto}}
@@ -29,6 +73,7 @@
         <div class="brand-copy"><h1>Project Kanban</h1><div class="subtitle">Vernieuwing schoolwebsite · teamoverzicht</div></div>
       </div>
       <div class="top-actions">
+        <button class="btn" id="themeToggle" type="button" aria-pressed="false" title="Schakel donkere modus in">🌙 Donker</button>
         <div id="connectionPill" class="pill"><span class="pill-dot"></span><span id="connectionText">Lokaal opgeslagen</span></div>
         <button class="btn" id="exportBtn" type="button" title="Download een volledige JSON-back-up"><span class="icon">↧</span> Back-up</button>
         <button class="btn" id="importBtn" type="button" title="Importeer een eerdere JSON-back-up"><span class="icon">↥</span> Importeren</button>
@@ -49,6 +94,16 @@
         <div class="metric"><div class="metric-icon">↗</div><div><div class="metric-label">In behandeling</div><div class="metric-value" id="doingCount">0</div><div class="metric-detail">Taken waar nu aan gewerkt wordt</div></div></div>
         <div class="metric"><div class="metric-icon">✓</div><div><div class="metric-label">Afgerond</div><div class="metric-value" id="doneCount">1</div><div class="metric-detail">Voltooide projecttaken</div></div></div>
         <div class="metric"><div class="metric-icon">♙</div><div><div class="metric-label">Zonder eigenaar</div><div class="metric-value" id="unassignedCount">39</div><div class="metric-detail">Nog aan een teamlid toe te wijzen</div></div></div>
+      </div>
+      <div class="team-insights">
+        <section class="team-panel" aria-label="Online teamleden">
+          <div class="team-panel-head"><h3 class="team-panel-title">Nu online</h3><span id="onlineCount" class="team-panel-note">Nog geen teamleden</span></div>
+          <div id="onlineMembers" class="online-members"><span class="team-empty">Beschikbaar bij gedeelde live-synchronisatie.</span></div>
+        </section>
+        <section class="team-panel" aria-label="Voortgang per teamlid">
+          <div class="team-panel-head"><h3 class="team-panel-title">Voortgang per teamlid</h3><span class="team-panel-note">Afgerond van toegewezen actieve taken</span></div>
+          <div id="memberProgress" class="member-progress-list"><span class="team-empty">Wijs taken toe om voortgang te zien.</span></div>
+        </section>
       </div>
     </section>
 
@@ -79,7 +134,7 @@
         <div class="field"><label for="taskCode">Taaklabel</label><input id="taskCode" required maxlength="60" placeholder="Bijv. Taak 2"><div class="hint">Verplicht veld.</div></div>
         <div class="field full"><label for="taskDescription">Omschrijving</label><textarea id="taskDescription" required maxlength="2000" placeholder="Wat moet er precies gebeuren?"></textarea><div class="hint">Verplicht veld. Beschrijf wat er precies moet gebeuren.</div></div>
         <div class="field"><label for="taskStatus">Status</label><select id="taskStatus"><option value="To-Do">Te doen</option><option value="In behandeling">In behandeling</option><option value="Afgerond">Afgerond</option></select></div>
-        <div class="field"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="100" list="assigneeSuggestions" placeholder="Naam teamlid (optioneel)"><datalist id="assigneeSuggestions"></datalist></div>
+        <div class="field full"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="500" list="assigneeSuggestions" placeholder="Teamleden, gescheiden door komma's (optioneel)"><datalist id="assigneeSuggestions"></datalist><div class="hint">Je kunt meerdere teamleden invullen, gescheiden door komma's.</div></div>
       </div>
       <div class="dialog-actions"><button id="archiveBtn" class="btn danger" type="button">Archiveren</button><div class="right-actions"><button id="cancelBtn" class="btn" type="button">Annuleren</button><button class="btn primary" type="submit">Opslaan</button></div></div>
     </form>
@@ -494,6 +549,8 @@
   }
 ];
     const STORAGE_KEY = "schoolwebsite-kanban-v1";
+    const THEME_KEY = "schoolwebsite-kanban-theme";
+    const REALTIME_CHANNEL = "schoolwebsite-kanban-live";
     const STATUS_ORDER = ["To-Do", "In behandeling", "Afgerond"];
     const STATUS_LABELS = {"To-Do":"Te doen", "In behandeling":"In behandeling", "Afgerond":"Afgerond"};
     const REQUIREMENTS = Array.from({length:8}, (_,i)=>`Requirement ${i+1}`);
@@ -502,9 +559,11 @@
     let supabaseClient = null;
     let syncMode = false;
     let currentUser = null;
+    let onlineUsers = [];
     let activeTaskId = null;
     let toastTimer = null;
     let storageAvailable = true;
+    let presenceChannel = null;
     const DEFAULT_MODE_NOTICE = '<span class="notice-icon">ⓘ</span><div><strong>Browseropslag actief.</strong> Wijzigingen worden automatisch in deze browser bewaard. Om ze op een ander apparaat te zetten, exporteer je een back-up en laat je die importeren. Voor directe gedeelde updates tussen teamleden is de optionele Supabase-configuratie nodig.</div>';
 
     function clone(value){return JSON.parse(JSON.stringify(value));}
@@ -529,14 +588,21 @@
         $('modeNotice').innerHTML = DEFAULT_MODE_NOTICE;
       }
     }
+    function parseAssignees(value){
+      const entries=Array.isArray(value)?value:String(value||'').split(/[;,]/);
+      return [...new Set(entries.map(name=>String(name).trim()).filter(Boolean))];
+    }
     function normalizeTask(t, i=0){
       const rawStatus = t.status || "To-Do";
+      const legacyAssignee=String(t.assignee ?? t.toegewezenAan ?? "");
+      const rawAssignees=Array.isArray(t.assignees)&& (t.assignees.length>0||!legacyAssignee)?t.assignees:legacyAssignee;
+      const assignees=parseAssignees(rawAssignees);
       return {
         id: Number(t.id), requirement: String(t.requirement || "Requirement 1"),
         taskCode: String(t.taskCode ?? t.task_code ?? "Taak 1"),
         description: String(t.description || ""),
         status: STATUS_ORDER.includes(rawStatus) ? rawStatus : (rawStatus === "Te doen" ? "To-Do" : "To-Do"),
-        assignee: String(t.assignee ?? t.toegewezenAan ?? ""),
+        assignee: assignees.join(', '), assignees,
         sortOrder: Number.isFinite(Number(t.sortOrder ?? t.sort_order)) ? Number(t.sortOrder ?? t.sort_order) : (Number(t.id)||i+1),
         archived: Boolean(t.archived)
       };
@@ -571,20 +637,24 @@
     function sorted(list){return [...list].sort((a,b)=>(a.sortOrder-b.sortOrder)||(a.id-b.id));}
     function escapeHTML(value){return String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
     function ownerInitial(name){const words=String(name||"").trim().split(/\s+/).filter(Boolean);return words.length>1?(words[0][0]+words[words.length-1][0]).toUpperCase():(words[0]||"?").slice(0,2).toUpperCase();}
+    function memberDisplayName(user){
+      const metadata=user?.user_metadata||{};
+      return String(metadata.full_name||metadata.name||user?.email?.split('@')[0]||'Teamlid').trim();
+    }
     function getFilters(){return {q:$('searchInput').value.trim().toLocaleLowerCase('nl'),req:$('requirementFilter').value,owner:$('assigneeFilter').value};}
     function matches(t, filters){
       if(filters.req && t.requirement!==filters.req)return false;
-      if(filters.owner==='__unassigned' && t.assignee.trim())return false;
-      if(filters.owner && filters.owner!=='__unassigned' && t.assignee!==filters.owner)return false;
-      if(filters.q){const hay=[t.id,t.requirement,t.taskCode,t.description,t.assignee].join(' ').toLocaleLowerCase('nl');if(!hay.includes(filters.q))return false;}
+      if(filters.owner==='__unassigned' && t.assignees.length)return false;
+      if(filters.owner && filters.owner!=='__unassigned' && !t.assignees.includes(filters.owner))return false;
+      if(filters.q){const hay=[t.id,t.requirement,t.taskCode,t.description,...t.assignees].join(' ').toLocaleLowerCase('nl');if(!hay.includes(filters.q))return false;}
       return true;
     }
     function cardHTML(t){
-      const owner=t.assignee.trim();
+      const owner=t.assignees.join(', ');
       return `<article class="task-card" draggable="true" tabindex="0" role="button" aria-label="Taak ${t.id}: ${escapeHTML(t.description)}. Klik om te bewerken." data-task-id="${t.id}">
         <div class="card-top"><span class="task-id">#${t.id}</span><span class="req-tag">${escapeHTML(t.requirement)}</span></div>
         <span class="task-code">${escapeHTML(t.taskCode)}</span><h3>${escapeHTML(t.description)}</h3>
-        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(owner)):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div><span class="edit-hint">Bewerken ↗</span></div>
+        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(t.assignees[0])):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div><span class="edit-hint">Bewerken ↗</span></div>
       </article>`;
     }
     function fillFilterOptions(){
@@ -592,16 +662,29 @@
       const requirements=[...new Set(tasks.map(t=>t.requirement).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl',{numeric:true}));
       $('requirementFilter').innerHTML='<option value="">Alle requirements</option>'+requirements.map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(r)}</option>`).join('');
       $('taskRequirement').innerHTML=[...new Set([...REQUIREMENTS,...requirements])].sort((a,b)=>a.localeCompare(b,'nl',{numeric:true})).map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(r)}</option>`).join('');
-      const owners=[...new Set(tasks.map(t=>t.assignee.trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl'));
+      const owners=[...new Set(tasks.flatMap(t=>t.assignees).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl'));
+      const suggestions=[...new Set([...owners,...onlineUsers.map(user=>user.name)])].sort((a,b)=>a.localeCompare(b,'nl'));
       $('assigneeFilter').innerHTML='<option value="">Alle teamleden</option><option value="__unassigned">Niet toegewezen</option>'+owners.map(o=>`<option value="${escapeHTML(o)}">${escapeHTML(o)}</option>`).join('');
-      $('assigneeSuggestions').innerHTML=owners.map(o=>`<option value="${escapeHTML(o)}"></option>`).join('');
+      $('assigneeSuggestions').innerHTML=suggestions.map(o=>`<option value="${escapeHTML(o)}"></option>`).join('');
       if([...$('requirementFilter').options].some(o=>o.value===oldReq))$('requirementFilter').value=oldReq;
       if([...$('assigneeFilter').options].some(o=>o.value===oldOwner))$('assigneeFilter').value=oldOwner;
+    }
+    function renderTeamInsights(){
+      const active=getActiveTasks();
+      $('onlineCount').textContent=onlineUsers.length?`${onlineUsers.length} ${onlineUsers.length===1?'teamlid':'teamleden'}`:'Niemand online';
+      $('onlineMembers').innerHTML=onlineUsers.length?onlineUsers.map(user=>`<span class="online-member" title="Ingelogd en board open"><span class="online-avatar">${escapeHTML(ownerInitial(user.name))}</span><span>${escapeHTML(user.name)}</span><span class="online-dot" aria-label="online"></span></span>`).join(''):'<span class="team-empty">Niemand is momenteel ingelogd met het board open.</span>';
+      const members=[...new Set(active.flatMap(task=>task.assignees))].sort((a,b)=>a.localeCompare(b,'nl'));
+      $('memberProgress').innerHTML=members.length?members.map(name=>{
+        const assigned=active.filter(task=>task.assignees.includes(name));
+        const completed=assigned.filter(task=>task.status==='Afgerond').length;
+        const percent=assigned.length?Math.round(completed/assigned.length*100):0;
+        return `<div class="member-progress-row"><span class="member-progress-name" title="${escapeHTML(name)}">${escapeHTML(name)}</span><div class="member-progress-track" role="progressbar" aria-label="Voortgang ${escapeHTML(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><div class="member-progress-fill" style="width:${percent}%"></div></div><span class="member-progress-value">${percent}% · ${completed}/${assigned.length}</span></div>`;
+      }).join(''):'<span class="team-empty">Wijs taken toe om voortgang te zien.</span>';
     }
     function render(){
       const active=getActiveTasks();
       const counts={"To-Do":active.filter(t=>t.status==='To-Do').length,"In behandeling":active.filter(t=>t.status==='In behandeling').length,"Afgerond":active.filter(t=>t.status==='Afgerond').length};
-      $('totalCount').textContent=active.length;$('doingCount').textContent=counts['In behandeling'];$('doneCount').textContent=counts['Afgerond'];$('unassignedCount').textContent=active.filter(t=>!t.assignee.trim()).length;
+      $('totalCount').textContent=active.length;$('doingCount').textContent=counts['In behandeling'];$('doneCount').textContent=counts['Afgerond'];$('unassignedCount').textContent=active.filter(t=>!t.assignees.length).length;
       const pct=active.length?Math.round(counts['Afgerond']/active.length*100):0;$('progressFill').style.width=pct+'%';$('progressCopy').textContent=`${pct}% afgerond`;$('progressTrack').setAttribute('aria-valuenow',pct);
       const filters=getFilters();let visible=0;
       for(const status of STATUS_ORDER){
@@ -615,6 +698,7 @@
       $('archivedSection').classList.toggle('hidden',!$('showArchived').checked);
       $('archivedCount').textContent=`${archives.length} taken`;
       $('archivedList').innerHTML=archives.length?archives.map(t=>`<div class="archived-card">${cardHTML(t)}</div>`).join(''):'<div class="empty-column">Geen gearchiveerde taken gevonden.</div>';
+      renderTeamInsights();
       bindCards();
     }
     function bindCards(){
@@ -627,7 +711,8 @@
     }
     async function persistTask(task){
       if(!syncMode){persistLocal();return;}
-      const row={id:task.id,requirement:task.requirement,task_code:task.taskCode,description:task.description,status:task.status,assignee:task.assignee,sort_order:task.sortOrder,archived:task.archived};
+      const assignees=parseAssignees(task.assignees??task.assignee);
+      const row={id:task.id,requirement:task.requirement,task_code:task.taskCode,description:task.description,status:task.status,assignee:assignees.join(', '),assignees,sort_order:task.sortOrder,archived:task.archived};
       const {error}=await supabaseClient.from('tasks').upsert(row,{onConflict:'id'});
       if(error)throw error;
     }
@@ -651,7 +736,7 @@
       const submitButton=$('taskForm').querySelector('button[type="submit"]');
       if(submitButton.disabled)return;
       const idVal=$('taskId').value;const isNew=idVal==='';const id=isNew?Math.max(0,...tasks.map(t=>t.id))+1:Number(idVal);
-      const previous=tasks.find(t=>t.id===id);const task=normalizeTask({id,requirement:$('taskRequirement').value,taskCode:$('taskCode').value.trim(),description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignee:$('taskAssignee').value.trim(),sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
+      const previous=tasks.find(t=>t.id===id);const task=normalizeTask({id,requirement:$('taskRequirement').value,taskCode:$('taskCode').value.trim(),description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignees:parseAssignees($('taskAssignee').value),sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
       if(!task.taskCode||!task.description){showToast('Vul zowel het taaklabel als de omschrijving in.',true);return;}
       submitButton.disabled=true;submitButton.textContent='Opslaan…';
       try{
@@ -675,8 +760,8 @@
     }
     function openTask(id){
       const t=id===null?null:tasks.find(x=>x.id===id);if(id!==null&&!t)return;activeTaskId=id;
-      $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of eigenaar bij.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
-      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||'Requirement 1';$('taskCode').value=t?.taskCode||'Taak 1';$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||'To-Do';$('taskAssignee').value=t?.assignee||'';
+      $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of teamleden bij.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
+      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||'Requirement 1';$('taskCode').value=t?.taskCode||'Taak 1';$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||'To-Do';$('taskAssignee').value=t?.assignees.join(', ')||'';
       $('archiveBtn').textContent=t?(t.archived?'Herstellen uit archief':'Archiveren'):'Annuleren';$('archiveBtn').classList.toggle('danger',!t||!t.archived);$('archiveBtn').disabled=false;
       if(t&&t.archived){$('taskStatus').disabled=true;}else{$('taskStatus').disabled=false;}
       $('taskDialog').showModal();
@@ -699,7 +784,7 @@
     function downloadBlob(content,filename,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
     function exportCSV(){
       const headers=['Nr','Requirement','Taak','Omschrijving','Status','Toegewezen aan','Gearchiveerd'];
-      const rows=[headers,...sorted(tasks).map(t=>[t.id,t.requirement,t.taskCode,t.description,t.status,t.assignee,t.archived?'Ja':'Nee'])];
+      const rows=[headers,...sorted(tasks).map(t=>[t.id,t.requirement,t.taskCode,t.description,t.status,t.assignees.join(', '),t.archived?'Ja':'Nee'])];
       const csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');
       downloadBlob('\ufeff'+csv,'kanban-schoolwebsite-'+new Date().toISOString().slice(0,10)+'.csv','text/csv;charset=utf-8');showToast('CSV gedownload.');
     }
@@ -715,7 +800,7 @@
           // Upsert one by one so any rejected row is clearly reported; existing non-imported rows remain untouched.
           for(const task of clean)await persistTask(task);
           const {data,error}=await supabaseClient.from('tasks').select('*').order('sort_order',{ascending:true});if(error)throw error;
-          tasks=data.map(row=>normalizeTask({id:row.id,requirement:row.requirement,taskCode:row.task_code,description:row.description,status:row.status,assignee:row.assignee,sortOrder:row.sort_order,archived:row.archived}));
+          tasks=data.map(row=>normalizeTask(row));
         }else{
           tasks=merged;
           try{persistLocal(tasks);}catch(storageErr){fillFilterOptions();render();showToast(storageErr.message||storageErrorMessage(storageErr),true);return;}
@@ -727,13 +812,68 @@
     async function loadRemoteTasks(){
       const {data,error}=await supabaseClient.from('tasks').select('*').order('sort_order',{ascending:true});
       if(error)throw error;
-      tasks=(data||[]).map(row=>normalizeTask({id:row.id,requirement:row.requirement,taskCode:row.task_code,description:row.description,status:row.status,assignee:row.assignee,sortOrder:row.sort_order,archived:row.archived}));
+      tasks=(data||[]).map(row=>normalizeTask(row));
       fillFilterOptions();render();
     }
     function setRemoteStatus(user){
       $('connectionPill').classList.add('online');$('connectionText').textContent=user?`Live · ${user.email||'ingelogd'}`:'Live synchronisatie';
       $('modeNotice').innerHTML='<span class="notice-icon">✓</span><div><strong>Gedeelde live-opslag actief.</strong> Wijzigingen worden in de database opgeslagen en verschijnen ook bij ingelogde teamleden. Maak alsnog af en toe een JSON-back-up.</div>';
       $('signOutBtn').classList.toggle('hidden',!user);
+    }
+    function updateOnlineUsers(){
+      const users=new Map();
+      const state=presenceChannel?.presenceState()||{};
+      Object.values(state).flat().forEach(presence=>{
+        if(presence.user_id&&presence.name)users.set(presence.user_id,{id:presence.user_id,name:presence.name});
+      });
+      onlineUsers=[...users.values()].sort((a,b)=>a.name.localeCompare(b.name,'nl'));
+      fillFilterOptions();renderTeamInsights();
+    }
+    function closeRealtimeChannel(){
+      const channel=presenceChannel;
+      presenceChannel=null;
+      onlineUsers=[];
+      fillFilterOptions();renderTeamInsights();
+      if(channel&&supabaseClient)supabaseClient.removeChannel(channel);
+    }
+    function connectRealtimeChannel(){
+      if(presenceChannel||!currentUser)return;
+      const channel=supabaseClient.channel(REALTIME_CHANNEL,{
+        config:{private:true,presence:{key:currentUser.id}}
+      });
+      presenceChannel=channel;
+      channel
+        .on('presence',{event:'sync'},updateOnlineUsers)
+        .on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{loadRemoteTasks().catch(e=>showToast('Live-update mislukt: '+e.message,true));})
+        .subscribe(async status=>{
+          if(status==='SUBSCRIBED'){
+            try{
+              const trackStatus=await channel.track({user_id:currentUser.id,name:memberDisplayName(currentUser)});
+              if(trackStatus!=='ok')throw new Error(`Realtime-status: ${trackStatus}`);
+            }catch(err){showToast('Online-status niet beschikbaar: '+(err.message||'controleer de realtime-toegang'),true);}
+          }else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'){
+            showToast('Realtimeverbinding mislukt. Voer de nieuwste supabase_setup.sql uit en vernieuw de pagina.',true);
+          }
+        });
+    }
+    function applyTheme(theme,save=true){
+      const dark=theme==='dark';
+      document.documentElement.dataset.theme=dark?'dark':'light';
+      $('themeToggle').textContent=dark?'☀️ Licht':'🌙 Donker';
+      $('themeToggle').setAttribute('aria-pressed',String(dark));
+      $('themeToggle').title=dark?'Schakel lichte modus in':'Schakel donkere modus in';
+      document.querySelector('meta[name="theme-color"]').content=dark?'#151c28':'#f5f7fb';
+      if(save){
+        try{window.localStorage.setItem(THEME_KEY,dark?'dark':'light');}
+        catch(error){console.warn('Kan de thema-voorkeur niet opslaan:',error);}
+      }
+    }
+    function initializeTheme(){
+      let theme='';
+      try{theme=window.localStorage.getItem(THEME_KEY)||'';}
+      catch(error){console.warn('Kan de thema-voorkeur niet lezen:',error);}
+      if(theme!=='dark'&&theme!=='light')theme=window.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light';
+      applyTheme(theme,false);
     }
     async function initializeSync(){
       syncMode=true;
@@ -745,17 +885,18 @@
       else{$('authGate').hidden=false;}
       supabaseClient.auth.onAuthStateChange((_event,session)=>{
         if(session&&(!currentUser||currentUser.id!==session.user.id)){currentUser=session.user;setTimeout(()=>afterLogin().catch(e=>showToast('Laden mislukt: '+e.message,true)),0);}
-        else if(!session&&currentUser){currentUser=null;tasks=[];render();$('authGate').hidden=false;$('signOutBtn').classList.add('hidden');}
+        else if(!session&&currentUser){closeRealtimeChannel();currentUser=null;tasks=[];render();$('authGate').hidden=false;$('signOutBtn').classList.add('hidden');}
       });
     }
     async function afterLogin(){
       $('authGate').hidden=true;setRemoteStatus(currentUser);$('authError').textContent='';
       try{await loadRemoteTasks();}catch(err){$('authGate').hidden=false;$('authError').textContent='Kan het bord niet laden. Controleer de database-instellingen. '+err.message;return;}
-      if(!supabaseClient._kanbanChannel){supabaseClient._kanbanChannel=supabaseClient.channel('schoolwebsite-kanban-live').on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{loadRemoteTasks().catch(e=>showToast('Live-update mislukt: '+e.message,true));}).subscribe();}
+      connectRealtimeChannel();
     }
 
     // Event wiring
     $('searchInput').addEventListener('input',render);$('requirementFilter').addEventListener('change',render);$('assigneeFilter').addEventListener('change',render);$('showArchived').addEventListener('change',render);
+    $('themeToggle').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
     $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('csvBtn').addEventListener('click',exportCSV);$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
     // CSV export is available via Ctrl/Cmd+Shift+E to keep the top bar uncluttered.
@@ -774,6 +915,7 @@
     $('signOutBtn').addEventListener('click',async()=>{if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)showToast(error.message,true);}});
 
     async function init(){
+      initializeTheme();
       let saved=null;let localReadError=null;
       try{const raw=window.localStorage.getItem(STORAGE_KEY);saved=raw?JSON.parse(raw):null;storageAvailable=true;}
       catch(err){localReadError=err;storageAvailable=false;}
