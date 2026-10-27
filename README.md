@@ -12,7 +12,7 @@ Een HTML-kanbanbord met de 39 bestaande taken uit de oorspronkelijke Excel.
 6. Kies **Importeren** om een JSON-back-up te herstellen. Bestaande taken die niet in de back-up voorkomen worden niet automatisch verwijderd.
 7. Klik op **CSV** om een CSV-bestand voor Excel te exporteren.
 
-**Belangrijk:** zonder gedeelde database zijn wijzigingen alleen zichtbaar in de browser waarin ze zijn gemaakt. Voor directe synchronisatie tussen teamleden volg je de optionele Supabase-configuratie hieronder.
+**Belangrijk:** zonder Supabase-project zijn wijzigingen alleen zichtbaar in de browser waarin ze zijn gemaakt. Om het bord met het team te delen, moet je eerst de onderstaande Supabase-configuratie uitvoeren.
 
 ## Publiceren met GitHub Pages
 
@@ -23,16 +23,19 @@ Een HTML-kanbanbord met de 39 bestaande taken uit de oorspronkelijke Excel.
 
 GitHub Pages-websites zijn publiek toegankelijk op het internet. Zet dus geen wachtwoorden of andere gevoelige gegevens in de websitebestanden.
 
-## Optioneel: gedeelde live-synchronisatie
+## Gedeelde live-synchronisatie instellen
 
-1. Maak een project op [Supabase](https://supabase.com/).
-2. Voer de volledige inhoud van `supabase_setup.sql` uit in **SQL Editor**.
-3. Maak teamaccounts aan via Supabase Authentication; laat openbare registratie uitgeschakeld.
-4. Kopieer de **Project URL** en de **publishable/anon key** uit Project Settings → API.
-5. Open `index.html` en vul die in bij `const SUPABASE_CONFIG = { url: "", anonKey: "" };`.
-6. Upload de aangepaste HTML opnieuw naar GitHub Pages en log in via de gepubliceerde site.
+1. Maak een project aan op [Supabase](https://supabase.com/) en wacht tot de database klaar is.
+2. Voer de volledige inhoud van `supabase_setup.sql` uit in **SQL Editor**. Dit maakt de beveiligde tabel aan, schakelt live-updates in en voegt de 39 oorspronkelijke taken toe zonder bestaande taken te overschrijven.
+3. Maak teamaccounts aan via **Authentication → Users**. Houd openbare registraties uitgeschakeld; alleen accounts die je aanmaakt of uitnodigt kunnen inloggen.
+4. Kopieer de **Project URL** en de **publishable key** (of legacy **anon key**) uit **Project Settings → API**.
+5. Vul deze waarden in bij `SUPABASE_CONFIG` bovenaan het script in `index.html`. De huidige projectconfiguratie is al ingevuld.
+6. Publiceer de aangepaste `index.html` opnieuw via GitHub Pages. Open daarna de gepubliceerde HTTPS-link en log in met een teamaccount. Teamleden gebruiken dezelfde link en hun eigen account.
+7. Als je al taken in de lokale browser hebt aangepast, download daar eerst via **Back-up** een JSON-bestand. Log in op het gedeelde bord en gebruik **Importeren** om die taken toe te voegen of bij te werken. Taken die niet in de back-up staan blijven behouden.
 
-Gebruik nooit een `service_role`- of secret key in de browsercode. De meegeleverde SQL stelt Row Level Security in zodat alleen ingelogde teamaccounts taken kunnen lezen en aanpassen.
+Na deze configuratie worden wijzigingen in Supabase opgeslagen en via realtime-updates aan ingelogde teamleden getoond. Tot de configuratie is afgerond, blijft het bord lokaal werken en worden wijzigingen niet met anderen gedeeld.
+
+Gebruik nooit een `service_role`- of secret key in de browsercode. De publishable/anon key is bedoeld voor gebruik in de browser; Row Level Security in de meegeleverde SQL zorgt ervoor dat alleen ingelogde teamaccounts taken kunnen lezen en aanpassen.
 
 ## Inbegrepen functies
 
@@ -41,7 +44,7 @@ Gebruik nooit een `service_role`- of secret key in de browsercode. De meegelever
 - Zoeken en filters op requirement en teamlid.
 - Taken maken, bewerken, verslepen, archiveren en herstellen.
 - JSON-back-up/import en CSV-export.
-- Optionele Supabase-login, gedeelde database-opslag en live-updates.
+- Supabase-login, gedeelde database-opslag en live-updates (na configuratie).
 
 ## Beginstand
 
