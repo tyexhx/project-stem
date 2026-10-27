@@ -39,7 +39,7 @@ create policy "Signed-in team can add tasks" on public.tasks for insert to authe
 create policy "Signed-in team can update tasks" on public.tasks for update to authenticated using (true) with check (true);
 
 -- Private Realtime access: only authenticated team accounts can see online presence.
-alter table realtime.messages enable row level security;
+-- Supabase manages realtime.messages and already enables RLS; do not alter that table.
 drop policy if exists "Signed-in team can view kanban presence" on realtime.messages;
 drop policy if exists "Signed-in team can publish kanban presence" on realtime.messages;
 create policy "Signed-in team can view kanban presence" on realtime.messages

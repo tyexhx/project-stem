@@ -26,7 +26,7 @@ GitHub Pages-websites zijn publiek toegankelijk op het internet. Zet dus geen wa
 ## Gedeelde live-synchronisatie instellen
 
 1. Maak een project aan op [Supabase](https://supabase.com/) en wacht tot de database klaar is.
-2. Voer de volledige inhoud van `supabase_setup.sql` uit in **SQL Editor**. Dit maakt de beveiligde tabel aan, schakelt live-updates in en voegt de 39 oorspronkelijke taken toe zonder bestaande taken te overschrijven. Als je de eerdere versie al hebt uitgevoerd, voer het bijgewerkte script opnieuw uit om de kolom voor meerdere teamleden en beveiligde online-aanwezigheid toe te voegen. Bestaande taken blijven behouden.
+2. Voer de volledige inhoud van `supabase_setup.sql` uit in **SQL Editor**. Dit maakt de beveiligde tabel aan, schakelt live-updates in en voegt de 39 oorspronkelijke taken toe zonder bestaande taken te overschrijven. Als je de eerdere versie al hebt uitgevoerd, voer het bijgewerkte script opnieuw uit om de kolom voor meerdere teamleden en beveiligde online-aanwezigheid toe te voegen. Bestaande taken blijven behouden. De RLS op `realtime.messages` wordt door Supabase beheerd en staat al aan; het script maakt alleen policies aan en probeert die tabel niet te wijzigen.
 3. Maak teamaccounts aan via **Authentication → Users**. Houd openbare registraties uitgeschakeld; alleen accounts die je aanmaakt of uitnodigt kunnen inloggen.
 4. Kopieer de **Project URL** en de **publishable key** (of legacy **anon key**) uit **Project Settings → API**.
 5. Vul deze waarden in bij `SUPABASE_CONFIG` bovenaan het script in `index.html`. De huidige projectconfiguratie is al ingevuld.
