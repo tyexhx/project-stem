@@ -47,7 +47,7 @@ Gebruik nooit een `service_role`- of secret key in de browsercode. De publishabl
 - Genummerde onderdelen en taaknummers in de vorm `1.1`, met zoeken en filters op onderdeel en teamlid.
 - Taken maken, bewerken, verslepen, met pijltjes tussen statussen verplaatsen, naar de prullenmand verplaatsen, terugzetten en permanent verwijderen.
 - Meerdere teamleden aan één taak toewijzen en per teamlid het percentage van alle actieve taken volgen dat is afgerond.
-- Warm kampvuurthema, donker kampvuurthema en een extra donker middernachtthema met opgeslagen voorkeur, plus een realtime-lijst van ingelogde teamleden.
+- Latte-, kampvuur- en nachtblauwthema met opgeslagen voorkeur, plus een realtime-lijst van ingelogde teamleden.
 - JSON-back-up/import en CSV-export.
 - Supabase-login, gedeelde database-opslag en live-updates (na configuratie).
 
