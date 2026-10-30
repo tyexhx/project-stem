@@ -54,6 +54,15 @@
     .online-member{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--ink)}
     .online-avatar{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e6f6ee;color:#23865d;font-size:9px;font-weight:800}
     .online-dot{width:7px;height:7px;border-radius:50%;background:#2ca675}
+    .assignee-options{display:grid;gap:7px;max-height:180px;overflow:auto;padding:2px}
+    .assignee-option{display:flex;align-items:center;gap:9px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface);cursor:pointer}
+    .assignee-option input{accent-color:var(--purple)}
+    .assignee-option-name{font-size:12px;font-weight:700}
+    .assignee-empty{padding:10px;border:1px dashed var(--line);border-radius:9px;color:var(--muted);font-size:11px}
+    .assignee-fieldset{min-width:0;margin:0;padding:0;border:0}
+    .assignee-fieldset legend{margin-bottom:7px;font-size:12px;font-weight:750;color:var(--ink)}
+    .field[hidden]{display:none}
+    .profile-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}
     .team-empty{font-size:11px;color:var(--muted)}
     .member-progress-list{display:grid;gap:9px}
     .member-progress-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(90px,2fr) auto;align-items:center;gap:10px;font-size:11px}
@@ -251,6 +260,7 @@
         <button class="btn" id="csvBtn" type="button" title="Download een CSV voor Excel"><span class="icon">▤</span> CSV</button>
         <input id="importFile" class="hidden" type="file" accept=".json,application/json">
         <button class="btn primary" id="newTaskBtn" type="button"><span class="icon">＋</span> Nieuwe taak</button>
+        <button class="btn small hidden" id="profileBtn" type="button">Mijn profiel</button>
         <button class="btn small hidden" id="signOutBtn" type="button">Uitloggen</button>
       </div>
     </header>
@@ -319,9 +329,18 @@
         <div class="field"><label for="taskCode">Taaknummer</label><input id="taskCode" readonly required maxlength="60" placeholder="Bijv. 1.1"><div class="hint">Automatisch opgebouwd uit het onderdeelnummer en taaknummer.</div></div>
         <div class="field full"><label for="taskDescription">Omschrijving</label><textarea id="taskDescription" required maxlength="2000" placeholder="Wat moet er precies gebeuren?"></textarea><div class="hint">Verplicht veld. Beschrijf wat er precies moet gebeuren.</div></div>
         <div class="field"><label for="taskStatus">Status</label><select id="taskStatus"><option value="To-Do">Te doen</option><option value="In behandeling">In behandeling</option><option value="Afgerond">Afgerond</option></select></div>
-        <div class="field full"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="500" list="assigneeSuggestions" placeholder="Teamleden, gescheiden door komma's (optioneel)"><datalist id="assigneeSuggestions"></datalist><div class="hint">Je kunt meerdere teamleden invullen, gescheiden door komma's.</div></div>
+        <div class="field full" id="taskAssigneeAccountsField" hidden><fieldset class="assignee-fieldset"><legend>Toegewezen aan</legend><div class="assignee-options" id="taskAssigneeOptions"></div></fieldset></div>
+        <div class="field full" id="taskAssigneeLegacyField"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="500" list="assigneeSuggestions" placeholder="Teamleden, gescheiden door komma's (optioneel)"><datalist id="assigneeSuggestions"></datalist><div class="hint">Je kunt meerdere teamleden invullen, gescheiden door komma's.</div></div>
       </div>
       <div class="dialog-actions"><button id="archiveBtn" class="btn danger" type="button">Verplaatsen naar prullenmand</button><div class="right-actions"><button id="cancelBtn" class="btn" type="button">Annuleren</button><button class="btn primary" type="submit">Opslaan</button></div></div>
+    </form>
+  </dialog>
+
+  <dialog id="profileDialog" aria-labelledby="profileDialogTitle">
+    <div class="dialog-head"><div><h2 id="profileDialogTitle">Mijn profiel</h2><p>Kies de naam die teamleden op het bord zien.</p></div><button class="close-btn" id="closeProfileDialogBtn" type="button" aria-label="Venster sluiten">×</button></div>
+    <form class="dialog-form" id="profileForm">
+      <div class="field"><label for="displayNameInput">Weergavenaam</label><input id="displayNameInput" maxlength="80" autocomplete="name" required><div class="hint">Andere teamleden zien deze naam bij je taken.</div></div>
+      <div class="profile-actions"><button class="btn" id="cancelProfileBtn" type="button">Annuleren</button><button class="btn primary" id="saveProfileBtn" type="submit">Opslaan</button></div>
     </form>
   </dialog>
 
@@ -764,6 +783,7 @@
     let supabaseClient = null;
     let syncMode = false;
     let currentUser = null;
+    let teamMembers = [];
     let onlineUsers = [];
     let activeTaskId = null;
     let toastTimer = null;
@@ -798,6 +818,9 @@
       const entries=Array.isArray(value)?value:String(value||'').split(/[;,]/);
       return [...new Set(entries.map(name=>String(name).trim()).filter(Boolean))];
     }
+    function parseAssigneeIds(value){
+      return [...new Set((Array.isArray(value)?value:[]).map(String).filter(id=>/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(id)))];
+    }
     function getNextTaskCode(requirement, excludeId=null){
       const number=requirementNumber(requirement);
       if(!number)return `${REQUIREMENTS.length+1}.1`;
@@ -831,10 +854,14 @@
         taskCode: String(t.taskCode ?? t.task_code ?? "Taak 1"),
         description: String(t.description || ""),
         status: STATUS_ORDER.includes(rawStatus) ? rawStatus : (rawStatus === "Te doen" ? "To-Do" : "To-Do"),
-        assignee: assignees.join(', '), assignees,
+        assignee: assignees.join(', '), assignees, assigneeIds:parseAssigneeIds(t.assignee_ids??t.assigneeIds),
         sortOrder: Number.isFinite(Number(t.sortOrder ?? t.sort_order)) ? Number(t.sortOrder ?? t.sort_order) : (Number(t.id)||i+1),
         archived: Boolean(t.archived)
       };
+    }
+    function taskAssigneeNames(task){
+      const names=task.assigneeIds.map(id=>teamMembers.find(member=>member.user_id===id)?.display_name||'Onbekend teamlid');
+      return [...new Set([...names,...task.assignees])];
     }
     function getActiveTasks(){return tasks.filter(t=>!t.archived);}
     function persistLocal(taskList=tasks){
@@ -868,24 +895,26 @@
     function ownerInitial(name){const words=String(name||"").trim().split(/\s+/).filter(Boolean);return words.length>1?(words[0][0]+words[words.length-1][0]).toUpperCase():(words[0]||"?").slice(0,2).toUpperCase();}
     function memberDisplayName(user){
       const metadata=user?.user_metadata||{};
-      return String(metadata.full_name||metadata.name||user?.email?.split('@')[0]||'Teamlid').trim();
+      return String(teamMembers.find(member=>member.user_id===user?.id)?.display_name||metadata.display_name||metadata.full_name||metadata.name||user?.email?.split('@')[0]||'Teamlid').trim();
     }
     function getFilters(){return {q:$('searchInput').value.trim().toLocaleLowerCase('nl'),req:$('requirementFilter').value,owner:$('assigneeFilter').value};}
     function matches(t, filters){
+      const assigneeNames=taskAssigneeNames(t);
       if(filters.req && t.requirement!==filters.req)return false;
-      if(filters.owner==='__unassigned' && t.assignees.length)return false;
-      if(filters.owner && filters.owner!=='__unassigned' && !t.assignees.includes(filters.owner))return false;
-      if(filters.q){const hay=[t.id,t.requirement,t.taskCode,t.description,...t.assignees].join(' ').toLocaleLowerCase('nl');if(!hay.includes(filters.q))return false;}
+      if(filters.owner==='__unassigned' && assigneeNames.length)return false;
+      if(filters.owner && filters.owner!=='__unassigned' && !assigneeNames.includes(filters.owner))return false;
+      if(filters.q){const hay=[t.id,t.requirement,t.taskCode,t.description,...assigneeNames].join(' ').toLocaleLowerCase('nl');if(!hay.includes(filters.q))return false;}
       return true;
     }
     function cardHTML(t, includeMoveButtons=true){
-      const owner=t.assignees.join(', ');
+      const assigneeNames=taskAssigneeNames(t);
+      const owner=assigneeNames.join(', ');
       const currentStatusIndex=STATUS_ORDER.indexOf(t.status);
       const moveButtons=includeMoveButtons?`<div class="task-card-footer-end"><span class="edit-hint">Bewerken ↗</span>${currentStatusIndex>0?`<button class="task-move-button" type="button" data-move-status="${escapeHTML(STATUS_ORDER[currentStatusIndex-1])}" aria-label="Verplaats taak ${escapeHTML(t.taskCode)} naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex-1]])}" title="Verplaats naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex-1]])}">←</button>`:''}${currentStatusIndex<STATUS_ORDER.length-1?`<button class="task-move-button" type="button" data-move-status="${escapeHTML(STATUS_ORDER[currentStatusIndex+1])}" aria-label="Verplaats taak ${escapeHTML(t.taskCode)} naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex+1]])}" title="Verplaats naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex+1]])}">→</button>`:''}</div>`:'<span class="edit-hint">Bewerken ↗</span>';
       return `<article class="task-card" draggable="true" tabindex="0" role="group" aria-label="Taak ${t.id}: ${escapeHTML(t.description)}. Klik om te bewerken." data-task-id="${t.id}">
         <div class="card-top"><span class="task-id">#${t.id}</span><span class="req-tag">${escapeHTML(requirementLabel(t.requirement))}</span></div>
         <span class="task-code">${escapeHTML(t.taskCode)}</span><h3>${escapeHTML(t.description)}</h3>
-        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(t.assignees[0])):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div>${moveButtons}</div>
+        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(assigneeNames[0])):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div>${moveButtons}</div>
       </article>`;
     }
     function fillFilterOptions(){
@@ -894,7 +923,7 @@
       const requirements=[...REQUIREMENTS.filter(r=>tasks.some(t=>t.requirement===r)),...extras];
       $('requirementFilter').innerHTML='<option value="">Alle onderdelen</option>'+requirements.map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(requirementLabel(r))}</option>`).join('');
       $('taskRequirement').innerHTML=[...REQUIREMENTS,...extras].map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(requirementLabel(r))}</option>`).join('');
-      const owners=[...new Set(tasks.flatMap(t=>t.assignees).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl'));
+      const owners=[...new Set([...teamMembers.map(member=>member.display_name),...tasks.flatMap(taskAssigneeNames)].filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl'));
       const suggestions=[...new Set([...owners,...onlineUsers.map(user=>user.name)])].sort((a,b)=>a.localeCompare(b,'nl'));
       $('assigneeFilter').innerHTML='<option value="">Alle teamleden</option><option value="__unassigned">Niet toegewezen</option>'+owners.map(o=>`<option value="${escapeHTML(o)}">${escapeHTML(o)}</option>`).join('');
       $('assigneeSuggestions').innerHTML=suggestions.map(o=>`<option value="${escapeHTML(o)}"></option>`).join('');
@@ -905,9 +934,9 @@
       const active=getActiveTasks();
       $('onlineCount').textContent=onlineUsers.length?`${onlineUsers.length} ${onlineUsers.length===1?'teamlid':'teamleden'}`:'Niemand online';
       $('onlineMembers').innerHTML=onlineUsers.length?onlineUsers.map(user=>`<span class="online-member" title="Ingelogd en board open"><span class="online-avatar">${escapeHTML(ownerInitial(user.name))}</span><span>${escapeHTML(user.name)}</span><span class="online-dot" aria-label="online"></span></span>`).join(''):'<span class="team-empty">Niemand is momenteel ingelogd met het board open.</span>';
-      const members=[...new Set(active.flatMap(task=>task.assignees))].sort((a,b)=>a.localeCompare(b,'nl'));
+      const members=[...new Set(active.flatMap(taskAssigneeNames))].sort((a,b)=>a.localeCompare(b,'nl'));
       $('memberProgress').innerHTML=members.length?members.map(name=>{
-        const assigned=active.filter(task=>task.assignees.includes(name));
+        const assigned=active.filter(task=>taskAssigneeNames(task).includes(name));
         const completed=assigned.filter(task=>task.status==='Afgerond').length;
         const percent=active.length?Math.round(completed/active.length*100):0;
         return `<div class="member-progress-row"><span class="member-progress-name" title="${escapeHTML(name)}">${escapeHTML(name)}</span><div class="member-progress-track" role="progressbar" aria-label="Afgerond aandeel van alle actieve taken voor ${escapeHTML(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><div class="member-progress-fill" style="width:${percent}%"></div></div><span class="member-progress-value">${percent}% · ${completed}/${active.length}</span></div>`;
@@ -916,7 +945,7 @@
     function render(){
       const active=getActiveTasks();
       const counts={"To-Do":active.filter(t=>t.status==='To-Do').length,"In behandeling":active.filter(t=>t.status==='In behandeling').length,"Afgerond":active.filter(t=>t.status==='Afgerond').length};
-      $('totalCount').textContent=active.length;$('doingCount').textContent=counts['In behandeling'];$('doneCount').textContent=counts['Afgerond'];$('unassignedCount').textContent=active.filter(t=>!t.assignees.length).length;
+      $('totalCount').textContent=active.length;$('doingCount').textContent=counts['In behandeling'];$('doneCount').textContent=counts['Afgerond'];$('unassignedCount').textContent=active.filter(t=>!taskAssigneeNames(t).length).length;
       const pct=active.length?Math.round(counts['Afgerond']/active.length*100):0;$('progressFill').style.width=pct+'%';$('progressCopy').textContent=`${pct}% afgerond`;$('progressTrack').setAttribute('aria-valuenow',pct);
       const filters=getFilters();let visible=0;
       for(const status of STATUS_ORDER){
@@ -959,7 +988,7 @@
     async function persistTask(task){
       if(!syncMode){persistLocal();return;}
       const assignees=parseAssignees(task.assignees??task.assignee);
-      const row={id:task.id,requirement:task.requirement,task_code:task.taskCode,description:task.description,status:task.status,assignee:assignees.join(', '),assignees,sort_order:task.sortOrder,archived:task.archived};
+      const row={id:task.id,requirement:task.requirement,task_code:task.taskCode,description:task.description,status:task.status,assignee:assignees.join(', '),assignees,assignee_ids:task.assigneeIds,sort_order:task.sortOrder,archived:task.archived};
       const {error}=await supabaseClient.from('tasks').upsert(row,{onConflict:'id'});
       if(error)throw error;
     }
@@ -985,7 +1014,10 @@
       const idVal=$('taskId').value;const isNew=idVal==='';const id=isNew?Math.max(0,...tasks.map(t=>t.id))+1:Number(idVal);
       const previous=tasks.find(t=>t.id===id);const requirement=$('taskRequirement').value;
       const taskCode=previous?.requirement===requirement?previous.taskCode:getNextTaskCode(requirement,id);
-      const task=normalizeTask({id,requirement,taskCode,description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignees:parseAssignees($('taskAssignee').value),sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
+      const assigneeIds=syncMode?[...document.querySelectorAll('#taskAssigneeOptions input[name="taskAssigneeMember"]:checked')].map(input=>input.value):[];
+      const linkedMemberNames=new Set(teamMembers.map(member=>member.display_name));
+      const assignees=syncMode?(previous?.assignees||[]).filter(name=>!linkedMemberNames.has(name)):parseAssignees($('taskAssignee').value);
+      const task=normalizeTask({id,requirement,taskCode,description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignees,assigneeIds,sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
       if(!task.taskCode||!task.description){showToast('Vul de omschrijving in.',true);return;}
       submitButton.disabled=true;submitButton.textContent='Opslaan…';
       try{
@@ -1010,7 +1042,15 @@
     function openTask(id, newTaskStatus='To-Do', defaults={}){
       const t=id===null?null:tasks.find(x=>x.id===id);if(id!==null&&!t)return;activeTaskId=id;
       $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of teamleden bij, of verplaats de taak naar de prullenmand.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
-      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||defaults.requirement||REQUIREMENTS[0];$('taskCode').value=t?.taskCode||getNextTaskCode($('taskRequirement').value);$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||newTaskStatus;$('taskAssignee').value=t?.assignees.join(', ')||defaults.assignee||'';
+      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||defaults.requirement||REQUIREMENTS[0];$('taskCode').value=t?.taskCode||getNextTaskCode($('taskRequirement').value);$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||newTaskStatus;
+      if(syncMode){
+        const selectedIds=t?.assigneeIds.length?t.assigneeIds:teamMembers.filter(member=>t?.assignees.includes(member.display_name)||member.display_name===defaults.assignee).map(member=>member.user_id);
+        $('taskAssigneeAccountsField').hidden=false;$('taskAssigneeLegacyField').hidden=true;
+        $('taskAssigneeOptions').innerHTML=teamMembers.length?teamMembers.map(member=>`<label class="assignee-option"><input type="checkbox" name="taskAssigneeMember" value="${escapeHTML(member.user_id)}" ${selectedIds.includes(member.user_id)?'checked':''}><span class="assignee-option-name">${escapeHTML(member.display_name)}</span></label>`).join(''):'<div class="assignee-empty">Nog geen teamaccounts gevonden. Voeg accounts toe via Supabase → Authentication → Users.</div>';
+      }else{
+        $('taskAssigneeAccountsField').hidden=true;$('taskAssigneeLegacyField').hidden=false;
+        $('taskAssignee').value=t?taskAssigneeNames(t).join(', '):defaults.assignee||'';
+      }
       $('archiveBtn').textContent=t?(t.archived?'Terugzetten uit prullenmand':'Verplaatsen naar prullenmand'):'Annuleren';$('archiveBtn').classList.toggle('danger',!t||!t.archived);$('archiveBtn').disabled=false;
       if(t&&t.archived){$('taskStatus').disabled=true;}else{$('taskStatus').disabled=false;}
       $('taskDialog').showModal();
@@ -1091,7 +1131,7 @@
     function downloadBlob(content,filename,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
     function exportCSV(){
       const headers=['Nr','Onderdeel','Taaknummer','Omschrijving','Status','Toegewezen aan','Gearchiveerd'];
-      const rows=[headers,...sorted(tasks).map(t=>[t.id,t.requirement,t.taskCode,t.description,t.status,t.assignees.join(', '),t.archived?'Ja':'Nee'])];
+      const rows=[headers,...sorted(tasks).map(t=>[t.id,t.requirement,t.taskCode,t.description,t.status,taskAssigneeNames(t).join(', '),t.archived?'Ja':'Nee'])];
       const csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');
       downloadBlob('\ufeff'+csv,'kanban-schoolwebsite-'+new Date().toISOString().slice(0,10)+'.csv','text/csv;charset=utf-8');showToast('CSV gedownload.');
     }
@@ -1124,16 +1164,55 @@
       migrateTaskCodes(tasks);
       fillFilterOptions();render();
     }
+    async function loadTeamMembers(){
+      const {data,error}=await supabaseClient.from('team_members').select('user_id,display_name').order('display_name');
+      if(error)throw new Error(`Kan teamleden niet laden. Voer de nieuwste supabase_setup.sql uit in Supabase → SQL Editor. ${error.message}`);
+      teamMembers=(data||[]).map(member=>({user_id:String(member.user_id),display_name:String(member.display_name||'').trim()}));
+      if(currentUser&&!teamMembers.some(member=>member.user_id===currentUser.id)){
+        throw new Error('Je teamprofiel ontbreekt. Voer de nieuwste supabase_setup.sql uit in Supabase → SQL Editor.');
+      }
+      updateOnlineUsers();render();
+    }
     function setRemoteStatus(user){
       $('connectionPill').classList.add('online');$('connectionText').textContent=user?`Live · ${user.email||'ingelogd'}`:'Live synchronisatie';
       $('modeNotice').innerHTML='<span class="notice-icon">✓</span><div><strong>Gedeelde live-opslag actief.</strong> Wijzigingen worden in de database opgeslagen en verschijnen ook bij ingelogde teamleden. Maak alsnog af en toe een JSON-back-up.</div>';
       $('signOutBtn').classList.toggle('hidden',!user);
+      $('profileBtn').classList.toggle('hidden',!user);
+    }
+    function openProfile(){
+      const member=teamMembers.find(item=>item.user_id===currentUser?.id);
+      $('displayNameInput').value=member?.display_name||memberDisplayName(currentUser);
+      $('profileDialog').showModal();
+    }
+    async function saveProfile(event){
+      event.preventDefault();
+      const displayName=$('displayNameInput').value.trim();
+      if(!displayName){showToast('Vul een weergavenaam in.',true);return;}
+      const submitButton=$('saveProfileBtn');
+      if(submitButton.disabled)return;
+      submitButton.disabled=true;submitButton.textContent='Opslaan…';
+      try{
+        const {data,error}=await supabaseClient.from('team_members').update({display_name:displayName}).eq('user_id',currentUser.id).select('user_id,display_name').maybeSingle();
+        if(error)throw error;
+        if(!data)throw new Error('Je profiel is niet bijgewerkt. Controleer of je teamprofiel bestaat.');
+        teamMembers=teamMembers.map(member=>member.user_id===currentUser.id?{user_id:String(data.user_id),display_name:String(data.display_name)}:member);
+        fillFilterOptions();render();
+        $('profileDialog').close();
+        showToast('Weergavenaam opgeslagen.');
+        if(presenceChannel){
+          try{
+            const status=await presenceChannel.track({user_id:currentUser.id,name:displayName});
+            if(status!=='ok')showToast('Weergavenaam opgeslagen. De online status wordt pas na opnieuw inloggen bijgewerkt.',true);
+          }catch(error){showToast(`Weergavenaam opgeslagen, maar online status bijwerken is mislukt: ${error.message}`,true);}
+        }
+      }catch(error){showToast('Weergavenaam opslaan mislukt: '+(error.message||'controleer de verbinding'),true);}
+      finally{submitButton.disabled=false;submitButton.textContent='Opslaan';}
     }
     function updateOnlineUsers(){
       const users=new Map();
       const state=presenceChannel?.presenceState()||{};
       Object.values(state).flat().forEach(presence=>{
-        if(presence.user_id&&presence.name)users.set(presence.user_id,{id:presence.user_id,name:presence.name});
+        if(presence.user_id&&presence.name)users.set(presence.user_id,{id:presence.user_id,name:teamMembers.find(member=>member.user_id===presence.user_id)?.display_name||presence.name});
       });
       onlineUsers=[...users.values()].sort((a,b)=>a.name.localeCompare(b.name,'nl'));
       fillFilterOptions();renderTeamInsights();
@@ -1154,6 +1233,7 @@
       channel
         .on('presence',{event:'sync'},updateOnlineUsers)
         .on('postgres_changes',{event:'*',schema:'public',table:'tasks'},()=>{loadRemoteTasks().catch(e=>showToast('Live-update mislukt: '+e.message,true));})
+        .on('postgres_changes',{event:'*',schema:'public',table:'team_members'},()=>{loadTeamMembers().catch(e=>showToast('Teamleden vernieuwen mislukt: '+e.message,true));})
         .subscribe(async status=>{
           if(status==='SUBSCRIBED'){
             try{
@@ -1192,12 +1272,12 @@
       else{$('authGate').hidden=false;}
       supabaseClient.auth.onAuthStateChange((_event,session)=>{
         if(session&&(!currentUser||currentUser.id!==session.user.id)){currentUser=session.user;setTimeout(()=>afterLogin().catch(e=>showToast('Laden mislukt: '+e.message,true)),0);}
-        else if(!session&&currentUser){closeRealtimeChannel();currentUser=null;tasks=[];render();$('authGate').hidden=false;$('signOutBtn').classList.add('hidden');}
+        else if(!session&&currentUser){closeRealtimeChannel();currentUser=null;teamMembers=[];tasks=[];render();$('authGate').hidden=false;$('signOutBtn').classList.add('hidden');$('profileBtn').classList.add('hidden');}
       });
     }
     async function afterLogin(){
       $('authGate').hidden=true;setRemoteStatus(currentUser);$('authError').textContent='';
-      try{await loadRemoteTasks();}catch(err){$('authGate').hidden=false;$('authError').textContent='Kan het bord niet laden. Controleer de database-instellingen. '+err.message;return;}
+      try{await loadTeamMembers();await loadRemoteTasks();}catch(err){$('authGate').hidden=false;$('authError').textContent='Kan het bord niet laden. Controleer de database-instellingen. '+err.message;return;}
       connectRealtimeChannel();
     }
 
@@ -1211,6 +1291,7 @@
     });
     $('themeToggle').addEventListener('change',()=>applyTheme($('themeToggle').value));
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
+    $('profileBtn').addEventListener('click',openProfile);$('profileForm').addEventListener('submit',saveProfile);$('closeProfileDialogBtn').addEventListener('click',()=>$('profileDialog').close());$('cancelProfileBtn').addEventListener('click',()=>$('profileDialog').close());
     $('trashToggle').addEventListener('click',()=>{trashOpen=!trashOpen;render();});
     $('emptyTrashBtn').addEventListener('click',emptyTrash);
     $('archivedList').addEventListener('click',e=>{

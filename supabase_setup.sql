@@ -27,6 +27,118 @@ set assignees = array(
 )
 where cardinality(assignees) = 0 and btrim(assignee) <> '';
 
+create table if not exists public.team_members (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  display_name text not null check (char_length(btrim(display_name)) between 1 and 80),
+  updated_at timestamptz not null default now()
+);
+
+insert into public.team_members (user_id, display_name)
+select
+  id,
+  left(coalesce(
+    nullif(btrim(raw_user_meta_data->>'display_name'), ''),
+    nullif(btrim(raw_user_meta_data->>'full_name'), ''),
+    nullif(split_part(coalesce(email, ''), '@', 1), ''),
+    'Teamlid'
+  ), 80)
+from auth.users
+on conflict (user_id) do nothing;
+
+-- Keep account creation secure; no admin/service-role credential is exposed to the browser.
+create or replace function public.sync_team_member_profile()
+returns trigger
+language plpgsql
+security definer
+set search_path = ''
+as $$
+begin
+  insert into public.team_members (user_id, display_name)
+  values (
+    new.id,
+    left(coalesce(
+      nullif(btrim(new.raw_user_meta_data->>'display_name'), ''),
+      nullif(btrim(new.raw_user_meta_data->>'full_name'), ''),
+      nullif(split_part(coalesce(new.email, ''), '@', 1), ''),
+      'Teamlid'
+    ), 80)
+  )
+  on conflict (user_id) do nothing;
+  return new;
+end;
+$$;
+
+revoke all on function public.sync_team_member_profile() from public, anon, authenticated;
+drop trigger if exists sync_team_member_profile on auth.users;
+create trigger sync_team_member_profile
+  after insert or update of email, raw_user_meta_data on auth.users
+  for each row execute function public.sync_team_member_profile();
+
+alter table public.team_members enable row level security;
+revoke all on table public.team_members from anon, authenticated;
+grant select on table public.team_members to authenticated;
+grant update (display_name) on table public.team_members to authenticated;
+
+drop policy if exists "Signed-in team can read member profiles" on public.team_members;
+drop policy if exists "Members can update own display name" on public.team_members;
+create policy "Signed-in team can read member profiles" on public.team_members
+  for select to authenticated using (true);
+create policy "Members can update own display name" on public.team_members
+  for update to authenticated using (user_id = auth.uid()) with check (user_id = auth.uid());
+
+alter table public.tasks
+  add column if not exists assignee_ids uuid[] not null default '{}'::uuid[];
+
+update public.tasks task
+set assignee_ids = (
+  select coalesce(array_agg(assigned.user_id order by assigned.user_id), '{}'::uuid[])
+  from (
+    select unnest(task.assignee_ids) as user_id
+    union
+    select member.user_id
+    from public.team_members member
+    left join auth.users auth_user on auth_user.id = member.user_id
+    where exists (
+      select 1
+      from unnest(task.assignees) as old_assignee(name)
+      where lower(btrim(old_assignee.name)) in (
+        lower(member.display_name),
+        lower(split_part(coalesce(auth_user.email, ''), '@', 1))
+      )
+    )
+  ) assigned
+)
+where cardinality(task.assignees) > 0;
+
+update public.tasks task
+set assignees = array(
+      select old_assignee.name
+      from unnest(task.assignees) as old_assignee(name)
+      where not exists (
+        select 1
+        from public.team_members member
+        left join auth.users auth_user on auth_user.id = member.user_id
+        where lower(btrim(old_assignee.name)) in (
+          lower(member.display_name),
+          lower(split_part(coalesce(auth_user.email, ''), '@', 1))
+        )
+      )
+    ),
+    assignee = array_to_string(array(
+      select old_assignee.name
+      from unnest(task.assignees) as old_assignee(name)
+      where not exists (
+        select 1
+        from public.team_members member
+        left join auth.users auth_user on auth_user.id = member.user_id
+        where lower(btrim(old_assignee.name)) in (
+          lower(member.display_name),
+          lower(split_part(coalesce(auth_user.email, ''), '@', 1))
+        )
+      )
+    ), ', ')
+where cardinality(task.assignees) > 0;
+
 alter table public.tasks enable row level security;
 revoke all on table public.tasks from anon;
 grant select, insert, update, delete on table public.tasks to authenticated;
@@ -39,6 +151,18 @@ create policy "Signed-in team can read tasks" on public.tasks for select to auth
 create policy "Signed-in team can add tasks" on public.tasks for insert to authenticated with check (true);
 create policy "Signed-in team can update tasks" on public.tasks for update to authenticated using (true) with check (true);
 create policy "Signed-in team can delete tasks" on public.tasks for delete to authenticated using (true);
+
+do $$
+begin
+  if exists (select 1 from pg_publication where pubname = 'supabase_realtime')
+     and not exists (
+       select 1 from pg_publication_tables
+       where pubname = 'supabase_realtime' and schemaname = 'public' and tablename = 'team_members'
+     ) then
+    alter publication supabase_realtime add table public.team_members;
+  end if;
+end;
+$$;
 
 -- Private Realtime access: only authenticated team accounts can see online presence.
 -- Supabase manages realtime.messages and already enables RLS; do not alter that table.
