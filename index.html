@@ -935,14 +935,6 @@
     function bindCards(){
       document.querySelectorAll('[data-task-id]').forEach(card=>{
         card.addEventListener('click',e=>{
-          const trashAction=e.target.closest('[data-trash-action]');
-          if(trashAction){
-            e.stopPropagation();
-            const id=Number(card.dataset.taskId);
-            if(trashAction.dataset.trashAction==='restore')setTaskArchived(id,false);
-            else if(trashAction.dataset.trashAction==='delete')permanentlyDeleteTask(id);
-            return;
-          }
           const moveButton=e.target.closest('[data-move-status]');
           if(moveButton){e.stopPropagation();changeStatus(Number(card.dataset.taskId),moveButton.dataset.moveStatus);return;}
           openTask(Number(card.dataset.taskId));
@@ -1204,6 +1196,15 @@
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
     $('trashToggle').addEventListener('click',()=>{trashOpen=!trashOpen;render();if(trashOpen)$('archivedSection').scrollIntoView({behavior:'smooth',block:'start'});});
     $('emptyTrashBtn').addEventListener('click',emptyTrash);
+    $('archivedList').addEventListener('click',e=>{
+      const trashAction=e.target.closest('[data-trash-action]');
+      if(!trashAction)return;
+      const card=trashAction.closest('.trash-card')?.querySelector('[data-task-id]');
+      if(!card)return;
+      const id=Number(card.dataset.taskId);
+      if(trashAction.dataset.trashAction==='restore')setTaskArchived(id,false);
+      else if(trashAction.dataset.trashAction==='delete')permanentlyDeleteTask(id);
+    });
     $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('csvBtn').addEventListener('click',exportCSV);$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
     // CSV export is available via Ctrl/Cmd+Shift+E to keep the top bar uncluttered.
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();exportCSV();}});
