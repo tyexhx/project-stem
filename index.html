@@ -64,7 +64,7 @@
     @media(max-width:760px){.team-insights{grid-template-columns:1fr}.member-progress-row{grid-template-columns:minmax(75px,1fr) minmax(70px,1.4fr) auto}}
     @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.board{gap:10px}.column{padding:9px}.task-card{padding:11px}.toolbar-end{margin-left:0}}
     @media(max-width:760px){.app{padding-top:18px}.topbar{align-items:flex-start}.top-actions{width:100%}.top-actions .btn{flex:1}.brand{min-width:0}.board{grid-template-columns:1fr;gap:12px}.column{min-height:auto}.task-list{min-height:90px}.empty-column{min-height:95px}.metrics{gap:8px}.metric{padding:10px;gap:9px}.metric-icon{width:33px;height:33px;flex-basis:33px;border-radius:10px}.metric-value{font-size:20px}.toolbar{gap:8px}.search-wrap{max-width:none;flex-basis:100%}.filter{flex:1;min-width:0}.toolbar-end{width:100%;justify-content:space-between}.archived-list{grid-template-columns:1fr}.dialog-head{padding:18px 18px 14px}.dialog-form{padding:17px 18px 19px}}
-    .column{display:flex;flex-direction:column;height:min(82vh,900px);min-height:440px}.task-list{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#aab4c4 transparent}.task-list::-webkit-scrollbar{width:7px}.task-list::-webkit-scrollbar-thumb{background:#aab4c488;border-radius:8px}.task-list::-webkit-scrollbar-track{background:transparent}.task-card-footer-end{display:flex;align-items:center;gap:3px;flex:0 0 auto}.task-move-button{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:7px;background:transparent;color:#9aa4b5;font-size:14px;line-height:1;opacity:.72;transition:background .12s,color .12s,opacity .12s}.task-card:hover .task-move-button,.task-move-button:focus-visible{opacity:1}.task-move-button:hover{background:#f0eeff;color:#6558d3}.column-add-task{display:grid;place-content:center;justify-items:center;gap:3px;flex:0 0 auto;width:100%;min-height:48px;margin-top:9px;padding:8px 14px;border:1px solid transparent;border-radius:10px;background:transparent;color:#788497;font:inherit;font-size:11px;cursor:pointer;transition:border-color .15s,background .15s,color .15s}.column-add-task:hover,.column-add-task:focus-visible{border-color:#ffffff12;background:#ffffff05;color:#aab4c5}.column-add-task.is-empty{flex:0 0 180px;min-height:180px;margin-top:0;border:1px dashed #ffffff12;font-size:12px}.column-add-icon{font-size:19px;line-height:1;color:#788497;transition:color .15s}.column-add-task:hover .column-add-icon,.column-add-task:focus-visible .column-add-icon{color:#aab4c5}
+    .column{display:flex;flex-direction:column;height:min(82vh,900px);min-height:440px}.task-list{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior-y:auto;scrollbar-width:thin;scrollbar-color:#aab4c4 transparent}.task-list::-webkit-scrollbar{width:7px}.task-list::-webkit-scrollbar-thumb{background:#aab4c488;border-radius:8px}.task-list::-webkit-scrollbar-track{background:transparent}.task-card-footer-end{display:flex;align-items:center;gap:3px;flex:0 0 auto}.task-move-button{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:7px;background:transparent;color:#9aa4b5;font-size:14px;line-height:1;opacity:.72;transition:background .12s,color .12s,opacity .12s}.task-card:hover .task-move-button,.task-move-button:focus-visible{opacity:1}.task-move-button:hover{background:#f0eeff;color:#6558d3}.column-add-task{display:grid;place-content:center;justify-items:center;gap:3px;flex:0 0 auto;width:100%;min-height:48px;margin-top:9px;padding:8px 14px;border:1px solid transparent;border-radius:10px;background:transparent;color:#788497;font:inherit;font-size:11px;cursor:pointer;transition:border-color .15s,background .15s,color .15s}.column-add-task:hover,.column-add-task:focus-visible{border-color:#ffffff12;background:#ffffff05;color:#aab4c5}.column-add-task.is-empty{flex:0 0 180px;min-height:180px;margin-top:0;border:1px dashed #ffffff12;font-size:12px}.column-add-icon{font-size:19px;line-height:1;color:#788497;transition:color .15s}.column-add-task:hover .column-add-icon,.column-add-task:focus-visible .column-add-icon{color:#aab4c5}
     :root[data-theme="dark"] .task-move-button:hover{background:#ffffff0d;color:#d0d5e0}
     @media(max-width:760px){.column{height:min(78vh,820px);min-height:440px}.task-list{min-height:0}.column-add-task.is-empty{flex-basis:180px;min-height:180px}}
     @media(max-width:420px){.metrics{grid-template-columns:1fr 1fr}.metric{align-items:flex-start;flex-direction:column;gap:7px}.metric-detail{white-space:normal}.top-actions .btn{padding:9px 8px;font-size:11px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.dialog-actions{flex-wrap:wrap}.dialog-actions>.btn{order:2}.right-actions{margin-left:auto}}
@@ -169,7 +169,59 @@
     .archived-head-actions{display:flex;align-items:center;gap:10px}
     .trash-card{border:0;border-radius:13px;background:transparent;padding:0}
     .empty-trash{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center;background:var(--bg)}
-    @media(max-width:760px){.board-nav{margin-top:-3px}.archived-head{align-items:flex-start}.archived-head-actions{align-items:flex-end;flex-direction:column;gap:5px}}
+    .theme-select{width:160px;flex:0 0 160px}
+    :root[data-theme="midnight"]{
+      color-scheme:dark;
+      --ink:#e8e1d8;--muted:#a79c90;--line:#302923;--surface:#171310;--bg:#0d0b0a;
+      --purple:#c79b70;--purple-soft:#30251c;--blue:#a6b5b4;--blue-soft:#222a29;
+      --green:#a4b28b;--green-soft:#24291f;--amber:#d7ad73;--amber-soft:#302519;
+      --red:#dc9689;--red-soft:#35201d;--shadow:0 12px 32px rgba(0,0,0,.32);--focus:#d6ad7b
+    }
+    :root[data-theme="midnight"] body{background:radial-gradient(ellipse at 50% 0%,#211811 0,transparent 58%),var(--bg)}
+    :root[data-theme="midnight"] .pill,:root[data-theme="midnight"] .btn,:root[data-theme="midnight"] .control,
+    :root[data-theme="midnight"] .column-count,:root[data-theme="midnight"] .task-card,
+    :root[data-theme="midnight"] .metric,:root[data-theme="midnight"] .team-panel,
+    :root[data-theme="midnight"] .archived-section,:root[data-theme="midnight"] .auth-card{
+      color:var(--ink);background:var(--surface);border-color:var(--line)
+    }
+    :root[data-theme="midnight"] .topbar{border-color:var(--line)}
+    :root[data-theme="midnight"] .btn.primary,:root[data-theme="midnight"] .btn.primary:hover{background:var(--purple);border-color:var(--purple);color:#17110c}
+    :root[data-theme="midnight"] .btn.danger{background:var(--red-soft);border-color:var(--line);color:var(--red)}
+    :root[data-theme="midnight"] .btn:hover,:root[data-theme="midnight"] .close-btn:hover{background:#27201a}
+    :root[data-theme="midnight"] .notice{background:#211a14;border-color:#392d21;color:#d9c7ae}
+    :root[data-theme="midnight"] .notice strong{color:#f0dfc8}
+    :root[data-theme="midnight"] .notice.storage-warning{background:#2b1f15;border-color:#58402a;color:#e8c99e}
+    :root[data-theme="midnight"] .notice.storage-warning strong{color:#f3d9b3}
+    :root[data-theme="midnight"] .metric-icon{background:var(--purple-soft);color:var(--purple)}
+    :root[data-theme="midnight"] .metric:nth-child(2) .metric-icon{background:var(--blue-soft);color:var(--blue)}
+    :root[data-theme="midnight"] .metric:nth-child(3) .metric-icon{background:var(--green-soft);color:var(--green)}
+    :root[data-theme="midnight"] .metric:nth-child(4) .metric-icon{background:var(--amber-soft);color:var(--amber)}
+    :root[data-theme="midnight"] .column{background:#12100e}
+    :root[data-theme="midnight"] .column.drag-active{background:#241b14;border-color:var(--purple)}
+    :root[data-theme="midnight"] .task-card:hover{border-color:#65503a}
+    :root[data-theme="midnight"] .card-footer{border-color:var(--line)}
+    :root[data-theme="midnight"] .req-tag{background:var(--purple-soft);color:#e2c29c}
+    :root[data-theme="midnight"] .avatar{background:#302923;color:var(--ink)}
+    :root[data-theme="midnight"] .owner.unassigned .avatar{background:var(--amber-soft);color:var(--amber)}
+    :root[data-theme="midnight"] .field input,:root[data-theme="midnight"] .field select,
+    :root[data-theme="midnight"] .field textarea{background:#100e0c;border-color:var(--line);color:var(--ink)}
+    :root[data-theme="midnight"] .field label{color:var(--ink)}
+    :root[data-theme="midnight"] .column-add-task:hover,:root[data-theme="midnight"] .column-add-task:focus-visible{background:#ffffff08;border-color:#ffffff20;color:var(--ink)}
+    :root[data-theme="midnight"] .column-add-task.is-empty{border-color:#ffffff20}
+    :root[data-theme="midnight"] .online-avatar{background:var(--green-soft);color:var(--green)}
+    :root[data-theme="midnight"] .task-move-button:hover{background:#ffffff0d;color:var(--ink)}
+    :root[data-theme="midnight"] .member-progress-track,:root[data-theme="midnight"] .progress-track{background:#302923}
+    :root[data-theme="midnight"] .progress-fill,:root[data-theme="midnight"] .member-progress-fill{background:linear-gradient(90deg,#c79b70,#a4b28b)}
+    :root[data-theme="midnight"] .empty-column{background:#171310;border-color:#40352b}
+    :root[data-theme="midnight"] dialog{background:var(--surface);color:var(--ink)}
+    :root[data-theme="midnight"] dialog::backdrop{background:#080706e6}
+    :root[data-theme="midnight"] .close-btn{background:var(--surface);border-color:var(--line);color:var(--muted)}
+    :root[data-theme="midnight"] .toast{background:#211a14;color:var(--ink);border-color:var(--line)}
+    :root[data-theme="midnight"] .toast.error{background:#35201d;color:#f2c2b9;border-color:#6a413a}
+    :root[data-theme="midnight"] button:focus-visible,:root[data-theme="midnight"] input:focus-visible,
+    :root[data-theme="midnight"] select:focus-visible,:root[data-theme="midnight"] textarea:focus-visible,
+    :root[data-theme="midnight"] [tabindex]:focus-visible{outline-color:var(--focus)}
+    @media(max-width:760px){.board-nav{margin-top:-3px}.archived-head{align-items:flex-start}.archived-head-actions{align-items:flex-end;flex-direction:column;gap:5px}.top-actions .theme-select{flex:1 1 0;width:auto}}
   </style>
 </head>
 <body>
@@ -180,7 +232,11 @@
         <div class="brand-copy"><h1>Project Kanban</h1><div class="subtitle">Vernieuwing schoolwebsite · teamoverzicht</div></div>
       </div>
       <div class="top-actions">
-        <button class="btn" id="themeToggle" type="button" aria-pressed="false" title="Schakel kampvuurthema in">🔥 Kampvuur</button>
+        <select class="control theme-select" id="themeToggle" aria-label="Kleurthema">
+          <option value="light">🔥 Kampvuur</option>
+          <option value="dark">☕ Kampvuur nacht</option>
+          <option value="midnight">🌑 Middernacht</option>
+        </select>
         <div id="connectionPill" class="pill"><span class="pill-dot"></span><span id="connectionText">Lokaal opgeslagen</span></div>
         <button class="btn" id="exportBtn" type="button" title="Download een volledige JSON-back-up"><span class="icon">↧</span> Back-up</button>
         <button class="btn" id="importBtn" type="button" title="Importeer een eerdere JSON-back-up"><span class="icon">↥</span> Importeren</button>
@@ -988,14 +1044,12 @@
     async function permanentlyDeleteTasks(ids){
       if(!ids.length)return;
       if(syncMode){
-        const {data,error}=await supabaseClient.from('tasks').delete().in('id',ids).select('id');
+        const {error}=await supabaseClient.from('tasks').delete().in('id',ids);
         if(error)throw error;
-        const deleted=new Set((data||[]).map(row=>Number(row.id)));
-        if(ids.some(id=>!deleted.has(id))){
-          await loadRemoteTasks();
+        await loadRemoteTasks();
+        if(ids.some(id=>tasks.some(task=>task.id===id))){
           throw new Error('Niet alle taken konden uit de database worden verwijderd. De prullenmand is opnieuw geladen.');
         }
-        tasks=tasks.filter(task=>!deleted.has(task.id));
       }else{
         const deleted=new Set(ids);
         const nextTasks=tasks.filter(task=>!deleted.has(task.id));
@@ -1103,14 +1157,12 @@
         });
     }
     function applyTheme(theme,save=true){
-      const dark=theme==='dark';
-      document.documentElement.dataset.theme=dark?'dark':'light';
-      $('themeToggle').textContent=dark?'☕ Latte':'🔥 Kampvuur';
-      $('themeToggle').setAttribute('aria-pressed',String(dark));
-      $('themeToggle').title=dark?'Schakel het latte-thema in':'Schakel het kampvuurthema in';
-      document.querySelector('meta[name="theme-color"]').content=dark?'#1d211e':'#f6f1e9';
+      const selected=['light','dark','midnight'].includes(theme)?theme:'light';
+      document.documentElement.dataset.theme=selected;
+      $('themeToggle').value=selected;
+      document.querySelector('meta[name="theme-color"]').content=selected==='midnight'?'#0d0b0a':selected==='dark'?'#1d211e':'#f6f1e9';
       if(save){
-        try{window.localStorage.setItem(THEME_KEY,dark?'dark':'light');}
+        try{window.localStorage.setItem(THEME_KEY,selected);}
         catch(error){console.warn('Kan de thema-voorkeur niet opslaan:',error);}
       }
     }
@@ -1118,7 +1170,7 @@
       let theme='';
       try{theme=window.localStorage.getItem(THEME_KEY)||'';}
       catch(error){console.warn('Kan de thema-voorkeur niet lezen:',error);}
-      if(theme!=='dark'&&theme!=='light')theme=window.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light';
+      if(!['dark','light','midnight'].includes(theme))theme=window.matchMedia?.('(prefers-color-scheme: dark)').matches?'dark':'light';
       applyTheme(theme,false);
     }
     async function initializeSync(){
@@ -1148,7 +1200,7 @@
         ?currentTask.taskCode
         :getNextTaskCode($('taskRequirement').value,currentTask?.id??null);
     });
-    $('themeToggle').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+    $('themeToggle').addEventListener('change',()=>applyTheme($('themeToggle').value));
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
     $('trashToggle').addEventListener('click',()=>{trashOpen=!trashOpen;render();if(trashOpen)$('archivedSection').scrollIntoView({behavior:'smooth',block:'start'});});
     $('emptyTrashBtn').addEventListener('click',emptyTrash);

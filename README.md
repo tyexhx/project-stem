@@ -8,7 +8,7 @@ Een HTML-kanbanbord met de 39 bestaande taken uit de oorspronkelijke Excel.
 2. Klik op een taak om de omschrijving, status of teamleden te wijzigen. Meerdere teamleden kun je met komma's scheiden. Klik op **Opslaan**.
 3. Klik op **Nieuwe taak** of ergens in het lege vak van een kolom om een taak toe te voegen. Vanuit een lege kolom krijgt de nieuwe taak meteen de status van die kolom. Een actief teamlid- of onderdeelfilter wordt ook automatisch ingevuld. Onderdeel- en taaknummers worden automatisch gecombineerd, bijvoorbeeld `1.1`; vul alleen de omschrijving in.
 4. Gebruik de pijltjes op een taak om die één status vooruit of terug te zetten, of blijf de kaart naar een andere kolom slepen. De snelkoppelingen onder het overzicht springen meteen naar een status.
-5. De taken scrollen binnen hun eigen kolom. Onderaan elke kolom staat een subtiele knop om daar een taak toe te voegen.
+5. De taken scrollen binnen hun eigen kolom. Zodra je het einde van een takenlijst bereikt, kun je verder scrollen op de pagina. Onderaan elke kolom staat een subtiele knop om daar een taak toe te voegen.
 6. De site controleert nu of opslag echt is gelukt. Als de browser opslag blokkeert, verschijnt een blijvende waarschuwing in plaats van een misleidende melding dat alles is opgeslagen.
 7. Klik op **🗑 Prullenmand** om taken in de prullenmand te bekijken. Zet taken terug of verwijder ze permanent; permanent verwijderen kan niet ongedaan worden gemaakt. **Prullenmand leegmaken** verwijdert alle taken in de prullenmand.
 8. Klik op **Back-up** om alle taken, statussen, toegewezen teamleden en de prullenmand als JSON te downloaden. Bewaar geregeld een kopie.
@@ -47,7 +47,7 @@ Gebruik nooit een `service_role`- of secret key in de browsercode. De publishabl
 - Genummerde onderdelen en taaknummers in de vorm `1.1`, met zoeken en filters op onderdeel en teamlid.
 - Taken maken, bewerken, verslepen, met pijltjes tussen statussen verplaatsen, naar de prullenmand verplaatsen, terugzetten en permanent verwijderen.
 - Meerdere teamleden aan één taak toewijzen en per teamlid het percentage van alle actieve taken volgen dat is afgerond.
-- Rustig latte-thema en warm kampvuurthema met opgeslagen voorkeur, plus een realtime-lijst van ingelogde teamleden.
+- Warm kampvuurthema, donker kampvuurthema en een extra donker middernachtthema met opgeslagen voorkeur, plus een realtime-lijst van ingelogde teamleden.
 - JSON-back-up/import en CSV-export.
 - Supabase-login, gedeelde database-opslag en live-updates (na configuratie).
 
