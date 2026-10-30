@@ -1039,11 +1039,16 @@
     async function permanentlyDeleteTasks(ids){
       if(!ids.length)return;
       if(syncMode){
-        const {error}=await supabaseClient.from('tasks').delete().in('id',ids);
+        const {data:deletedRows,error}=await supabaseClient.from('tasks').delete().in('id',ids).select('id');
         if(error)throw error;
+        const deletedIds=new Set((deletedRows||[]).map(row=>row.id));
+        if(ids.some(id=>!deletedIds.has(id))){
+          await loadRemoteTasks();
+          throw new Error('De database heeft niet alle taken verwijderd. Controleer of je bent ingelogd en voer de nieuwste supabase_setup.sql opnieuw uit in Supabase > SQL Editor om de verwijdertoestemming in te stellen.');
+        }
         await loadRemoteTasks();
         if(ids.some(id=>tasks.some(task=>task.id===id))){
-          throw new Error('Niet alle taken konden uit de database worden verwijderd. De prullenmand is opnieuw geladen.');
+          throw new Error('Supabase heeft de verwijdering bevestigd, maar de taken staan na het opnieuw laden nog in de prullenmand. Vernieuw de pagina en controleer de database.');
         }
       }else{
         const deleted=new Set(ids);
