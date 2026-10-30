@@ -165,6 +165,8 @@
     .board-nav a{flex:0 0 auto;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);font-size:11px;font-weight:700;text-decoration:none}
     .board-nav a:hover{border-color:var(--purple);color:var(--ink)}
     .trash-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:8px}
+    .task-list.is-empty{justify-content:center}
+    .task-list>.column-add-task.is-empty{flex:0 0 auto;min-height:72px;margin:0}
     .archived-head{align-items:center}
     .archived-head-actions{display:flex;align-items:center;gap:10px}
     .trash-card{border:0;border-radius:13px;background:transparent;padding:0}
@@ -917,8 +919,10 @@
         const list=sorted(active.filter(t=>t.status===status&&matches(t,filters)));
         visible+=list.length;$('count-'+colId).textContent=list.length;
         const taskList=$('list-'+colId);
-        taskList.innerHTML=list.map(task=>cardHTML(task)).join('');
         const addButton=$('add-'+colId);
+        taskList.innerHTML=list.map(task=>cardHTML(task)).join('');
+        taskList.append(addButton);
+        taskList.classList.toggle('is-empty',list.length===0);
         addButton.classList.toggle('is-empty',list.length===0);
         addButton.innerHTML=`<span class="column-add-icon">＋</span>${list.length?'Taak toevoegen':filters.q||filters.req||filters.owner?'Geen taken gevonden met deze filters. Klik hier om een taak toe te voegen.':status==='To-Do'?'Alles opgepakt — goed bezig! Klik hier om een taak toe te voegen.':status==='In behandeling'?'Er wordt momenteel niet aan taken gewerkt. Klik hier om een taak toe te voegen.':'Nog geen taken afgerond. Klik hier om een taak toe te voegen.'}`;
       }
