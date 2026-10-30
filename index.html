@@ -22,6 +22,8 @@
     :root[data-theme="dark"] .notice{background:#292744;border-color:#46406d;color:#d0cafa}
     :root[data-theme="dark"] .notice strong{color:#f0edff}
     :root[data-theme="dark"] .notice.storage-warning{background:#3d3024;border-color:#765632;color:#f0d0a4}
+    :root[data-theme="dark"] .task-move-button{background:transparent;border-color:transparent;color:#9aa4b5}
+    :root[data-theme="dark"] .task-move-button:hover{background:#ffffff0d;border-color:transparent;color:#d0d5e0}
     :root[data-theme="dark"] .notice.storage-warning strong{color:#ffe0b0}
     :root[data-theme="dark"] .metric{background:#1b2533;border-color:var(--line)}
     :root[data-theme="dark"] .progress-track{background:#303b4d}
@@ -62,6 +64,9 @@
     @media(max-width:760px){.team-insights{grid-template-columns:1fr}.member-progress-row{grid-template-columns:minmax(75px,1fr) minmax(70px,1.4fr) auto}}
     @media(max-width:1050px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.board{gap:10px}.column{padding:9px}.task-card{padding:11px}.toolbar-end{margin-left:0}}
     @media(max-width:760px){.app{padding-top:18px}.topbar{align-items:flex-start}.top-actions{width:100%}.top-actions .btn{flex:1}.brand{min-width:0}.board{grid-template-columns:1fr;gap:12px}.column{min-height:auto}.task-list{min-height:90px}.empty-column{min-height:95px}.metrics{gap:8px}.metric{padding:10px;gap:9px}.metric-icon{width:33px;height:33px;flex-basis:33px;border-radius:10px}.metric-value{font-size:20px}.toolbar{gap:8px}.search-wrap{max-width:none;flex-basis:100%}.filter{flex:1;min-width:0}.toolbar-end{width:100%;justify-content:space-between}.archived-list{grid-template-columns:1fr}.dialog-head{padding:18px 18px 14px}.dialog-form{padding:17px 18px 19px}}
+    .column{display:flex;flex-direction:column;height:min(82vh,900px);min-height:440px}.task-list{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#aab4c4 transparent}.task-list::-webkit-scrollbar{width:7px}.task-list::-webkit-scrollbar-thumb{background:#aab4c488;border-radius:8px}.task-list::-webkit-scrollbar-track{background:transparent}.task-card-footer-end{display:flex;align-items:center;gap:3px;flex:0 0 auto}.task-move-button{display:grid;place-items:center;width:24px;height:24px;padding:0;border:0;border-radius:7px;background:transparent;color:#9aa4b5;font-size:14px;line-height:1;opacity:.72;transition:background .12s,color .12s,opacity .12s}.task-card:hover .task-move-button,.task-move-button:focus-visible{opacity:1}.task-move-button:hover{background:#f0eeff;color:#6558d3}.column-add-task{display:grid;place-content:center;justify-items:center;gap:3px;flex:0 0 auto;width:100%;min-height:48px;margin-top:9px;padding:8px 14px;border:1px solid transparent;border-radius:10px;background:transparent;color:#788497;font:inherit;font-size:11px;cursor:pointer;transition:border-color .15s,background .15s,color .15s}.column-add-task:hover,.column-add-task:focus-visible{border-color:#ffffff12;background:#ffffff05;color:#aab4c5}.column-add-task.is-empty{flex:0 0 180px;min-height:180px;margin-top:0;border:1px dashed #ffffff12;font-size:12px}.column-add-icon{font-size:19px;line-height:1;color:#788497;transition:color .15s}.column-add-task:hover .column-add-icon,.column-add-task:focus-visible .column-add-icon{color:#aab4c5}
+    :root[data-theme="dark"] .task-move-button:hover{background:#ffffff0d;color:#d0d5e0}
+    @media(max-width:760px){.column{height:min(78vh,820px);min-height:440px}.task-list{min-height:0}.column-add-task.is-empty{flex-basis:180px;min-height:180px}}
     @media(max-width:420px){.metrics{grid-template-columns:1fr 1fr}.metric{align-items:flex-start;flex-direction:column;gap:7px}.metric-detail{white-space:normal}.top-actions .btn{padding:9px 8px;font-size:11px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.dialog-actions{flex-wrap:wrap}.dialog-actions>.btn{order:2}.right-actions{margin-left:auto}}
   </style>
 </head>
@@ -116,9 +121,9 @@
     </section>
 
     <section class="board" id="board" aria-label="Kanbanbord">
-      <div class="column todo" data-status="To-Do"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">TE DOEN</h2><div class="column-subtitle">Nog op te pakken</div></div></div><span class="column-count" id="count-todo">38</span></div><div class="task-list" id="list-todo" data-status="To-Do"></div></div>
-      <div class="column doing" data-status="In behandeling"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">IN BEHANDELING</h2><div class="column-subtitle">Actief werk</div></div></div><span class="column-count" id="count-doing">0</span></div><div class="task-list" id="list-doing" data-status="In behandeling"></div></div>
-      <div class="column done" data-status="Afgerond"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">AFGEROND</h2><div class="column-subtitle">Klaar en gecontroleerd</div></div></div><span class="column-count" id="count-done">1</span></div><div class="task-list" id="list-done" data-status="Afgerond"></div></div>
+      <div class="column todo" data-status="To-Do"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">TE DOEN</h2><div class="column-subtitle">Nog op te pakken</div></div></div><span class="column-count" id="count-todo">38</span></div><div class="task-list" id="list-todo" data-status="To-Do"></div><button id="add-todo" class="column-add-task is-empty" type="button" data-new-task-status="To-Do" aria-label="Nieuwe taak aanmaken bij Te doen"><span class="column-add-icon">＋</span>Voeg hier een taak toe.</button></div>
+      <div class="column doing" data-status="In behandeling"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">IN BEHANDELING</h2><div class="column-subtitle">Actief werk</div></div></div><span class="column-count" id="count-doing">0</span></div><div class="task-list" id="list-doing" data-status="In behandeling"></div><button id="add-doing" class="column-add-task is-empty" type="button" data-new-task-status="In behandeling" aria-label="Nieuwe taak aanmaken bij In behandeling"><span class="column-add-icon">＋</span>Er wordt momenteel niet aan taken gewerkt. Klik hier om een taak toe te voegen.</button></div>
+      <div class="column done" data-status="Afgerond"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">AFGEROND</h2><div class="column-subtitle">Klaar en gecontroleerd</div></div></div><span class="column-count" id="count-done">1</span></div><div class="task-list" id="list-done" data-status="Afgerond"></div><button id="add-done" class="column-add-task is-empty" type="button" data-new-task-status="Afgerond" aria-label="Nieuwe taak aanmaken bij Afgerond"><span class="column-add-icon">＋</span>Voeg hier een taak toe.</button></div>
     </section>
     <div class="board-help"><span>↔</span> Sleep een kaart naar een andere kolom om de status te wijzigen. Klik op een kaart om details aan te passen.</div>
 
@@ -132,7 +137,7 @@
       <input id="taskId" type="hidden">
       <div class="form-grid">
         <div class="field"><label for="taskRequirement">Onderdeel</label><select id="taskRequirement" required></select></div>
-        <div class="field"><label for="taskCode">Taaklabel</label><input id="taskCode" required maxlength="60" placeholder="Bijv. Taak 2"><div class="hint">Verplicht veld.</div></div>
+        <div class="field"><label for="taskCode">Taaknummer</label><input id="taskCode" readonly required maxlength="60" placeholder="Bijv. 1.1"><div class="hint">Automatisch opgebouwd uit het onderdeelnummer en taaknummer.</div></div>
         <div class="field full"><label for="taskDescription">Omschrijving</label><textarea id="taskDescription" required maxlength="2000" placeholder="Wat moet er precies gebeuren?"></textarea><div class="hint">Verplicht veld. Beschrijf wat er precies moet gebeuren.</div></div>
         <div class="field"><label for="taskStatus">Status</label><select id="taskStatus"><option value="To-Do">Te doen</option><option value="In behandeling">In behandeling</option><option value="Afgerond">Afgerond</option></select></div>
         <div class="field full"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="500" list="assigneeSuggestions" placeholder="Teamleden, gescheiden door komma's (optioneel)"><datalist id="assigneeSuggestions"></datalist><div class="hint">Je kunt meerdere teamleden invullen, gescheiden door komma's.</div></div>
@@ -161,7 +166,7 @@
   {
     "id": 1,
     "requirement": "Projectuitvoering en oplevering",
-    "taskCode": "Taak 1",
+    "taskCode": "8.1",
     "description": "Analyse & Voorbereiding: Huidige site onderzoeken, knelpunten inventariseren en content verzamelen.",
     "status": "Afgerond",
     "assignee": "",
@@ -171,7 +176,7 @@
   {
     "id": 2,
     "requirement": "Beheer en Gebruiksvriendelijkheid",
-    "taskCode": "Taak 1",
+    "taskCode": "1.1",
     "description": "Onderzoeken van de huidige website om complexe beheerelementen te identificeren.",
     "status": "To-Do",
     "assignee": "",
@@ -181,7 +186,7 @@
   {
     "id": 3,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 3",
+    "taskCode": "2.1",
     "description": "Opstellen van een stijlgids met schoolkleuren, lettertypes, iconen en huisstijl.",
     "status": "To-Do",
     "assignee": "",
@@ -191,7 +196,7 @@
   {
     "id": 4,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 5",
+    "taskCode": "2.2",
     "description": "Inventariseren en stroomlijnen van de menustructuur (belangrijke info binnen 2 à 3 klikken).",
     "status": "To-Do",
     "assignee": "",
@@ -201,7 +206,7 @@
   {
     "id": 5,
     "requirement": "Schoolteam en Contact",
-    "taskCode": "Taak 3",
+    "taskCode": "5.1",
     "description": "Verzamelen, controleren en integreren van officiële links naar sociale-mediakanalen.",
     "status": "To-Do",
     "assignee": "",
@@ -211,7 +216,7 @@
   {
     "id": 6,
     "requirement": "Veiligheid, Juridisch en Formulieren",
-    "taskCode": "Taak 2",
+    "taskCode": "7.1",
     "description": "Controleren en vastleggen van beeldrechten, licenties en een procedure om foto's eenvoudig te verwijderen.",
     "status": "To-Do",
     "assignee": "",
@@ -221,7 +226,7 @@
   {
     "id": 7,
     "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-    "taskCode": "Taak 1",
+    "taskCode": "3.1",
     "description": "Verzamelen van authentieke schoolfoto's en korte teksten/video's om het dagelijkse schoolleven te tonen.",
     "status": "To-Do",
     "assignee": "",
@@ -231,7 +236,7 @@
   {
     "id": 8,
     "requirement": "Beheer en Gebruiksvriendelijkheid",
-    "taskCode": "Taak 2",
+    "taskCode": "1.2",
     "description": "Selecteren en inrichten van een gebruiksvriendelijk CMS met een visuele pagebuilder (inclusief drag-and-dropfunctionaliteit).",
     "status": "To-Do",
     "assignee": "",
@@ -241,7 +246,7 @@
   {
     "id": 9,
     "requirement": "Beheer en Gebruiksvriendelijkheid",
-    "taskCode": "Taak 3",
+    "taskCode": "1.3",
     "description": "Instellen van herbruikbare sjablonen voor terugkerende onderdelen (nieuws, studierichtingen, evenementen).",
     "status": "To-Do",
     "assignee": "",
@@ -251,7 +256,7 @@
   {
     "id": 10,
     "requirement": "Beheer en Gebruiksvriendelijkheid",
-    "taskCode": "Taak 4",
+    "taskCode": "1.4",
     "description": "Configureren van gebruikersrollen en toegangsrechten (beheerder, leerkrachten, redacteurs) en deze testen.",
     "status": "To-Do",
     "assignee": "",
@@ -261,7 +266,7 @@
   {
     "id": 11,
     "requirement": "Beheer en Gebruiksvriendelijkheid",
-    "taskCode": "Taak 5",
+    "taskCode": "1.5",
     "description": "Instellen van een onderhoudsarm platform met een testomgeving, automatische back-ups en beveiligingsupdates.",
     "status": "To-Do",
     "assignee": "",
@@ -271,7 +276,7 @@
   {
     "id": 12,
     "requirement": "Veiligheid, Juridisch en Formulieren",
-    "taskCode": "Taak 3",
+    "taskCode": "7.2",
     "description": "Instellen van een beveiligde HTTPS-verbinding (TLS-certificaat) en sterke beveiliging voor de beheerdersomgeving (incl. 2FA).",
     "status": "To-Do",
     "assignee": "",
@@ -281,7 +286,7 @@
   {
     "id": 13,
     "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-    "taskCode": "Taak 3",
+    "taskCode": "3.2",
     "description": "Inrichten van een overzichtelijke mediabibliotheek in het CMS voor het eenvoudig beheren en vervangen van foto's.",
     "status": "To-Do",
     "assignee": "",
@@ -291,7 +296,7 @@
   {
     "id": 14,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 1",
+    "taskCode": "2.3",
     "description": "Realiseren van volledige responsiviteit (automatische schaalbaarheid voor smartphones, tablets en pc's).",
     "status": "To-Do",
     "assignee": "",
@@ -301,7 +306,7 @@
   {
     "id": 15,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 2",
+    "taskCode": "2.4",
     "description": "Ontwikkelen van een compact uitklapbaar mobiel menu en grote, touch-vriendelijke knoppen.",
     "status": "To-Do",
     "assignee": "",
@@ -311,7 +316,7 @@
   {
     "id": 16,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 4",
+    "taskCode": "2.5",
     "description": "Ontwerpen van een heldere homepage met duidelijke introductie, snelkoppelingen en doelgroep-ingangen (leerlingen, ouders, personeel, sollicitanten).",
     "status": "To-Do",
     "assignee": "",
@@ -321,7 +326,7 @@
   {
     "id": 17,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 6",
+    "taskCode": "2.6",
     "description": "Implementeren van WCAG-richtlijnen voor toegankelijkheid (kleurcontrast, leesbare lettergroottes, alt-teksten, focusmarkeringen).",
     "status": "To-Do",
     "assignee": "",
@@ -331,7 +336,7 @@
   {
     "id": 18,
     "requirement": "Design, Layout en Schermresoluties",
-    "taskCode": "Taak 7",
+    "taskCode": "2.7",
     "description": "Vormgeven en testen van de Google Maps-locatiekaart in de huisstijl.",
     "status": "To-Do",
     "assignee": "",
@@ -341,7 +346,7 @@
   {
     "id": 19,
     "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-    "taskCode": "Taak 2",
+    "taskCode": "3.3",
     "description": "Visueel uitwerken van de vier kernwaarden (Eigentijds leren, Zelfstandigheid, Samen, Betrokken) met iconen en beelden.",
     "status": "To-Do",
     "assignee": "",
@@ -351,7 +356,7 @@
   {
     "id": 20,
     "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-    "taskCode": "Taak 4",
+    "taskCode": "3.4",
     "description": "Toevoegen van interactieve elementen aan afbeeldingen (zoals aanklikbare zones of verhalen uit de praktijk).",
     "status": "To-Do",
     "assignee": "",
@@ -361,7 +366,7 @@
   {
     "id": 21,
     "requirement": "Studierichtingen en Interactief Spoor",
-    "taskCode": "Taak 1",
+    "taskCode": "4.1",
     "description": "Groeperen van graden, studierichtingen en lessentabellen in een uniforme, mobiel-vriendelijke structuur.",
     "status": "To-Do",
     "assignee": "",
@@ -371,7 +376,7 @@
   {
     "id": 22,
     "requirement": "Schoolteam en Contact",
-    "taskCode": "Taak 1",
+    "taskCode": "5.2",
     "description": "Aanmaken van een overzichtelijke 'Ons Team'-pagina met profielsjablonen per personeelslid (functie, vakken, foto, contactopties).",
     "status": "To-Do",
     "assignee": "",
@@ -381,7 +386,7 @@
   {
     "id": 23,
     "requirement": "Schoolteam en Contact",
-    "taskCode": "Taak 2",
+    "taskCode": "5.3",
     "description": "Inrichten van een centrale contactpagina ingedeeld op onderwerp (inschrijvingen, administratie, begeleiding) en opnemen in de footer.",
     "status": "To-Do",
     "assignee": "",
@@ -391,7 +396,7 @@
   {
     "id": 24,
     "requirement": "Veiligheid, Juridisch en Formulieren",
-    "taskCode": "Taak 1",
+    "taskCode": "7.3",
     "description": "Implementeren van een correcte cookiebanner en AVG/GDPR-compatibel privacybeleid.",
     "status": "To-Do",
     "assignee": "",
@@ -401,7 +406,7 @@
   {
     "id": 25,
     "requirement": "Studierichtingen en Interactief Spoor",
-    "taskCode": "Taak 2",
+    "taskCode": "4.2",
     "description": "Bouwen van een vergelijkingsfunctie voor studierichtingen (vakken, uren, vervolgtrajecten).",
     "status": "To-Do",
     "assignee": "",
@@ -411,7 +416,7 @@
   {
     "id": 26,
     "requirement": "Studierichtingen en Interactief Spoor",
-    "taskCode": "Taak 3",
+    "taskCode": "4.3",
     "description": "Ontwikkelen van de interactieve keuzehulp 'Kies je Spoor' (gebaseerd op een treintjes- en statenthema).",
     "status": "To-Do",
     "assignee": "",
@@ -421,7 +426,7 @@
   {
     "id": 27,
     "requirement": "Studierichtingen en Interactief Spoor",
-    "taskCode": "Taak 4",
+    "taskCode": "4.4",
     "description": "Implementeren van een op interesses gebaseerde vragenlijst in de keuzehulp met vrijblijvende suggesties.",
     "status": "To-Do",
     "assignee": "",
@@ -431,7 +436,7 @@
   {
     "id": 28,
     "requirement": "AI Chatbot, Robot en Zoekfunctie",
-    "taskCode": "Taak 5",
+    "taskCode": "6.1",
     "description": "Bouwen van een geavanceerde zoekbalk in de header met directe zoeksuggesties en ondersteuning voor alle apparaten.",
     "status": "To-Do",
     "assignee": "",
@@ -441,7 +446,7 @@
   {
     "id": 29,
     "requirement": "Veiligheid, Juridisch en Formulieren",
-    "taskCode": "Taak 4",
+    "taskCode": "7.4",
     "description": "Bouwen van een online vacaturepagina en digitaal sollicitatieformulier met beveiligde doorsturing naar de directie.",
     "status": "To-Do",
     "assignee": "",
@@ -451,7 +456,7 @@
   {
     "id": 30,
     "requirement": "Veiligheid, Juridisch en Formulieren",
-    "taskCode": "Taak 5",
+    "taskCode": "7.5",
     "description": "Structureren van de pagina voor inschrijvingen en administratieve aanvragen met duidelijke instructies en bevestigingsmeldingen.",
     "status": "To-Do",
     "assignee": "",
@@ -461,7 +466,7 @@
   {
     "id": 31,
     "requirement": "AI Chatbot, Robot en Zoekfunctie",
-    "taskCode": "Taak 1",
+    "taskCode": "6.2",
     "description": "Integreren van een subtiel, niet-storend chatboticoon onderaan de website.",
     "status": "To-Do",
     "assignee": "",
@@ -471,7 +476,7 @@
   {
     "id": 32,
     "requirement": "AI Chatbot, Robot en Zoekfunctie",
-    "taskCode": "Taak 2",
+    "taskCode": "6.3",
     "description": "Koppelen van een centrale kennisbank (schoolreglement, kalender, FAQ's) aan de chatbot voor betrouwbare antwoorden buiten de openingsuren.",
     "status": "To-Do",
     "assignee": "",
@@ -481,7 +486,7 @@
   {
     "id": 33,
     "requirement": "AI Chatbot, Robot en Zoekfunctie",
-    "taskCode": "Taak 3",
+    "taskCode": "6.4",
     "description": "Vormgeven van het chatbotvenster met de schoolrobot (inclusief eigen naam en vriendelijke begroeting).",
     "status": "To-Do",
     "assignee": "",
@@ -491,7 +496,7 @@
   {
     "id": 34,
     "requirement": "AI Chatbot, Robot en Zoekfunctie",
-    "taskCode": "Taak 4",
+    "taskCode": "6.5",
     "description": "Instellen van een e-mailfallback / doorverwijsformulier wanneer de chatbot de vraag niet kan beantwoorden.",
     "status": "To-Do",
     "assignee": "",
@@ -501,7 +506,7 @@
   {
     "id": 35,
     "requirement": "Projectuitvoering en oplevering",
-    "taskCode": "Taak 2",
+    "taskCode": "8.2",
     "description": "Ontwikkeling: CMS inrichten, design bouwen, content migreren en technische features (chatbot, spoor, zoekfunctie) koppelen.",
     "status": "To-Do",
     "assignee": "",
@@ -511,7 +516,7 @@
   {
     "id": 36,
     "requirement": "Studierichtingen en Interactief Spoor",
-    "taskCode": "Taak 5",
+    "taskCode": "4.5",
     "description": "Testen van de studiekeuzehulp met leerlingen en ouders.",
     "status": "To-Do",
     "assignee": "",
@@ -521,7 +526,7 @@
   {
     "id": 37,
     "requirement": "Projectuitvoering en oplevering",
-    "taskCode": "Taak 3",
+    "taskCode": "8.3",
     "description": "Testfase: Uitvoeren van responsive tests, linkchecks, laadsnelheidsoptimalisatie en gebruikersgroep-tests (leerlingen/ouders).",
     "status": "To-Do",
     "assignee": "",
@@ -531,7 +536,7 @@
   {
     "id": 38,
     "requirement": "Beheer en Gebruiksvriendelijkheid",
-    "taskCode": "Taak 6",
+    "taskCode": "1.6",
     "description": "Opstellen van een handleiding en organiseren van een praktijktest voor het schoolteam.",
     "status": "To-Do",
     "assignee": "",
@@ -541,7 +546,7 @@
   {
     "id": 39,
     "requirement": "Projectuitvoering en oplevering",
-    "taskCode": "Taak 4",
+    "taskCode": "8.4",
     "description": "Oplevering & Onderhoud: Volledige back-up maken, website publiceren, schoolteam opleiden en een vaste beheerder aanwijzen voor updates.",
     "status": "To-Do",
     "assignee": "",
@@ -567,6 +572,14 @@
     const LEGACY_REQUIREMENTS = Object.fromEntries(
       REQUIREMENTS.map((name,index)=>[`Requirement ${index+1}`,name])
     );
+    function requirementNumber(name){
+      const index=REQUIREMENTS.indexOf(name);
+      return index<0?null:index+1;
+    }
+    function requirementLabel(name){
+      const number=requirementNumber(name);
+      return number?`${number}. ${name}`:name;
+    }
     const $ = (id) => document.getElementById(id);
     let tasks = [];
     let supabaseClient = null;
@@ -604,6 +617,29 @@
     function parseAssignees(value){
       const entries=Array.isArray(value)?value:String(value||'').split(/[;,]/);
       return [...new Set(entries.map(name=>String(name).trim()).filter(Boolean))];
+    }
+    function getNextTaskCode(requirement, excludeId=null){
+      const number=requirementNumber(requirement);
+      if(!number)return `${REQUIREMENTS.length+1}.1`;
+      const pattern=new RegExp(`^${number}\\.(\\d+)$`);
+      const used=tasks.filter(task=>task.id!==excludeId&&task.requirement===requirement)
+        .map(task=>Number(task.taskCode.match(pattern)?.[1])||0);
+      return `${number}.${Math.max(0,...used)+1}`;
+    }
+    function migrateTaskCodes(taskList){
+      const usedByRequirement=new Map();
+      taskList.forEach(task=>{
+        const number=requirementNumber(task.requirement);
+        const match=number&&task.taskCode.match(new RegExp(`^${number}\\.(\\d+)$`));
+        if(match)usedByRequirement.set(task.requirement,Math.max(usedByRequirement.get(task.requirement)||0,Number(match[1])));
+      });
+      sorted(taskList).forEach(task=>{
+        const number=requirementNumber(task.requirement);
+        if(!number||new RegExp(`^${number}\\.\\d+$`).test(task.taskCode))return;
+        const next=(usedByRequirement.get(task.requirement)||0)+1;
+        task.taskCode=`${number}.${next}`;
+        usedByRequirement.set(task.requirement,next);
+      });
     }
     function normalizeTask(t, i=0){
       const rawStatus = t.status || "To-Do";
@@ -662,19 +698,22 @@
       if(filters.q){const hay=[t.id,t.requirement,t.taskCode,t.description,...t.assignees].join(' ').toLocaleLowerCase('nl');if(!hay.includes(filters.q))return false;}
       return true;
     }
-    function cardHTML(t){
+    function cardHTML(t, includeMoveButtons=true){
       const owner=t.assignees.join(', ');
-      return `<article class="task-card" draggable="true" tabindex="0" role="button" aria-label="Taak ${t.id}: ${escapeHTML(t.description)}. Klik om te bewerken." data-task-id="${t.id}">
-        <div class="card-top"><span class="task-id">#${t.id}</span><span class="req-tag">${escapeHTML(t.requirement)}</span></div>
+      const currentStatusIndex=STATUS_ORDER.indexOf(t.status);
+      const moveButtons=includeMoveButtons?`<div class="task-card-footer-end"><span class="edit-hint">Bewerken ↗</span>${currentStatusIndex>0?`<button class="task-move-button" type="button" data-move-status="${escapeHTML(STATUS_ORDER[currentStatusIndex-1])}" aria-label="Verplaats taak ${escapeHTML(t.taskCode)} naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex-1]])}" title="Verplaats naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex-1]])}">←</button>`:''}${currentStatusIndex<STATUS_ORDER.length-1?`<button class="task-move-button" type="button" data-move-status="${escapeHTML(STATUS_ORDER[currentStatusIndex+1])}" aria-label="Verplaats taak ${escapeHTML(t.taskCode)} naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex+1]])}" title="Verplaats naar ${escapeHTML(STATUS_LABELS[STATUS_ORDER[currentStatusIndex+1]])}">→</button>`:''}</div>`:'<span class="edit-hint">Bewerken ↗</span>';
+      return `<article class="task-card" draggable="true" tabindex="0" role="group" aria-label="Taak ${t.id}: ${escapeHTML(t.description)}. Klik om te bewerken." data-task-id="${t.id}">
+        <div class="card-top"><span class="task-id">#${t.id}</span><span class="req-tag">${escapeHTML(requirementLabel(t.requirement))}</span></div>
         <span class="task-code">${escapeHTML(t.taskCode)}</span><h3>${escapeHTML(t.description)}</h3>
-        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(t.assignees[0])):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div><span class="edit-hint">Bewerken ↗</span></div>
+        <div class="card-footer"><div class="owner ${owner?'':'unassigned'}"><span class="avatar">${owner?escapeHTML(ownerInitial(t.assignees[0])):'+'}</span><span class="owner-name">${owner?escapeHTML(owner):'Niet toegewezen'}</span></div>${moveButtons}</div>
       </article>`;
     }
     function fillFilterOptions(){
       const oldReq=$('requirementFilter').value, oldOwner=$('assigneeFilter').value;
-      const requirements=[...new Set(tasks.map(t=>t.requirement).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl',{numeric:true}));
-      $('requirementFilter').innerHTML='<option value="">Alle onderdelen</option>'+requirements.map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(r)}</option>`).join('');
-      $('taskRequirement').innerHTML=[...new Set([...REQUIREMENTS,...requirements])].sort((a,b)=>a.localeCompare(b,'nl',{numeric:true})).map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(r)}</option>`).join('');
+      const extras=[...new Set(tasks.map(t=>t.requirement).filter(r=>r&&!REQUIREMENTS.includes(r)))].sort((a,b)=>a.localeCompare(b,'nl'));
+      const requirements=[...REQUIREMENTS.filter(r=>tasks.some(t=>t.requirement===r)),...extras];
+      $('requirementFilter').innerHTML='<option value="">Alle onderdelen</option>'+requirements.map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(requirementLabel(r))}</option>`).join('');
+      $('taskRequirement').innerHTML=[...REQUIREMENTS,...extras].map(r=>`<option value="${escapeHTML(r)}">${escapeHTML(requirementLabel(r))}</option>`).join('');
       const owners=[...new Set(tasks.flatMap(t=>t.assignees).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'nl'));
       const suggestions=[...new Set([...owners,...onlineUsers.map(user=>user.name)])].sort((a,b)=>a.localeCompare(b,'nl'));
       $('assigneeFilter').innerHTML='<option value="">Alle teamleden</option><option value="__unassigned">Niet toegewezen</option>'+owners.map(o=>`<option value="${escapeHTML(o)}">${escapeHTML(o)}</option>`).join('');
@@ -704,22 +743,28 @@
         const colId=status==='To-Do'?'todo':status==='In behandeling'?'doing':'done';
         const list=sorted(active.filter(t=>t.status===status&&matches(t,filters)));
         visible+=list.length;$('count-'+colId).textContent=list.length;
-        const hasFilters=filters.q||filters.req||filters.owner;
-        const emptyMessage=hasFilters?'Geen taken gevonden met deze filters.':status==='To-Do'?'Alles opgepakt — goed bezig!':status==='In behandeling'?'Er wordt momenteel niet aan taken gewerkt.':'Nog geen taken afgerond.';
-        $('list-'+colId).innerHTML=list.length?list.map(cardHTML).join():`<div class="empty-column">${hasFilters?`<div>${emptyMessage}</div>`:`<button class="empty-add" type="button" data-new-task-status="${escapeHTML(status)}" aria-label="Nieuwe taak aanmaken bij ${escapeHTML(STATUS_LABELS[status])}"><span class="empty-icon">＋</span>${emptyMessage}</button>`}</div>`;
+        const taskList=$('list-'+colId);
+        taskList.innerHTML=list.map(task=>cardHTML(task)).join();
+        const addButton=$('add-'+colId);
+        addButton.classList.toggle('is-empty',list.length===0);
+        addButton.innerHTML=`<span class="column-add-icon">＋</span>${list.length?'Taak toevoegen':filters.q||filters.req||filters.owner?'Geen taken gevonden met deze filters. Klik hier om een taak toe te voegen.':status==='To-Do'?'Alles opgepakt — goed bezig! Klik hier om een taak toe te voegen.':status==='In behandeling'?'Er wordt momenteel niet aan taken gewerkt. Klik hier om een taak toe te voegen.':'Nog geen taken afgerond. Klik hier om een taak toe te voegen.'}`;
       }
       const archives=sorted(tasks.filter(t=>t.archived&&matches(t,filters)));
       $('resultsCount').textContent=`${visible} van ${active.length} actieve taken`;
       $('archivedSection').classList.toggle('hidden',!$('showArchived').checked);
       $('archivedCount').textContent=`${archives.length} taken`;
-      $('archivedList').innerHTML=archives.length?archives.map(t=>`<div class="archived-card">${cardHTML(t)}</div>`).join(''):'<div class="empty-column">Geen gearchiveerde taken gevonden.</div>';
+      $('archivedList').innerHTML=archives.length?archives.map(t=>`<div class="archived-card">${cardHTML(t,false)}</div>`).join(''):'<div class="empty-column">Geen gearchiveerde taken gevonden.</div>';
       renderTeamInsights();
       bindCards();
     }
     function bindCards(){
       document.querySelectorAll('[data-task-id]').forEach(card=>{
-        card.addEventListener('click',()=>openTask(Number(card.dataset.taskId)));
-        card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openTask(Number(card.dataset.taskId));}});
+        card.addEventListener('click',e=>{
+          const moveButton=e.target.closest('[data-move-status]');
+          if(moveButton){e.stopPropagation();changeStatus(Number(card.dataset.taskId),moveButton.dataset.moveStatus);return;}
+          openTask(Number(card.dataset.taskId));
+        });
+        card.addEventListener('keydown',e=>{if(e.target===card&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openTask(Number(card.dataset.taskId));}});
         card.addEventListener('dragstart',e=>{e.dataTransfer.setData('text/plain',card.dataset.taskId);e.dataTransfer.effectAllowed='move';card.classList.add('dragging');});
         card.addEventListener('dragend',()=>{card.classList.remove('dragging');document.querySelectorAll('.column.drag-active').forEach(c=>c.classList.remove('drag-active'));});
       });
@@ -751,8 +796,10 @@
       const submitButton=$('taskForm').querySelector('button[type="submit"]');
       if(submitButton.disabled)return;
       const idVal=$('taskId').value;const isNew=idVal==='';const id=isNew?Math.max(0,...tasks.map(t=>t.id))+1:Number(idVal);
-      const previous=tasks.find(t=>t.id===id);const task=normalizeTask({id,requirement:$('taskRequirement').value,taskCode:$('taskCode').value.trim(),description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignees:parseAssignees($('taskAssignee').value),sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
-      if(!task.taskCode||!task.description){showToast('Vul zowel het taaklabel als de omschrijving in.',true);return;}
+      const previous=tasks.find(t=>t.id===id);const requirement=$('taskRequirement').value;
+      const taskCode=previous?.requirement===requirement?previous.taskCode:getNextTaskCode(requirement,id);
+      const task=normalizeTask({id,requirement,taskCode,description:$('taskDescription').value.trim(),status:$('taskStatus').value,assignees:parseAssignees($('taskAssignee').value),sortOrder:previous?previous.sortOrder:id,archived:previous?previous.archived:false});
+      if(!task.taskCode||!task.description){showToast('Vul de omschrijving in.',true);return;}
       submitButton.disabled=true;submitButton.textContent='Opslaan…';
       try{
         if(syncMode){
@@ -773,13 +820,20 @@
       }catch(err){showToast('Opslaan mislukt: '+(err.message||'controleer de verbinding'),true);}
       finally{submitButton.disabled=false;submitButton.textContent='Opslaan';}
     }
-    function openTask(id, newTaskStatus='To-Do'){
+    function openTask(id, newTaskStatus='To-Do', defaults={}){
       const t=id===null?null:tasks.find(x=>x.id===id);if(id!==null&&!t)return;activeTaskId=id;
       $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of teamleden bij.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
-      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||REQUIREMENTS[0];$('taskCode').value=t?.taskCode||'Taak 1';$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||newTaskStatus;$('taskAssignee').value=t?.assignees.join(', ')||'';
+      $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||defaults.requirement||REQUIREMENTS[0];$('taskCode').value=t?.taskCode||getNextTaskCode($('taskRequirement').value);$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||newTaskStatus;$('taskAssignee').value=t?.assignees.join(', ')||defaults.assignee||'';
       $('archiveBtn').textContent=t?(t.archived?'Herstellen uit archief':'Archiveren'):'Annuleren';$('archiveBtn').classList.toggle('danger',!t||!t.archived);$('archiveBtn').disabled=false;
       if(t&&t.archived){$('taskStatus').disabled=true;}else{$('taskStatus').disabled=false;}
       $('taskDialog').showModal();
+    }
+    function openTaskFromColumn(status){
+      const filters=getFilters();
+      openTask(null,status,{
+        requirement:filters.req||undefined,
+        assignee:filters.owner&&filters.owner!=='__unassigned'?filters.owner:''
+      });
     }
     async function archiveActive(){
       const id=$('taskId').value;if(id===''){ $('taskDialog').close();return; }
@@ -798,7 +852,7 @@
     }
     function downloadBlob(content,filename,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
     function exportCSV(){
-      const headers=['Nr','Onderdeel','Taak','Omschrijving','Status','Toegewezen aan','Gearchiveerd'];
+      const headers=['Nr','Onderdeel','Taaknummer','Omschrijving','Status','Toegewezen aan','Gearchiveerd'];
       const rows=[headers,...sorted(tasks).map(t=>[t.id,t.requirement,t.taskCode,t.description,t.status,t.assignees.join(', '),t.archived?'Ja':'Nee'])];
       const csv=rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');
       downloadBlob('\ufeff'+csv,'kanban-schoolwebsite-'+new Date().toISOString().slice(0,10)+'.csv','text/csv;charset=utf-8');showToast('CSV gedownload.');
@@ -808,6 +862,7 @@
         const parsed=JSON.parse(await file.text());const incoming=Array.isArray(parsed)?parsed:parsed.tasks;
         if(!Array.isArray(incoming))throw new Error('Dit bestand bevat geen takenlijst.');
         const clean=incoming.map((t,i)=>normalizeTask(t,i));
+        migrateTaskCodes(clean);
         if(clean.some(t=>!Number.isFinite(t.id)||t.id<1))throw new Error('Een of meer taken hebben geen geldig nummer.');
         if(!confirm(`${clean.length} taken gevonden. De taken uit deze back-up worden op basis van taaknummer toegevoegd of bijgewerkt. Bestaande taken die niet in de back-up staan, blijven behouden. Doorgaan?`))return;
         const map=new Map(tasks.map(t=>[t.id,t]));clean.forEach(t=>map.set(t.id,t));const merged=sorted([...map.values()]);
@@ -828,6 +883,7 @@
       const {data,error}=await supabaseClient.from('tasks').select('*').order('sort_order',{ascending:true});
       if(error)throw error;
       tasks=(data||[]).map(row=>normalizeTask(row));
+      migrateTaskCodes(tasks);
       fillFilterOptions();render();
     }
     function setRemoteStatus(user){
@@ -911,13 +967,21 @@
 
     // Event wiring
     $('searchInput').addEventListener('input',render);$('requirementFilter').addEventListener('change',render);$('assigneeFilter').addEventListener('change',render);$('showArchived').addEventListener('change',render);
+    $('taskRequirement').addEventListener('change',()=>{
+      const currentTask=tasks.find(task=>task.id===Number($('taskId').value));
+      $('taskCode').value=currentTask?.requirement===$('taskRequirement').value
+        ?currentTask.taskCode
+        :getNextTaskCode($('taskRequirement').value,currentTask?.id??null);
+    });
     $('themeToggle').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
     $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('csvBtn').addEventListener('click',exportCSV);$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
     // CSV export is available via Ctrl/Cmd+Shift+E to keep the top bar uncluttered.
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();exportCSV();}});
+    document.querySelectorAll('.column').forEach(column=>{
+      column.addEventListener('click',e=>{const addButton=e.target.closest('[data-new-task-status]');if(addButton)openTaskFromColumn(addButton.dataset.newTaskStatus);});
+    });
     document.querySelectorAll('.task-list').forEach(list=>{
-      list.addEventListener('click',e=>{const addButton=e.target.closest('[data-new-task-status]');if(addButton)openTask(null,addButton.dataset.newTaskStatus);});
       list.addEventListener('dragover',e=>{e.preventDefault();const col=list.closest('.column');if(col)col.classList.add('drag-active');e.dataTransfer.dropEffect='move';});
       list.addEventListener('dragleave',e=>{if(!list.contains(e.relatedTarget)){const col=list.closest('.column');if(col)col.classList.remove('drag-active');}});
       list.addEventListener('drop',e=>{e.preventDefault();const col=list.closest('.column');if(col)col.classList.remove('drag-active');const id=Number(e.dataTransfer.getData('text/plain'));const status=list.dataset.status;if(id)changeStatus(id,status);});
@@ -936,6 +1000,7 @@
       try{const raw=window.localStorage.getItem(STORAGE_KEY);saved=raw?JSON.parse(raw):null;storageAvailable=true;}
       catch(err){localReadError=err;storageAvailable=false;}
       tasks=(saved&&Array.isArray(saved.tasks)?saved.tasks:INITIAL_TASKS).map((t,i)=>normalizeTask(t,i));
+      migrateTaskCodes(tasks);
       fillFilterOptions();render();
       if(localReadError){setStorageWarning(localReadError);showToast(storageErrorMessage(localReadError),true);}
       else if(!saved){try{persistLocal(tasks);}catch(err){showToast(err.message||storageErrorMessage(err),true);}}

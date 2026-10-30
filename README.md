@@ -6,11 +6,13 @@ Een HTML-kanbanbord met de 39 bestaande taken uit de oorspronkelijke Excel.
 
 1. **Aanbevolen:** publiceer `index.html` via GitHub Pages en open de `https://...`-link. Open het HTML-bestand niet door erop te dubbelklikken als je wilt dat wijzigingen permanent worden bewaard; sommige browsers blokkeren opslag voor lokale `file://`-bestanden.
 2. Klik op een taak om de omschrijving, status of teamleden te wijzigen. Meerdere teamleden kun je met komma's scheiden. Klik op **Opslaan**.
-3. Klik op **Nieuwe taak** of op de **+** in een lege kolom om een taak toe te voegen. Vanuit een lege kolom krijgt de nieuwe taak meteen de status van die kolom. Zowel het taaklabel als de omschrijving zijn verplicht.
-4. De site controleert nu of opslag echt is gelukt. Als de browser opslag blokkeert, verschijnt een blijvende waarschuwing in plaats van een misleidende melding dat alles is opgeslagen.
-5. Klik op **Back-up** om alle taken, statussen, toegewezen teamleden en het archief als JSON te downloaden. Bewaar geregeld een kopie.
-6. Kies **Importeren** om een JSON-back-up te herstellen. Bestaande taken die niet in de back-up voorkomen worden niet automatisch verwijderd.
-7. Klik op **CSV** om een CSV-bestand voor Excel te exporteren.
+3. Klik op **Nieuwe taak** of ergens in het lege vak van een kolom om een taak toe te voegen. Vanuit een lege kolom krijgt de nieuwe taak meteen de status van die kolom. Een actief teamlid- of onderdeelfilter wordt ook automatisch ingevuld. Onderdeel- en taaknummers worden automatisch gecombineerd, bijvoorbeeld `1.1`; vul alleen de omschrijving in.
+4. Gebruik de pijltjes op een taak om die één status vooruit of terug te zetten, of blijf de kaart naar een andere kolom slepen.
+5. De taken scrollen binnen hun eigen kolom. Onderaan elke kolom staat een subtiele knop om daar een taak toe te voegen.
+6. De site controleert nu of opslag echt is gelukt. Als de browser opslag blokkeert, verschijnt een blijvende waarschuwing in plaats van een misleidende melding dat alles is opgeslagen.
+7. Klik op **Back-up** om alle taken, statussen, toegewezen teamleden en het archief als JSON te downloaden. Bewaar geregeld een kopie.
+8. Kies **Importeren** om een JSON-back-up te herstellen. Bestaande taken die niet in de back-up voorkomen worden niet automatisch verwijderd.
+9. Klik op **CSV** om een CSV-bestand voor Excel te exporteren.
 
 **Belangrijk:** zonder Supabase-project zijn wijzigingen alleen zichtbaar in de browser waarin ze zijn gemaakt. Om het bord met het team te delen, moet je eerst de onderstaande Supabase-configuratie uitvoeren.
 
@@ -26,7 +28,7 @@ GitHub Pages-websites zijn publiek toegankelijk op het internet. Zet dus geen wa
 ## Gedeelde live-synchronisatie instellen
 
 1. Maak een project aan op [Supabase](https://supabase.com/) en wacht tot de database klaar is.
-2. Voer de volledige inhoud van `supabase_setup.sql` uit in **SQL Editor**. Dit maakt de beveiligde tabel aan, schakelt live-updates in en voegt de 39 oorspronkelijke taken toe zonder bestaande taken te overschrijven. Het script zet ook bestaande requirementnummers om naar de bijbehorende requirementnaam. Als je de eerdere versie al hebt uitgevoerd, voer het bijgewerkte script opnieuw uit om de kolom voor meerdere teamleden, requirementnamen en beveiligde online-aanwezigheid toe te voegen. Bestaande taken blijven behouden. De RLS op `realtime.messages` wordt door Supabase beheerd en staat al aan; het script maakt alleen policies aan en probeert die tabel niet te wijzigen.
+2. Voer de volledige inhoud van `supabase_setup.sql` uit in **SQL Editor**. Dit maakt de beveiligde tabel aan, schakelt live-updates in en voegt de 39 oorspronkelijke taken toe zonder bestaande taken te overschrijven. Het script zet ook bestaande requirementnummers om naar de bijbehorende requirementnaam en werkt bestaande taaknummers bij naar de vorm `1.1`. Als je de eerdere versie al hebt uitgevoerd, voer het bijgewerkte script opnieuw uit om de kolom voor meerdere teamleden, requirementnamen, taaknummering en beveiligde online-aanwezigheid toe te voegen. Bestaande taken blijven behouden. De RLS op `realtime.messages` wordt door Supabase beheerd en staat al aan; het script maakt alleen policies aan en probeert die tabel niet te wijzigen.
 3. Maak teamaccounts aan via **Authentication → Users**. Houd openbare registraties uitgeschakeld; alleen accounts die je aanmaakt of uitnodigt kunnen inloggen.
 4. Kopieer de **Project URL** en de **publishable key** (of legacy **anon key**) uit **Project Settings → API**.
 5. Vul deze waarden in bij `SUPABASE_CONFIG` bovenaan het script in `index.html`. De huidige projectconfiguratie is al ingevuld.
@@ -41,8 +43,8 @@ Gebruik nooit een `service_role`- of secret key in de browsercode. De publishabl
 
 - Kolommen **Te doen**, **In behandeling** en **Afgerond**.
 - Automatisch overzicht van actieve taken, lopende taken, afgeronde taken en taken zonder eigenaar.
-- Zoeken en filters op requirementnaam (onderdeel) en teamlid.
-- Taken maken, bewerken, verslepen, archiveren en herstellen.
+- Genummerde onderdelen en taaknummers in de vorm `1.1`, met zoeken en filters op onderdeel en teamlid.
+- Taken maken, bewerken, verslepen, met pijltjes tussen statussen verplaatsen, archiveren en herstellen.
 - Meerdere teamleden aan één taak toewijzen en per teamlid het percentage van alle actieve taken volgen dat is afgerond.
 - Donkere modus met opgeslagen voorkeur en een realtime-lijst van ingelogde teamleden.
 - JSON-back-up/import en CSV-export.

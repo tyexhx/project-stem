@@ -6,7 +6,7 @@
     {
       "id": 1,
       "requirement": "Projectuitvoering en oplevering",
-      "taskCode": "Taak 1",
+      "taskCode": "8.1",
       "description": "Analyse & Voorbereiding: Huidige site onderzoeken, knelpunten inventariseren en content verzamelen.",
       "status": "Afgerond",
       "assignee": "",
@@ -16,7 +16,7 @@
     {
       "id": 2,
       "requirement": "Beheer en Gebruiksvriendelijkheid",
-      "taskCode": "Taak 1",
+      "taskCode": "1.1",
       "description": "Onderzoeken van de huidige website om complexe beheerelementen te identificeren.",
       "status": "To-Do",
       "assignee": "",
@@ -26,7 +26,7 @@
     {
       "id": 3,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 3",
+      "taskCode": "2.1",
       "description": "Opstellen van een stijlgids met schoolkleuren, lettertypes, iconen en huisstijl.",
       "status": "To-Do",
       "assignee": "",
@@ -36,7 +36,7 @@
     {
       "id": 4,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 5",
+      "taskCode": "2.2",
       "description": "Inventariseren en stroomlijnen van de menustructuur (belangrijke info binnen 2 à 3 klikken).",
       "status": "To-Do",
       "assignee": "",
@@ -46,7 +46,7 @@
     {
       "id": 5,
       "requirement": "Schoolteam en Contact",
-      "taskCode": "Taak 3",
+      "taskCode": "5.1",
       "description": "Verzamelen, controleren en integreren van officiële links naar sociale-mediakanalen.",
       "status": "To-Do",
       "assignee": "",
@@ -56,7 +56,7 @@
     {
       "id": 6,
       "requirement": "Veiligheid, Juridisch en Formulieren",
-      "taskCode": "Taak 2",
+      "taskCode": "7.1",
       "description": "Controleren en vastleggen van beeldrechten, licenties en een procedure om foto's eenvoudig te verwijderen.",
       "status": "To-Do",
       "assignee": "",
@@ -66,7 +66,7 @@
     {
       "id": 7,
       "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-      "taskCode": "Taak 1",
+      "taskCode": "3.1",
       "description": "Verzamelen van authentieke schoolfoto's en korte teksten/video's om het dagelijkse schoolleven te tonen.",
       "status": "To-Do",
       "assignee": "",
@@ -76,7 +76,7 @@
     {
       "id": 8,
       "requirement": "Beheer en Gebruiksvriendelijkheid",
-      "taskCode": "Taak 2",
+      "taskCode": "1.2",
       "description": "Selecteren en inrichten van een gebruiksvriendelijk CMS met een visuele pagebuilder (inclusief drag-and-dropfunctionaliteit).",
       "status": "To-Do",
       "assignee": "",
@@ -86,7 +86,7 @@
     {
       "id": 9,
       "requirement": "Beheer en Gebruiksvriendelijkheid",
-      "taskCode": "Taak 3",
+      "taskCode": "1.3",
       "description": "Instellen van herbruikbare sjablonen voor terugkerende onderdelen (nieuws, studierichtingen, evenementen).",
       "status": "To-Do",
       "assignee": "",
@@ -96,7 +96,7 @@
     {
       "id": 10,
       "requirement": "Beheer en Gebruiksvriendelijkheid",
-      "taskCode": "Taak 4",
+      "taskCode": "1.4",
       "description": "Configureren van gebruikersrollen en toegangsrechten (beheerder, leerkrachten, redacteurs) en deze testen.",
       "status": "To-Do",
       "assignee": "",
@@ -106,7 +106,7 @@
     {
       "id": 11,
       "requirement": "Beheer en Gebruiksvriendelijkheid",
-      "taskCode": "Taak 5",
+      "taskCode": "1.5",
       "description": "Instellen van een onderhoudsarm platform met een testomgeving, automatische back-ups en beveiligingsupdates.",
       "status": "To-Do",
       "assignee": "",
@@ -116,7 +116,7 @@
     {
       "id": 12,
       "requirement": "Veiligheid, Juridisch en Formulieren",
-      "taskCode": "Taak 3",
+      "taskCode": "7.2",
       "description": "Instellen van een beveiligde HTTPS-verbinding (TLS-certificaat) en sterke beveiliging voor de beheerdersomgeving (incl. 2FA).",
       "status": "To-Do",
       "assignee": "",
@@ -126,7 +126,7 @@
     {
       "id": 13,
       "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-      "taskCode": "Taak 3",
+      "taskCode": "3.2",
       "description": "Inrichten van een overzichtelijke mediabibliotheek in het CMS voor het eenvoudig beheren en vervangen van foto's.",
       "status": "To-Do",
       "assignee": "",
@@ -136,7 +136,7 @@
     {
       "id": 14,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 1",
+      "taskCode": "2.3",
       "description": "Realiseren van volledige responsiviteit (automatische schaalbaarheid voor smartphones, tablets en pc's).",
       "status": "To-Do",
       "assignee": "",
@@ -146,7 +146,7 @@
     {
       "id": 15,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 2",
+      "taskCode": "2.4",
       "description": "Ontwikkelen van een compact uitklapbaar mobiel menu en grote, touch-vriendelijke knoppen.",
       "status": "To-Do",
       "assignee": "",
@@ -156,7 +156,7 @@
     {
       "id": 16,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 4",
+      "taskCode": "2.5",
       "description": "Ontwerpen van een heldere homepage met duidelijke introductie, snelkoppelingen en doelgroep-ingangen (leerlingen, ouders, personeel, sollicitanten).",
       "status": "To-Do",
       "assignee": "",
@@ -166,7 +166,7 @@
     {
       "id": 17,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 6",
+      "taskCode": "2.6",
       "description": "Implementeren van WCAG-richtlijnen voor toegankelijkheid (kleurcontrast, leesbare lettergroottes, alt-teksten, focusmarkeringen).",
       "status": "To-Do",
       "assignee": "",
@@ -176,7 +176,7 @@
     {
       "id": 18,
       "requirement": "Design, Layout en Schermresoluties",
-      "taskCode": "Taak 7",
+      "taskCode": "2.7",
       "description": "Vormgeven en testen van de Google Maps-locatiekaart in de huisstijl.",
       "status": "To-Do",
       "assignee": "",
@@ -186,7 +186,7 @@
     {
       "id": 19,
       "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-      "taskCode": "Taak 2",
+      "taskCode": "3.3",
       "description": "Visueel uitwerken van de vier kernwaarden (Eigentijds leren, Zelfstandigheid, Samen, Betrokken) met iconen en beelden.",
       "status": "To-Do",
       "assignee": "",
@@ -196,7 +196,7 @@
     {
       "id": 20,
       "requirement": "Visie, Sfeer en Content (Foto's & Waarden)",
-      "taskCode": "Taak 4",
+      "taskCode": "3.4",
       "description": "Toevoegen van interactieve elementen aan afbeeldingen (zoals aanklikbare zones of verhalen uit de praktijk).",
       "status": "To-Do",
       "assignee": "",
@@ -206,7 +206,7 @@
     {
       "id": 21,
       "requirement": "Studierichtingen en Interactief Spoor",
-      "taskCode": "Taak 1",
+      "taskCode": "4.1",
       "description": "Groeperen van graden, studierichtingen en lessentabellen in een uniforme, mobiel-vriendelijke structuur.",
       "status": "To-Do",
       "assignee": "",
@@ -216,7 +216,7 @@
     {
       "id": 22,
       "requirement": "Schoolteam en Contact",
-      "taskCode": "Taak 1",
+      "taskCode": "5.2",
       "description": "Aanmaken van een overzichtelijke 'Ons Team'-pagina met profielsjablonen per personeelslid (functie, vakken, foto, contactopties).",
       "status": "To-Do",
       "assignee": "",
@@ -226,7 +226,7 @@
     {
       "id": 23,
       "requirement": "Schoolteam en Contact",
-      "taskCode": "Taak 2",
+      "taskCode": "5.3",
       "description": "Inrichten van een centrale contactpagina ingedeeld op onderwerp (inschrijvingen, administratie, begeleiding) en opnemen in de footer.",
       "status": "To-Do",
       "assignee": "",
@@ -236,7 +236,7 @@
     {
       "id": 24,
       "requirement": "Veiligheid, Juridisch en Formulieren",
-      "taskCode": "Taak 1",
+      "taskCode": "7.3",
       "description": "Implementeren van een correcte cookiebanner en AVG/GDPR-compatibel privacybeleid.",
       "status": "To-Do",
       "assignee": "",
@@ -246,7 +246,7 @@
     {
       "id": 25,
       "requirement": "Studierichtingen en Interactief Spoor",
-      "taskCode": "Taak 2",
+      "taskCode": "4.2",
       "description": "Bouwen van een vergelijkingsfunctie voor studierichtingen (vakken, uren, vervolgtrajecten).",
       "status": "To-Do",
       "assignee": "",
@@ -256,7 +256,7 @@
     {
       "id": 26,
       "requirement": "Studierichtingen en Interactief Spoor",
-      "taskCode": "Taak 3",
+      "taskCode": "4.3",
       "description": "Ontwikkelen van de interactieve keuzehulp 'Kies je Spoor' (gebaseerd op een treintjes- en statenthema).",
       "status": "To-Do",
       "assignee": "",
@@ -266,7 +266,7 @@
     {
       "id": 27,
       "requirement": "Studierichtingen en Interactief Spoor",
-      "taskCode": "Taak 4",
+      "taskCode": "4.4",
       "description": "Implementeren van een op interesses gebaseerde vragenlijst in de keuzehulp met vrijblijvende suggesties.",
       "status": "To-Do",
       "assignee": "",
@@ -276,7 +276,7 @@
     {
       "id": 28,
       "requirement": "AI Chatbot, Robot en Zoekfunctie",
-      "taskCode": "Taak 5",
+      "taskCode": "6.1",
       "description": "Bouwen van een geavanceerde zoekbalk in de header met directe zoeksuggesties en ondersteuning voor alle apparaten.",
       "status": "To-Do",
       "assignee": "",
@@ -286,7 +286,7 @@
     {
       "id": 29,
       "requirement": "Veiligheid, Juridisch en Formulieren",
-      "taskCode": "Taak 4",
+      "taskCode": "7.4",
       "description": "Bouwen van een online vacaturepagina en digitaal sollicitatieformulier met beveiligde doorsturing naar de directie.",
       "status": "To-Do",
       "assignee": "",
@@ -296,7 +296,7 @@
     {
       "id": 30,
       "requirement": "Veiligheid, Juridisch en Formulieren",
-      "taskCode": "Taak 5",
+      "taskCode": "7.5",
       "description": "Structureren van de pagina voor inschrijvingen en administratieve aanvragen met duidelijke instructies en bevestigingsmeldingen.",
       "status": "To-Do",
       "assignee": "",
@@ -306,7 +306,7 @@
     {
       "id": 31,
       "requirement": "AI Chatbot, Robot en Zoekfunctie",
-      "taskCode": "Taak 1",
+      "taskCode": "6.2",
       "description": "Integreren van een subtiel, niet-storend chatboticoon onderaan de website.",
       "status": "To-Do",
       "assignee": "",
@@ -316,7 +316,7 @@
     {
       "id": 32,
       "requirement": "AI Chatbot, Robot en Zoekfunctie",
-      "taskCode": "Taak 2",
+      "taskCode": "6.3",
       "description": "Koppelen van een centrale kennisbank (schoolreglement, kalender, FAQ's) aan de chatbot voor betrouwbare antwoorden buiten de openingsuren.",
       "status": "To-Do",
       "assignee": "",
@@ -326,7 +326,7 @@
     {
       "id": 33,
       "requirement": "AI Chatbot, Robot en Zoekfunctie",
-      "taskCode": "Taak 3",
+      "taskCode": "6.4",
       "description": "Vormgeven van het chatbotvenster met de schoolrobot (inclusief eigen naam en vriendelijke begroeting).",
       "status": "To-Do",
       "assignee": "",
@@ -336,7 +336,7 @@
     {
       "id": 34,
       "requirement": "AI Chatbot, Robot en Zoekfunctie",
-      "taskCode": "Taak 4",
+      "taskCode": "6.5",
       "description": "Instellen van een e-mailfallback / doorverwijsformulier wanneer de chatbot de vraag niet kan beantwoorden.",
       "status": "To-Do",
       "assignee": "",
@@ -346,7 +346,7 @@
     {
       "id": 35,
       "requirement": "Projectuitvoering en oplevering",
-      "taskCode": "Taak 2",
+      "taskCode": "8.2",
       "description": "Ontwikkeling: CMS inrichten, design bouwen, content migreren en technische features (chatbot, spoor, zoekfunctie) koppelen.",
       "status": "To-Do",
       "assignee": "",
@@ -356,7 +356,7 @@
     {
       "id": 36,
       "requirement": "Studierichtingen en Interactief Spoor",
-      "taskCode": "Taak 5",
+      "taskCode": "4.5",
       "description": "Testen van de studiekeuzehulp met leerlingen en ouders.",
       "status": "To-Do",
       "assignee": "",
@@ -366,7 +366,7 @@
     {
       "id": 37,
       "requirement": "Projectuitvoering en oplevering",
-      "taskCode": "Taak 3",
+      "taskCode": "8.3",
       "description": "Testfase: Uitvoeren van responsive tests, linkchecks, laadsnelheidsoptimalisatie en gebruikersgroep-tests (leerlingen/ouders).",
       "status": "To-Do",
       "assignee": "",
@@ -376,7 +376,7 @@
     {
       "id": 38,
       "requirement": "Beheer en Gebruiksvriendelijkheid",
-      "taskCode": "Taak 6",
+      "taskCode": "1.6",
       "description": "Opstellen van een handleiding en organiseren van een praktijktest voor het schoolteam.",
       "status": "To-Do",
       "assignee": "",
@@ -386,7 +386,7 @@
     {
       "id": 39,
       "requirement": "Projectuitvoering en oplevering",
-      "taskCode": "Taak 4",
+      "taskCode": "8.4",
       "description": "Oplevering & Onderhoud: Volledige back-up maken, website publiceren, schoolteam opleiden en een vaste beheerder aanwijzen voor updates.",
       "status": "To-Do",
       "assignee": "",
