@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#f5f7fb">
+  <meta name="theme-color" content="#f6f1e9">
   <meta name="description" content="Overzichtelijk Kanbanbord voor de vernieuwing van de schoolwebsite.">
   <title>Project Kanban — Vernieuwing schoolwebsite</title>
   <style>
@@ -69,6 +69,108 @@
     @media(max-width:760px){.column{height:min(78vh,820px);min-height:440px}.task-list{min-height:0}.column-add-task.is-empty{flex-basis:180px;min-height:180px}}
     @media(max-width:420px){.metrics{grid-template-columns:1fr 1fr}.metric{align-items:flex-start;flex-direction:column;gap:7px}.metric-detail{white-space:normal}.top-actions .btn{padding:9px 8px;font-size:11px}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.dialog-actions{flex-wrap:wrap}.dialog-actions>.btn{order:2}.right-actions{margin-left:auto}}
   </style>
+  <style>
+    :root{
+      color-scheme:light;
+      --ink:#382f28;--muted:#766a5e;--line:#e8dfd3;--surface:#fffdf9;--bg:#f6f1e9;
+      --purple:#896744;--purple-soft:#f1e7d9;--blue:#6c8290;--blue-soft:#e8eef0;
+      --green:#627a61;--green-soft:#e7eee4;--amber:#a87935;--amber-soft:#f7eedc;
+      --red:#a95346;--red-soft:#f8e9e5;--shadow:0 8px 25px rgba(67,49,31,.07);
+      --radius:16px;--focus:#b78e62
+    }
+    :root[data-theme="dark"]{
+      color-scheme:dark;
+      --ink:#eee5d7;--muted:#b6ad9e;--line:#46463e;--surface:#292b27;--bg:#1d211e;
+      --purple:#d0a16c;--purple-soft:#41372c;--blue:#96aaa7;--blue-soft:#2d3b39;
+      --green:#a4b582;--green-soft:#343d2e;--amber:#e0b56e;--amber-soft:#453a29;
+      --red:#e29a8d;--red-soft:#442e2b;--shadow:0 10px 28px rgba(0,0,0,.2);
+      --focus:#d6ad7b
+    }
+    :root[data-theme="dark"] body{background:radial-gradient(ellipse at 50% 0%,#30291f 0,transparent 55%),var(--bg)}
+    :root[data-theme="light"] body{background:linear-gradient(180deg,#faf6ef 0,var(--bg) 38rem)}
+    .topbar{padding-bottom:16px;border-bottom:1px solid var(--line)}
+    .pill,.btn,.control,.column-count,.task-card,.metric,.team-panel,.archived-section{
+      color:var(--ink);background:var(--surface);border-color:var(--line)
+    }
+    .btn{color:var(--ink)}
+    .btn.primary{background:var(--purple);border-color:var(--purple);color:#fffaf2;box-shadow:0 4px 10px #89674426}
+    .btn.primary:hover{background:#765638}
+    .btn.danger{background:var(--red-soft);border-color:#e7c9bd;color:var(--red)}
+    .btn.subtle{color:var(--muted)}
+    .column{background:#eee8df}
+    .column.drag-active{background:#f5ecde;border-color:#c49b6a}
+    .task-card{border-color:var(--line);box-shadow:0 2px 6px rgba(67,49,31,.035)}
+    .task-card:hover{border-color:#d0bfa9;box-shadow:0 6px 17px rgba(67,49,31,.085)}
+    .metric{background:#fffaf3}
+    .notice{background:#f3ece1;border-color:#e8dccb;color:#675541}
+    .notice strong{color:#4b3b29}
+    .progress-track,.member-progress-track{background:#e8e1d6}
+    .progress-fill,.member-progress-fill{background:linear-gradient(90deg,#ac8258,#72876b)}
+    .req-tag{background:var(--purple-soft);color:#765738}
+    .empty-column{background:#f3ede4;border-color:#e4d9ca}
+    .field input,.field select,.field textarea{background:var(--surface);border-color:var(--line);color:var(--ink)}
+    dialog{background:var(--surface);color:var(--ink);border-color:var(--line)}
+    dialog::backdrop{background:#31261c80}
+    .toast{background:#fffdf9;color:var(--ink);border-color:var(--line)}
+    :root[data-theme="dark"] .topbar{background:#242721;border-color:var(--line)}
+    :root[data-theme="dark"] .pill,:root[data-theme="dark"] .btn,:root[data-theme="dark"] .control,
+    :root[data-theme="dark"] .column-count,:root[data-theme="dark"] .task-card,
+    :root[data-theme="dark"] .metric,:root[data-theme="dark"] .team-panel,
+    :root[data-theme="dark"] .archived-section,:root[data-theme="dark"] .auth-card{
+      color:var(--ink);background:var(--surface);border-color:var(--line)
+    }
+    :root[data-theme="dark"] .btn.primary,:root[data-theme="dark"] .btn.primary:hover{background:var(--purple);border-color:var(--purple);color:#241b12}
+    :root[data-theme="dark"] .btn.danger{background:var(--red-soft);border-color:var(--line);color:var(--red)}
+    :root[data-theme="dark"] .btn.subtle{color:var(--muted)}
+    :root[data-theme="dark"] .btn:hover,:root[data-theme="dark"] .close-btn:hover{background:#35372f}
+    :root[data-theme="dark"] .notice{background:#353126;border-color:#514633;color:#e3d2b6}
+    :root[data-theme="dark"] .notice strong{color:#f3dfbd}
+    :root[data-theme="dark"] .notice.storage-warning{background:#3b3024;border-color:#65503a;color:#f0d2a6}
+    :root[data-theme="dark"] .metric-icon{background:var(--purple-soft);color:var(--purple)}
+    :root[data-theme="dark"] .metric:nth-child(2) .metric-icon{background:var(--blue-soft);color:var(--blue)}
+    :root[data-theme="dark"] .metric:nth-child(3) .metric-icon{background:var(--green-soft);color:var(--green)}
+    :root[data-theme="dark"] .metric:nth-child(4) .metric-icon{background:var(--amber-soft);color:var(--amber)}
+    :root[data-theme="dark"] .column{background:#292c28}
+    :root[data-theme="dark"] .column.drag-active{background:#3a3127;border-color:var(--purple)}
+    :root[data-theme="dark"] .task-card:hover{border-color:#777060}
+    :root[data-theme="dark"] .req-tag{background:var(--purple-soft);color:#e5c69e}
+    :root[data-theme="dark"] .avatar{background:#3a3d36;color:var(--ink)}
+    :root[data-theme="dark"] .owner.unassigned .avatar{background:var(--amber-soft);color:var(--amber)}
+    :root[data-theme="dark"] .field input,:root[data-theme="dark"] .field select,
+    :root[data-theme="dark"] .field textarea{background:#222520;border-color:var(--line);color:var(--ink)}
+    :root[data-theme="dark"] .field label{color:var(--ink)}
+    :root[data-theme="dark"] .column-add-task:hover,:root[data-theme="dark"] .column-add-task:focus-visible{background:#ffffff08;border-color:#ffffff20;color:var(--ink)}
+    :root[data-theme="dark"] .column-add-task.is-empty{border-color:#ffffff20}
+    :root[data-theme="dark"] .online-avatar{background:var(--green-soft);color:var(--green)}
+    :root[data-theme="dark"] .task-move-button:hover{background:#ffffff0d;color:var(--ink)}
+    :root[data-theme="dark"] .member-progress-track,:root[data-theme="dark"] .progress-track{background:#3a3c35}
+    :root[data-theme="dark"] .progress-fill,:root[data-theme="dark"] .member-progress-fill{background:linear-gradient(90deg,#d0a16c,#9cae7c)}
+    :root[data-theme="dark"] .empty-column{background:#242721;border-color:#535348}
+    :root[data-theme="dark"] .archived-section{background:var(--surface)}
+    :root[data-theme="dark"] dialog{background:var(--surface);color:var(--ink)}
+    :root[data-theme="dark"] dialog::backdrop{background:#100f0bcc}
+    :root[data-theme="dark"] .close-btn{color:var(--muted)}
+    :root[data-theme="dark"] .toast{background:#34372f;color:var(--ink);border-color:var(--line)}
+    :root[data-theme="dark"] .toast.error{background:#442e2b;color:#f2c2b9;border-color:#6a413a}
+    :root[data-theme="dark"] button:focus-visible,:root[data-theme="dark"] input:focus-visible,
+    :root[data-theme="dark"] select:focus-visible,:root[data-theme="dark"] textarea:focus-visible,
+    :root[data-theme="dark"] [tabindex]:focus-visible{outline-color:var(--focus)}
+    :root[data-theme="light"] button:focus-visible,:root[data-theme="light"] input:focus-visible,
+    :root[data-theme="light"] select:focus-visible,:root[data-theme="light"] textarea:focus-visible,
+    :root[data-theme="light"] [tabindex]:focus-visible{outline-color:var(--focus)}
+    .brand-mark{background:linear-gradient(140deg,#a17b52,#775535);box-shadow:0 7px 18px #8b69402b}
+    :root[data-theme="dark"] .brand-mark{background:linear-gradient(140deg,#dbad73,#a76543);box-shadow:0 7px 18px #d19a6233}
+    .brand-copy h1{font-family:Georgia,"Times New Roman",serif;font-weight:600;letter-spacing:-.4px}
+    .board-nav{display:flex;gap:8px;overflow-x:auto;padding:2px 0 8px;margin:-7px 0 11px;scrollbar-width:thin}
+    .board-nav a{flex:0 0 auto;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--muted);font-size:11px;font-weight:700;text-decoration:none}
+    .board-nav a:hover{border-color:var(--purple);color:var(--ink)}
+    .trash-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:8px}
+    .archived-head{align-items:center}
+    .archived-head-actions{display:flex;align-items:center;gap:10px}
+    .trash-card{border:0;border-radius:13px;background:transparent;padding:0}
+    .empty-trash{padding:18px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);text-align:center;background:var(--bg)}
+    @media(max-width:760px){.board-nav{margin-top:-3px}.archived-head{align-items:flex-start}.archived-head-actions{align-items:flex-end;flex-direction:column;gap:5px}}
+  </style>
 </head>
 <body>
   <main class="app">
@@ -78,7 +180,7 @@
         <div class="brand-copy"><h1>Project Kanban</h1><div class="subtitle">Vernieuwing schoolwebsite · teamoverzicht</div></div>
       </div>
       <div class="top-actions">
-        <button class="btn" id="themeToggle" type="button" aria-pressed="false" title="Schakel donkere modus in">🌙 Donker</button>
+        <button class="btn" id="themeToggle" type="button" aria-pressed="false" title="Schakel kampvuurthema in">🔥 Kampvuur</button>
         <div id="connectionPill" class="pill"><span class="pill-dot"></span><span id="connectionText">Lokaal opgeslagen</span></div>
         <button class="btn" id="exportBtn" type="button" title="Download een volledige JSON-back-up"><span class="icon">↧</span> Back-up</button>
         <button class="btn" id="importBtn" type="button" title="Importeer een eerdere JSON-back-up"><span class="icon">↥</span> Importeren</button>
@@ -95,7 +197,7 @@
       <div class="overview-head"><h2 class="section-title">Project in één oogopslag</h2><div id="progressCopy" class="progress-copy">0% afgerond</div></div>
       <div class="progress-track" role="progressbar" aria-label="Percentage afgeronde taken" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
       <div class="metrics">
-        <div class="metric"><div class="metric-icon">▦</div><div><div class="metric-label">Actieve taken</div><div class="metric-value" id="totalCount">39</div><div class="metric-detail">Exclusief gearchiveerde taken</div></div></div>
+        <div class="metric"><div class="metric-icon">▦</div><div><div class="metric-label">Actieve taken</div><div class="metric-value" id="totalCount">39</div><div class="metric-detail">Niet in de prullenmand</div></div></div>
         <div class="metric"><div class="metric-icon">↗</div><div><div class="metric-label">In behandeling</div><div class="metric-value" id="doingCount">0</div><div class="metric-detail">Taken waar nu aan gewerkt wordt</div></div></div>
         <div class="metric"><div class="metric-icon">✓</div><div><div class="metric-label">Afgerond</div><div class="metric-value" id="doneCount">1</div><div class="metric-detail">Voltooide projecttaken</div></div></div>
         <div class="metric"><div class="metric-icon">♙</div><div><div class="metric-label">Zonder eigenaar</div><div class="metric-value" id="unassignedCount">39</div><div class="metric-detail">Nog aan een teamlid toe te wijzen</div></div></div>
@@ -113,22 +215,34 @@
       </div>
     </section>
 
+    <nav class="board-nav" aria-label="Snel naar een taakstatus">
+      <a href="#column-todo">Te doen</a>
+      <a href="#column-doing">In behandeling</a>
+      <a href="#column-done">Afgerond</a>
+    </nav>
+
     <section class="toolbar" aria-label="Taken zoeken en filteren">
       <div class="search-wrap"><span class="search-icon" aria-hidden="true">⌕</span><input class="control search" id="searchInput" type="search" placeholder="Zoek taak, onderdeel of omschrijving…" aria-label="Zoek taken"></div>
       <select class="control filter" id="requirementFilter" aria-label="Filter op onderdeel"><option value="">Alle onderdelen</option></select>
       <select class="control filter" id="assigneeFilter" aria-label="Filter op eigenaar"><option value="">Alle teamleden</option><option value="__unassigned">Niet toegewezen</option></select>
-      <div class="toolbar-end"><label class="archive-toggle"><input id="showArchived" type="checkbox"> Toon archief</label><span id="resultsCount" class="result-count">39 taken</span></div>
+      <div class="toolbar-end"><button class="btn small" id="trashToggle" type="button" aria-expanded="false" aria-controls="archivedSection">🗑 Prullenmand · 0</button><span id="resultsCount" class="result-count">39 taken</span></div>
     </section>
 
     <section class="board" id="board" aria-label="Kanbanbord">
-      <div class="column todo" data-status="To-Do"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">TE DOEN</h2><div class="column-subtitle">Nog op te pakken</div></div></div><span class="column-count" id="count-todo">38</span></div><div class="task-list" id="list-todo" data-status="To-Do"></div><button id="add-todo" class="column-add-task is-empty" type="button" data-new-task-status="To-Do" aria-label="Nieuwe taak aanmaken bij Te doen"><span class="column-add-icon">＋</span>Voeg hier een taak toe.</button></div>
-      <div class="column doing" data-status="In behandeling"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">IN BEHANDELING</h2><div class="column-subtitle">Actief werk</div></div></div><span class="column-count" id="count-doing">0</span></div><div class="task-list" id="list-doing" data-status="In behandeling"></div><button id="add-doing" class="column-add-task is-empty" type="button" data-new-task-status="In behandeling" aria-label="Nieuwe taak aanmaken bij In behandeling"><span class="column-add-icon">＋</span>Er wordt momenteel niet aan taken gewerkt. Klik hier om een taak toe te voegen.</button></div>
-      <div class="column done" data-status="Afgerond"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">AFGEROND</h2><div class="column-subtitle">Klaar en gecontroleerd</div></div></div><span class="column-count" id="count-done">1</span></div><div class="task-list" id="list-done" data-status="Afgerond"></div><button id="add-done" class="column-add-task is-empty" type="button" data-new-task-status="Afgerond" aria-label="Nieuwe taak aanmaken bij Afgerond"><span class="column-add-icon">＋</span>Voeg hier een taak toe.</button></div>
+      <div class="column todo" id="column-todo" data-status="To-Do"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">TE DOEN</h2><div class="column-subtitle">Nog op te pakken</div></div></div><span class="column-count" id="count-todo">38</span></div><div class="task-list" id="list-todo" data-status="To-Do"></div><button id="add-todo" class="column-add-task is-empty" type="button" data-new-task-status="To-Do" aria-label="Nieuwe taak aanmaken bij Te doen"><span class="column-add-icon">＋</span>Voeg hier een taak toe.</button></div>
+      <div class="column doing" id="column-doing" data-status="In behandeling"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">IN BEHANDELING</h2><div class="column-subtitle">Actief werk</div></div></div><span class="column-count" id="count-doing">0</span></div><div class="task-list" id="list-doing" data-status="In behandeling"></div><button id="add-doing" class="column-add-task is-empty" type="button" data-new-task-status="In behandeling" aria-label="Nieuwe taak aanmaken bij In behandeling"><span class="column-add-icon">＋</span>Er wordt momenteel niet aan taken gewerkt. Klik hier om een taak toe te voegen.</button></div>
+      <div class="column done" id="column-done" data-status="Afgerond"><div class="column-header"><div class="column-heading"><span class="column-dot"></span><div><h2 class="column-title">AFGEROND</h2><div class="column-subtitle">Klaar en gecontroleerd</div></div></div><span class="column-count" id="count-done">1</span></div><div class="task-list" id="list-done" data-status="Afgerond"></div><button id="add-done" class="column-add-task is-empty" type="button" data-new-task-status="Afgerond" aria-label="Nieuwe taak aanmaken bij Afgerond"><span class="column-add-icon">＋</span>Voeg hier een taak toe.</button></div>
     </section>
     <div class="board-help"><span>↔</span> Sleep een kaart naar een andere kolom om de status te wijzigen. Klik op een kaart om details aan te passen.</div>
 
-    <section id="archivedSection" class="archived-section hidden"><div class="archived-head"><h2 class="section-title">Gearchiveerde taken</h2><span class="result-count" id="archivedCount">0 taken</span></div><div id="archivedList" class="archived-list"></div></section>
-    <p class="footer-note">Back-ups bevatten alle taken inclusief archief. Bewaar regelmatig een kopie van het JSON-bestand.</p>
+    <section id="archivedSection" class="archived-section hidden" aria-label="Prullenmand">
+      <div class="archived-head">
+        <div><h2 class="section-title">Prullenmand</h2><p class="progress-copy">Taken blijven hier staan tot je ze terugzet of permanent verwijdert.</p></div>
+        <div class="archived-head-actions"><span class="result-count" id="archivedCount">0 taken</span><button class="btn danger small" id="emptyTrashBtn" type="button" disabled>Prullenmand leegmaken</button></div>
+      </div>
+      <div id="archivedList" class="archived-list"></div>
+    </section>
+    <p class="footer-note">Back-ups bevatten alle taken inclusief de prullenmand. Bewaar regelmatig een kopie van het JSON-bestand.</p>
   </main>
 
   <dialog id="taskDialog" aria-labelledby="dialogTitle">
@@ -142,7 +256,7 @@
         <div class="field"><label for="taskStatus">Status</label><select id="taskStatus"><option value="To-Do">Te doen</option><option value="In behandeling">In behandeling</option><option value="Afgerond">Afgerond</option></select></div>
         <div class="field full"><label for="taskAssignee">Toegewezen aan</label><input id="taskAssignee" maxlength="500" list="assigneeSuggestions" placeholder="Teamleden, gescheiden door komma's (optioneel)"><datalist id="assigneeSuggestions"></datalist><div class="hint">Je kunt meerdere teamleden invullen, gescheiden door komma's.</div></div>
       </div>
-      <div class="dialog-actions"><button id="archiveBtn" class="btn danger" type="button">Archiveren</button><div class="right-actions"><button id="cancelBtn" class="btn" type="button">Annuleren</button><button class="btn primary" type="submit">Opslaan</button></div></div>
+      <div class="dialog-actions"><button id="archiveBtn" class="btn danger" type="button">Verplaatsen naar prullenmand</button><div class="right-actions"><button id="cancelBtn" class="btn" type="button">Annuleren</button><button class="btn primary" type="submit">Opslaan</button></div></div>
     </form>
   </dialog>
 
@@ -589,6 +703,7 @@
     let activeTaskId = null;
     let toastTimer = null;
     let storageAvailable = true;
+    let trashOpen = false;
     let presenceChannel = null;
     const DEFAULT_MODE_NOTICE = '<span class="notice-icon">ⓘ</span><div><strong>Browseropslag actief.</strong> Wijzigingen worden automatisch in deze browser bewaard. Om ze op een ander apparaat te zetten, exporteer je een back-up en laat je die importeren. Voor directe gedeelde updates tussen teamleden is de optionele Supabase-configuratie nodig.</div>';
 
@@ -677,7 +792,7 @@
     function revealTaskAfterSave(task){
       // Clear filters that would hide the just-saved task, so it is immediately visible.
       $('searchInput').value='';$('requirementFilter').value='';$('assigneeFilter').value='';
-      if(task.archived)$('showArchived').checked=true;
+      if(task.archived)trashOpen=true;
     }
     function showToast(message, error=false){
       const el=$("toast");el.textContent=message;el.classList.toggle("error",error);el.classList.add("show");
@@ -744,22 +859,34 @@
         const list=sorted(active.filter(t=>t.status===status&&matches(t,filters)));
         visible+=list.length;$('count-'+colId).textContent=list.length;
         const taskList=$('list-'+colId);
-        taskList.innerHTML=list.map(task=>cardHTML(task)).join();
+        taskList.innerHTML=list.map(task=>cardHTML(task)).join('');
         const addButton=$('add-'+colId);
         addButton.classList.toggle('is-empty',list.length===0);
         addButton.innerHTML=`<span class="column-add-icon">＋</span>${list.length?'Taak toevoegen':filters.q||filters.req||filters.owner?'Geen taken gevonden met deze filters. Klik hier om een taak toe te voegen.':status==='To-Do'?'Alles opgepakt — goed bezig! Klik hier om een taak toe te voegen.':status==='In behandeling'?'Er wordt momenteel niet aan taken gewerkt. Klik hier om een taak toe te voegen.':'Nog geen taken afgerond. Klik hier om een taak toe te voegen.'}`;
       }
-      const archives=sorted(tasks.filter(t=>t.archived&&matches(t,filters)));
+      const allArchived=sorted(tasks.filter(t=>t.archived));
+      const archives=allArchived.filter(t=>matches(t,filters));
       $('resultsCount').textContent=`${visible} van ${active.length} actieve taken`;
-      $('archivedSection').classList.toggle('hidden',!$('showArchived').checked);
+      $('archivedSection').classList.toggle('hidden',!trashOpen);
+      $('trashToggle').textContent=`🗑 Prullenmand · ${allArchived.length}`;
+      $('trashToggle').setAttribute('aria-expanded',String(trashOpen));
       $('archivedCount').textContent=`${archives.length} taken`;
-      $('archivedList').innerHTML=archives.length?archives.map(t=>`<div class="archived-card">${cardHTML(t,false)}</div>`).join(''):'<div class="empty-column">Geen gearchiveerde taken gevonden.</div>';
+      $('emptyTrashBtn').disabled=allArchived.length===0;
+      $('archivedList').innerHTML=archives.length?archives.map(t=>`<div class="trash-card">${cardHTML(t,false)}<div class="trash-actions"><button class="btn small" type="button" data-trash-action="restore" aria-label="Taak ${escapeHTML(t.taskCode)} terugzetten">Terugzetten</button><button class="btn danger small" type="button" data-trash-action="delete" aria-label="Taak ${escapeHTML(t.taskCode)} permanent verwijderen">Permanent verwijderen</button></div></div>`).join(''):`<div class="empty-trash">${allArchived.length?'Geen prullenmandtaken gevonden met deze filters.':'De prullenmand is leeg.'}</div>`;
       renderTeamInsights();
       bindCards();
     }
     function bindCards(){
       document.querySelectorAll('[data-task-id]').forEach(card=>{
         card.addEventListener('click',e=>{
+          const trashAction=e.target.closest('[data-trash-action]');
+          if(trashAction){
+            e.stopPropagation();
+            const id=Number(card.dataset.taskId);
+            if(trashAction.dataset.trashAction==='restore')setTaskArchived(id,false);
+            else if(trashAction.dataset.trashAction==='delete')permanentlyDeleteTask(id);
+            return;
+          }
           const moveButton=e.target.closest('[data-move-status]');
           if(moveButton){e.stopPropagation();changeStatus(Number(card.dataset.taskId),moveButton.dataset.moveStatus);return;}
           openTask(Number(card.dataset.taskId));
@@ -822,9 +949,9 @@
     }
     function openTask(id, newTaskStatus='To-Do', defaults={}){
       const t=id===null?null:tasks.find(x=>x.id===id);if(id!==null&&!t)return;activeTaskId=id;
-      $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of teamleden bij.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
+      $('dialogTitle').textContent=t?`Taak #${t.id} aanpassen`:'Nieuwe taak toevoegen';$('dialogSubtitle').textContent=t?'Werk de omschrijving, status of teamleden bij, of verplaats de taak naar de prullenmand.':'Vul de details in. De nieuwe taak verschijnt meteen op het bord.';
       $('taskId').value=t?t.id:'';$('taskRequirement').value=t?.requirement||defaults.requirement||REQUIREMENTS[0];$('taskCode').value=t?.taskCode||getNextTaskCode($('taskRequirement').value);$('taskDescription').value=t?.description||'';$('taskStatus').value=t?.status||newTaskStatus;$('taskAssignee').value=t?.assignees.join(', ')||defaults.assignee||'';
-      $('archiveBtn').textContent=t?(t.archived?'Herstellen uit archief':'Archiveren'):'Annuleren';$('archiveBtn').classList.toggle('danger',!t||!t.archived);$('archiveBtn').disabled=false;
+      $('archiveBtn').textContent=t?(t.archived?'Terugzetten uit prullenmand':'Verplaatsen naar prullenmand'):'Annuleren';$('archiveBtn').classList.toggle('danger',!t||!t.archived);$('archiveBtn').disabled=false;
       if(t&&t.archived){$('taskStatus').disabled=true;}else{$('taskStatus').disabled=false;}
       $('taskDialog').showModal();
     }
@@ -835,20 +962,68 @@
         assignee:filters.owner&&filters.owner!=='__unassigned'?filters.owner:''
       });
     }
-    async function archiveActive(){
-      const id=$('taskId').value;if(id===''){ $('taskDialog').close();return; }
-      const ix=tasks.findIndex(t=>t.id===Number(id));if(ix<0)return;
-      const task=tasks[ix];const next={...task,archived:!task.archived};
+    async function setTaskArchived(id,archived,closeDialog=false){
+      const ix=tasks.findIndex(t=>t.id===id);if(ix<0)return;
+      const task=tasks[ix];if(task.archived===archived)return;
+      const next={...task,archived};
       try{
         if(syncMode)await persistTask(next);
-        tasks[ix]=next;
-        if(!syncMode){try{persistLocal(tasks);}catch(storageErr){fillFilterOptions();render();$('taskDialog').close();showToast(storageErr.message||storageErrorMessage(storageErr),true);return;}}
-        fillFilterOptions();render();$('taskDialog').close();showToast(next.archived?'Taak gearchiveerd.':'Taak teruggezet op het bord.');
+        else{
+          const nextTasks=[...tasks];nextTasks[ix]=next;
+          persistLocal(nextTasks);tasks=nextTasks;
+        }
+        if(syncMode)tasks[ix]=next;
+        if(archived)trashOpen=true;
+        fillFilterOptions();render();
+        if(closeDialog)$('taskDialog').close();
+        showToast(archived?'Taak naar de prullenmand verplaatst.':'Taak teruggezet op het bord.');
       }catch(err){showToast('Wijziging mislukt: '+(err.message||'controleer de verbinding'),true);}
+    }
+    async function archiveActive(){
+      const id=$('taskId').value;
+      if(id===''){ $('taskDialog').close();return; }
+      const task=tasks.find(t=>t.id===Number(id));
+      if(task)await setTaskArchived(task.id,!task.archived,true);
+    }
+    async function permanentlyDeleteTasks(ids){
+      if(!ids.length)return;
+      if(syncMode){
+        const {data,error}=await supabaseClient.from('tasks').delete().in('id',ids).select('id');
+        if(error)throw error;
+        const deleted=new Set((data||[]).map(row=>Number(row.id)));
+        if(ids.some(id=>!deleted.has(id))){
+          await loadRemoteTasks();
+          throw new Error('Niet alle taken konden uit de database worden verwijderd. De prullenmand is opnieuw geladen.');
+        }
+        tasks=tasks.filter(task=>!deleted.has(task.id));
+      }else{
+        const deleted=new Set(ids);
+        const nextTasks=tasks.filter(task=>!deleted.has(task.id));
+        persistLocal(nextTasks);tasks=nextTasks;
+      }
+      fillFilterOptions();render();
+    }
+    async function permanentlyDeleteTask(id){
+      const task=tasks.find(t=>t.id===id);
+      if(!task?.archived)return;
+      if(!confirm(`Taak ${task.taskCode} permanent verwijderen? Dit kan niet ongedaan worden gemaakt.`))return;
+      try{
+        await permanentlyDeleteTasks([id]);
+        showToast(`Taak ${task.taskCode} permanent verwijderd.`);
+      }catch(err){showToast('Permanent verwijderen mislukt: '+(err.message||'controleer de opslag'),true);}
+    }
+    async function emptyTrash(){
+      const ids=tasks.filter(task=>task.archived).map(task=>task.id);
+      if(!ids.length)return;
+      if(!confirm(`De prullenmand bevat ${ids.length} ${ids.length===1?'taak':'taken'}. Alles permanent verwijderen? Dit kan niet ongedaan worden gemaakt.`))return;
+      try{
+        await permanentlyDeleteTasks(ids);
+        showToast(`${ids.length} ${ids.length===1?'taak':'taken'} permanent verwijderd.`);
+      }catch(err){showToast('Prullenmand leegmaken mislukt: '+(err.message||'controleer de opslag'),true);}
     }
     function exportBackup(){
       const content={format:'schoolwebsite-kanban',version:1,exportedAt:new Date().toISOString(),tasks:sorted(tasks).map(t=>({...t}))};
-      downloadBlob(JSON.stringify(content,null,2),'kanban-schoolwebsite-backup-'+new Date().toISOString().slice(0,10)+'.json','application/json;charset=utf-8');showToast('Back-up gedownload, inclusief archief.');
+      downloadBlob(JSON.stringify(content,null,2),'kanban-schoolwebsite-backup-'+new Date().toISOString().slice(0,10)+'.json','application/json;charset=utf-8');showToast('Back-up gedownload, inclusief prullenmand.');
     }
     function downloadBlob(content,filename,type){const blob=new Blob([content],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
     function exportCSV(){
@@ -930,10 +1105,10 @@
     function applyTheme(theme,save=true){
       const dark=theme==='dark';
       document.documentElement.dataset.theme=dark?'dark':'light';
-      $('themeToggle').textContent=dark?'☀️ Licht':'🌙 Donker';
+      $('themeToggle').textContent=dark?'☕ Latte':'🔥 Kampvuur';
       $('themeToggle').setAttribute('aria-pressed',String(dark));
-      $('themeToggle').title=dark?'Schakel lichte modus in':'Schakel donkere modus in';
-      document.querySelector('meta[name="theme-color"]').content=dark?'#151c28':'#f5f7fb';
+      $('themeToggle').title=dark?'Schakel het latte-thema in':'Schakel het kampvuurthema in';
+      document.querySelector('meta[name="theme-color"]').content=dark?'#1d211e':'#f6f1e9';
       if(save){
         try{window.localStorage.setItem(THEME_KEY,dark?'dark':'light');}
         catch(error){console.warn('Kan de thema-voorkeur niet opslaan:',error);}
@@ -966,7 +1141,7 @@
     }
 
     // Event wiring
-    $('searchInput').addEventListener('input',render);$('requirementFilter').addEventListener('change',render);$('assigneeFilter').addEventListener('change',render);$('showArchived').addEventListener('change',render);
+    $('searchInput').addEventListener('input',render);$('requirementFilter').addEventListener('change',render);$('assigneeFilter').addEventListener('change',render);
     $('taskRequirement').addEventListener('change',()=>{
       const currentTask=tasks.find(task=>task.id===Number($('taskId').value));
       $('taskCode').value=currentTask?.requirement===$('taskRequirement').value
@@ -975,6 +1150,8 @@
     });
     $('themeToggle').addEventListener('click',()=>applyTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
+    $('trashToggle').addEventListener('click',()=>{trashOpen=!trashOpen;render();if(trashOpen)$('archivedSection').scrollIntoView({behavior:'smooth',block:'start'});});
+    $('emptyTrashBtn').addEventListener('click',emptyTrash);
     $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('csvBtn').addEventListener('click',exportCSV);$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
     // CSV export is available via Ctrl/Cmd+Shift+E to keep the top bar uncluttered.
     document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();exportCSV();}});

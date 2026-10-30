@@ -29,14 +29,16 @@ where cardinality(assignees) = 0 and btrim(assignee) <> '';
 
 alter table public.tasks enable row level security;
 revoke all on table public.tasks from anon;
-grant select, insert, update on table public.tasks to authenticated;
+grant select, insert, update, delete on table public.tasks to authenticated;
 
 drop policy if exists "Signed-in team can read tasks" on public.tasks;
 drop policy if exists "Signed-in team can add tasks" on public.tasks;
 drop policy if exists "Signed-in team can update tasks" on public.tasks;
+drop policy if exists "Signed-in team can delete tasks" on public.tasks;
 create policy "Signed-in team can read tasks" on public.tasks for select to authenticated using (true);
 create policy "Signed-in team can add tasks" on public.tasks for insert to authenticated with check (true);
 create policy "Signed-in team can update tasks" on public.tasks for update to authenticated using (true) with check (true);
+create policy "Signed-in team can delete tasks" on public.tasks for delete to authenticated using (true);
 
 -- Private Realtime access: only authenticated team accounts can see online presence.
 -- Supabase manages realtime.messages and already enables RLS; do not alter that table.
