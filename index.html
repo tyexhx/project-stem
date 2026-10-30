@@ -10,7 +10,7 @@
     :root{--ink:#1e293b;--muted:#68758a;--line:#e4e9f1;--surface:#fff;--bg:#f5f7fb;--purple:#6558d3;--purple-soft:#eeecff;--blue:#3878d8;--blue-soft:#e8f1ff;--green:#23865d;--green-soft:#e6f6ee;--amber:#b7791f;--amber-soft:#fff4d8;--red:#b83a45;--red-soft:#fff0f0;--shadow:0 8px 25px rgba(25,39,67,.055);--radius:16px}
     *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:14px;line-height:1.45}
     button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid #b2aaff;outline-offset:2px}button:disabled{opacity:.5;cursor:not-allowed}
-    .app{max-width:1600px;margin:auto;padding:30px clamp(14px,3vw,42px) 44px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px;min-width:250px}.brand-mark{display:grid;place-items:center;width:47px;height:47px;border-radius:15px;background:linear-gradient(140deg,#7265eb,#5145b8);box-shadow:0 7px 18px #6558d333;color:white;font-size:23px;font-weight:850;letter-spacing:-1px}.brand-copy h1{font-size:clamp(21px,2.4vw,29px);letter-spacing:-.8px;line-height:1.15;margin:0 0 5px;font-weight:790}.subtitle{color:var(--muted);font-size:13px}.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;color:#48556a;font-size:12px;font-weight:700}.pill-dot{width:7px;height:7px;border-radius:50%;background:#d29a3e}.pill.online .pill-dot{background:#2ca675}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #dbe1eb;background:white;border-radius:10px;padding:10px 13px;font-weight:700;font-size:13px;color:#344156;transition:transform .12s,border-color .12s,background .12s;white-space:nowrap}.btn:hover{border-color:#bfc8d8;background:#fbfcfe;transform:translateY(-1px)}.btn.primary{background:var(--purple);border-color:var(--purple);color:white;box-shadow:0 4px 10px #6558d326}.btn.primary:hover{background:#5749c3}.btn.subtle{background:transparent;border-color:transparent;color:#59677c}.btn.danger{border-color:#f2c8cb;color:var(--red);background:#fffafa}.btn.small{padding:7px 9px;font-size:12px}.icon{font-size:16px;line-height:1}
+    .app{max-width:1600px;margin:auto;padding:30px clamp(14px,3vw,42px) 44px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px;min-width:250px}.brand-mark{display:grid;place-items:center;width:47px;height:47px;padding:0;border:0;border-radius:15px;background:linear-gradient(140deg,#7265eb,#5145b8);box-shadow:0 7px 18px #6558d333;color:white;font-size:23px;font-weight:850;letter-spacing:-1px}.brand-menu-wrap{position:relative}.brand-menu{position:absolute;top:calc(100% + 10px);left:0;z-index:30;width:220px;padding:7px;border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:var(--shadow)}.brand-menu[hidden]{display:none}.brand-menu-item{display:flex;align-items:center;width:100%;gap:9px;padding:9px 10px;border:0;border-radius:8px;background:transparent;color:var(--ink);font:inherit;font-size:12px;text-align:left;cursor:pointer}.brand-menu-item:hover,.brand-menu-item:focus-visible{background:var(--purple-soft)}.brand-menu-divider{height:1px;margin:5px 3px;background:var(--line)}.brand-copy h1{font-size:clamp(21px,2.4vw,29px);letter-spacing:-.8px;line-height:1.15;margin:0 0 5px;font-weight:790}.subtitle{color:var(--muted);font-size:13px}.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 11px;color:#48556a;font-size:12px;font-weight:700}.pill-dot{width:7px;height:7px;border-radius:50%;background:#d29a3e}.pill.online .pill-dot{background:#2ca675}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #dbe1eb;background:white;border-radius:10px;padding:10px 13px;font-weight:700;font-size:13px;color:#344156;transition:transform .12s,border-color .12s,background .12s;white-space:nowrap}.btn:hover{border-color:#bfc8d8;background:#fbfcfe;transform:translateY(-1px)}.btn.primary{background:var(--purple);border-color:var(--purple);color:white;box-shadow:0 4px 10px #6558d326}.btn.primary:hover{background:#5749c3}.btn.subtle{background:transparent;border-color:transparent;color:#59677c}.btn.danger{border-color:#f2c8cb;color:var(--red);background:#fffafa}.btn.small{padding:7px 9px;font-size:12px}.icon{font-size:16px;line-height:1}
     .notice{display:flex;align-items:flex-start;gap:10px;padding:12px 15px;border:1px solid #e6e1ff;background:#f5f3ff;border-radius:12px;color:#504b80;margin:0 0 17px;font-size:12.5px}.notice strong{color:#363061}.notice .notice-icon{font-size:17px;line-height:1.15}.notice a{color:inherit;font-weight:700}.notice.storage-warning{border-color:#f0c9a5;background:#fff8ef;color:#80501b}.notice.storage-warning strong{color:#733e0e}
     .overview{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 19px 16px;margin-bottom:19px;box-shadow:var(--shadow)}.overview-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:15px}.section-title{font-size:14px;font-weight:800;letter-spacing:-.15px;margin:0}.progress-copy{font-size:12px;color:var(--muted)}.progress-track{height:7px;border-radius:999px;overflow:hidden;background:#eef1f6;margin-bottom:17px}.progress-fill{height:100%;width:0;background:linear-gradient(90deg,#6e63df,#3aaf80);border-radius:999px;transition:width .25s}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.metric{display:flex;align-items:center;gap:12px;min-width:0;padding:12px 13px;border:1px solid #edf0f5;border-radius:12px;background:#fcfdff}.metric-icon{display:grid;place-items:center;flex:0 0 38px;width:38px;height:38px;border-radius:12px;background:var(--purple-soft);color:var(--purple);font-size:18px}.metric:nth-child(2) .metric-icon{background:var(--blue-soft);color:var(--blue)}.metric:nth-child(3) .metric-icon{background:var(--green-soft);color:var(--green)}.metric:nth-child(4) .metric-icon{background:var(--amber-soft);color:var(--amber)}.metric-label{font-size:11.5px;color:var(--muted);font-weight:650;margin-bottom:1px}.metric-value{font-size:23px;font-weight:820;letter-spacing:-.75px;line-height:1.1;font-variant-numeric:tabular-nums}.metric-detail{font-size:10.5px;color:#8290a3;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:19px 0 14px}.search-wrap{position:relative;flex:1 1 255px;max-width:480px}.search-wrap .search-icon{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:#8792a5;font-size:16px;pointer-events:none}.control{border:1px solid #dfe5ee;background:white;border-radius:10px;color:#364258;padding:10px 12px;min-height:41px}.search{width:100%;padding-left:38px}.filter{min-width:165px}.toolbar-end{margin-left:auto;display:flex;align-items:center;gap:8px}.archive-toggle{display:flex;align-items:center;gap:7px;color:#667388;font-size:12px;user-select:none;white-space:nowrap}.archive-toggle input{accent-color:var(--purple)}.result-count{font-size:12px;color:#8190a5;white-space:nowrap}
@@ -233,7 +233,7 @@
     :root[data-theme="midnight"] .close-btn{background:var(--surface);border-color:var(--line);color:var(--muted)}
     :root[data-theme="midnight"] .toast{background:#142238;color:var(--ink);border-color:var(--line)}
     :root[data-theme="midnight"] .toast.error{background:#35201d;color:#f2c2b9;border-color:#6a413a}
-    :root[data-theme="midnight"] .brand-mark{background:linear-gradient(140deg,#83adf2,#426cae);box-shadow:0 7px 18px #83adf233;color:#f2f7ff}
+    :root[data-theme="midnight"] .brand-mark{background:linear-gradient(135deg,rgba(139,190,255,.96),rgba(65,111,181,.92));box-shadow:0 4px 16px rgba(81,143,224,.28),inset 0 1px rgba(235,246,255,.4);color:#09111d}
     :root[data-theme="midnight"] button:focus-visible,:root[data-theme="midnight"] input:focus-visible,
     :root[data-theme="midnight"] select:focus-visible,:root[data-theme="midnight"] textarea:focus-visible,
     :root[data-theme="midnight"] [tabindex]:focus-visible{outline-color:var(--focus)}
@@ -244,7 +244,17 @@
   <main class="app">
     <header class="topbar">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true">K</div>
+        <div class="brand-menu-wrap">
+          <button class="brand-mark" id="brandMenuToggle" type="button" aria-label="Menu openen" aria-expanded="false" aria-controls="brandMenu">K</button>
+          <div class="brand-menu" id="brandMenu" hidden>
+            <button class="brand-menu-item" id="exportBtn" type="button"><span class="icon">↧</span>Back-up downloaden</button>
+            <button class="brand-menu-item" id="importBtn" type="button"><span class="icon">↥</span>Back-up importeren</button>
+            <button class="brand-menu-item" id="csvBtn" type="button"><span class="icon">▤</span>CSV downloaden</button>
+            <div class="brand-menu-divider"></div>
+            <button class="brand-menu-item hidden" id="profileBtn" type="button">Mijn profiel aanpassen</button>
+            <button class="brand-menu-item hidden" id="signOutBtn" type="button">Uitloggen</button>
+          </div>
+        </div>
         <div class="brand-copy"><h1>Project Kanban</h1><div class="subtitle">Vernieuwing schoolwebsite · teamoverzicht</div></div>
       </div>
       <div class="top-actions">
@@ -254,13 +264,8 @@
           <option value="midnight">🌌 Nachtblauw</option>
         </select>
         <div id="connectionPill" class="pill"><span class="pill-dot"></span><span id="connectionText">Lokaal opgeslagen</span></div>
-        <button class="btn" id="exportBtn" type="button" title="Download een volledige JSON-back-up"><span class="icon">↧</span> Back-up</button>
-        <button class="btn" id="importBtn" type="button" title="Importeer een eerdere JSON-back-up"><span class="icon">↥</span> Importeren</button>
-        <button class="btn" id="csvBtn" type="button" title="Download een CSV voor Excel"><span class="icon">▤</span> CSV</button>
         <input id="importFile" class="hidden" type="file" accept=".json,application/json">
         <button class="btn primary" id="newTaskBtn" type="button"><span class="icon">＋</span> Nieuwe taak</button>
-        <button class="btn small hidden" id="profileBtn" type="button">Mijn profiel</button>
-        <button class="btn small hidden" id="signOutBtn" type="button">Uitloggen</button>
       </div>
     </header>
 
@@ -1178,6 +1183,11 @@
       $('signOutBtn').classList.toggle('hidden',!user);
       $('profileBtn').classList.toggle('hidden',!user);
     }
+    function setBrandMenuOpen(open){
+      $('brandMenu').hidden=!open;
+      $('brandMenuToggle').setAttribute('aria-expanded',String(open));
+      $('brandMenuToggle').setAttribute('aria-label',open?'Menu sluiten':'Menu openen');
+    }
     function openProfile(){
       const member=teamMembers.find(item=>item.user_id===currentUser?.id);
       $('displayNameInput').value=member?.display_name||memberDisplayName(currentUser);
@@ -1290,7 +1300,9 @@
     });
     $('themeToggle').addEventListener('change',()=>applyTheme($('themeToggle').value));
     $('newTaskBtn').addEventListener('click',()=>openTask(null));$('taskForm').addEventListener('submit',saveTask);$('closeDialogBtn').addEventListener('click',()=>$('taskDialog').close());$('cancelBtn').addEventListener('click',()=>$('taskDialog').close());$('archiveBtn').addEventListener('click',archiveActive);
-    $('profileBtn').addEventListener('click',openProfile);$('profileForm').addEventListener('submit',saveProfile);$('closeProfileDialogBtn').addEventListener('click',()=>$('profileDialog').close());$('cancelProfileBtn').addEventListener('click',()=>$('profileDialog').close());
+    $('brandMenuToggle').addEventListener('click',()=>setBrandMenuOpen($('brandMenu').hidden));
+    document.addEventListener('click',event=>{if(!event.target.closest('.brand-menu-wrap'))setBrandMenuOpen(false);});
+    $('profileBtn').addEventListener('click',()=>{setBrandMenuOpen(false);openProfile();});$('profileForm').addEventListener('submit',saveProfile);$('closeProfileDialogBtn').addEventListener('click',()=>$('profileDialog').close());$('cancelProfileBtn').addEventListener('click',()=>$('profileDialog').close());
     $('trashToggle').addEventListener('click',()=>{trashOpen=!trashOpen;render();});
     $('emptyTrashBtn').addEventListener('click',emptyTrash);
     $('archivedList').addEventListener('click',e=>{
@@ -1302,9 +1314,12 @@
       if(trashAction.dataset.trashAction==='restore')setTaskArchived(id,false);
       else if(trashAction.dataset.trashAction==='delete')permanentlyDeleteTask(id);
     });
-    $('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('csvBtn').addEventListener('click',exportCSV);$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
+    $('exportBtn').addEventListener('click',()=>{setBrandMenuOpen(false);exportBackup();});$('importBtn').addEventListener('click',()=>{setBrandMenuOpen(false);$('importFile').click();});$('csvBtn').addEventListener('click',()=>{setBrandMenuOpen(false);exportCSV();});$('importFile').addEventListener('change',e=>{const file=e.target.files?.[0];if(file)importBackup(file);});
     // CSV export is available via Ctrl/Cmd+Shift+E to keep the top bar uncluttered.
-    document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();exportCSV();}});
+    document.addEventListener('keydown',e=>{
+      if(e.key==='Escape'&&!$('brandMenu').hidden){setBrandMenuOpen(false);$('brandMenuToggle').focus();}
+      if((e.ctrlKey||e.metaKey)&&e.shiftKey&&e.key.toLowerCase()==='e'){e.preventDefault();exportCSV();}
+    });
     document.querySelectorAll('.column').forEach(column=>{
       column.addEventListener('click',e=>{const addButton=e.target.closest('[data-new-task-status]');if(addButton)openTaskFromColumn(addButton.dataset.newTaskStatus);});
     });
@@ -1319,7 +1334,7 @@
       catch(err){$('authError').textContent=err.message||'Inloggen mislukt.';}
       finally{$('loginBtn').disabled=false;$('loginBtn').textContent='Inloggen';}
     });
-    $('signOutBtn').addEventListener('click',async()=>{if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)showToast(error.message,true);}});
+    $('signOutBtn').addEventListener('click',async()=>{setBrandMenuOpen(false);if(supabaseClient){const {error}=await supabaseClient.auth.signOut();if(error)showToast(error.message,true);}});
 
     async function init(){
       initializeTheme();

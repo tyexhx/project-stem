@@ -11,9 +11,10 @@ Een HTML-kanbanbord met de 39 bestaande taken uit de oorspronkelijke Excel.
 5. De taken scrollen binnen hun eigen kolom. Zodra je het einde van een takenlijst bereikt, kun je verder scrollen op de pagina. Onderaan elke kolom staat een subtiele knop om daar een taak toe te voegen.
 6. De site controleert nu of opslag echt is gelukt. Als de browser opslag blokkeert, verschijnt een blijvende waarschuwing in plaats van een misleidende melding dat alles is opgeslagen.
 7. Klik op **🗑 Prullenmand** om taken in de prullenmand te bekijken. Zet taken terug of verwijder ze permanent; permanent verwijderen kan niet ongedaan worden gemaakt. **Prullenmand leegmaken** verwijdert alle taken in de prullenmand.
-8. Klik op **Back-up** om alle taken, statussen, toegewezen teamleden en de prullenmand als JSON te downloaden. Bewaar geregeld een kopie.
-9. Kies **Importeren** om een JSON-back-up te herstellen. Bestaande taken die niet in de back-up voorkomen worden niet automatisch verwijderd.
-10. Klik op **CSV** om een CSV-bestand voor Excel te exporteren.
+8. Klik op het **K-logo** om het menu met back-up, importeren en CSV te openen. In datzelfde menu kun je, als je bent ingelogd, je weergavenaam aanpassen of uitloggen.
+9. Kies **Back-up downloaden** om alle taken, statussen, toegewezen teamleden en de prullenmand als JSON te bewaren.
+10. Kies **Back-up importeren** om een JSON-back-up te herstellen. Bestaande taken die niet in de back-up voorkomen worden niet automatisch verwijderd.
+11. Kies **CSV downloaden** om een CSV-bestand voor Excel te exporteren.
 
 **Belangrijk:** zonder Supabase-project zijn wijzigingen alleen zichtbaar in de browser waarin ze zijn gemaakt. Om het bord met het team te delen, moet je eerst de onderstaande Supabase-configuratie uitvoeren.
 
