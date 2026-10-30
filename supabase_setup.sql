@@ -45,6 +45,9 @@ select
 from auth.users
 on conflict (user_id) do nothing;
 
+delete from public.team_members member
+where not exists (select 1 from auth.users auth_user where auth_user.id = member.user_id);
+
 -- Keep account creation secure; no admin/service-role credential is exposed to the browser.
 create or replace function public.sync_team_member_profile()
 returns trigger
@@ -93,7 +96,13 @@ update public.tasks task
 set assignee_ids = (
   select coalesce(array_agg(assigned.user_id order by assigned.user_id), '{}'::uuid[])
   from (
-    select unnest(task.assignee_ids) as user_id
+    select existing.user_id
+    from unnest(task.assignee_ids) as existing(user_id)
+    where exists (
+      select 1
+      from public.team_members member
+      where member.user_id = existing.user_id
+    )
     union
     select member.user_id
     from public.team_members member
@@ -138,6 +147,11 @@ set assignees = array(
       )
     ), ', ')
 where cardinality(task.assignees) > 0;
+
+update public.tasks
+set assignees = '{}'::text[],
+    assignee = ''
+where cardinality(assignees) > 0 or btrim(assignee) <> '';
 
 alter table public.tasks enable row level security;
 revoke all on table public.tasks from anon;
