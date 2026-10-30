@@ -187,9 +187,14 @@
       color:var(--ink);background:var(--surface);border-color:var(--line)
     }
     :root[data-theme="midnight"] .topbar{border-color:var(--line)}
-    :root[data-theme="midnight"] .btn.primary,:root[data-theme="midnight"] .btn.primary:hover{background:var(--purple);border-color:var(--purple);color:#09111d}
-    :root[data-theme="midnight"] .btn.danger{background:var(--red-soft);border-color:var(--line);color:var(--red)}
-    :root[data-theme="midnight"] .btn:hover,:root[data-theme="midnight"] .close-btn:hover{background:#1b2a40}
+    :root[data-theme="midnight"] .btn:not(.primary):not(.danger):not(.subtle){background:linear-gradient(135deg,rgba(89,151,226,.2),rgba(40,78,129,.12));border-color:#385d87;box-shadow:inset 0 1px rgba(205,228,255,.08),0 4px 14px rgba(42,94,159,.12);backdrop-filter:blur(10px)}
+    :root[data-theme="midnight"] .btn.primary,:root[data-theme="midnight"] .btn.primary:hover{background:linear-gradient(135deg,rgba(139,190,255,.96),rgba(65,111,181,.92));border-color:#83adf2;color:#09111d;box-shadow:0 4px 16px rgba(81,143,224,.28),inset 0 1px rgba(235,246,255,.4)}
+    :root[data-theme="midnight"] .btn.danger{background:linear-gradient(135deg,rgba(226,154,157,.16),rgba(64,84,125,.18));border-color:#485779;color:var(--red);box-shadow:inset 0 1px rgba(218,231,255,.07),0 4px 14px rgba(42,94,159,.1);backdrop-filter:blur(10px)}
+    :root[data-theme="midnight"] .btn.subtle{background:transparent;box-shadow:none}
+    :root[data-theme="midnight"] .btn:not(.subtle):hover{background:linear-gradient(135deg,rgba(122,177,244,.3),rgba(53,96,152,.22));border-color:#5f8fc7;box-shadow:0 6px 18px rgba(57,114,186,.2),inset 0 1px rgba(225,240,255,.13)}
+    :root[data-theme="midnight"] .btn.primary:hover{background:linear-gradient(135deg,#a4ceff,#5d91d7);border-color:#a4ceff;box-shadow:0 6px 20px rgba(81,143,224,.38),inset 0 1px rgba(245,250,255,.48)}
+    :root[data-theme="midnight"] .btn.danger:hover{background:linear-gradient(135deg,rgba(226,154,157,.24),rgba(64,94,145,.26));border-color:#7188b2;color:#ffd2d4}
+    :root[data-theme="midnight"] .close-btn:hover{background:#1b2a40}
     :root[data-theme="midnight"] .notice{background:#142238;border-color:#263e5c;color:#c3d6ed}
     :root[data-theme="midnight"] .notice strong{color:#e4efff}
     :root[data-theme="midnight"] .notice.storage-warning{background:#30271b;border-color:#5a4930;color:#ead3ab}
