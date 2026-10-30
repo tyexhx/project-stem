@@ -51,7 +51,8 @@
     .team-panel-title{font-size:12px;font-weight:800;margin:0}
     .team-panel-note{font-size:10px;color:var(--muted)}
     .online-members{display:flex;flex-wrap:wrap;gap:7px}
-    .online-member{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--ink)}
+    .online-member{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:11px;color:var(--ink);cursor:pointer}
+    .online-member:hover,.online-member:focus-visible,.member-progress-profile:hover .member-progress-name,.member-progress-profile:focus-visible .member-progress-name{border-color:var(--purple);color:var(--purple)}
     .online-avatar{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e6f6ee;color:#23865d;font-size:9px;font-weight:800}
     .online-dot{width:7px;height:7px;border-radius:50%;background:#2ca675}
     .assignee-options{display:grid;gap:7px;max-height:180px;overflow:auto;padding:2px}
@@ -66,7 +67,18 @@
     .team-empty{font-size:11px;color:var(--muted)}
     .member-progress-list{display:grid;gap:9px}
     .member-progress-row{display:grid;grid-template-columns:minmax(80px,1fr) minmax(90px,2fr) auto;align-items:center;gap:10px;font-size:11px}
+    .member-progress-profile{min-width:0;padding:0;border:0;background:transparent;text-align:left;cursor:pointer}
     .member-progress-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+    .member-summary-email{margin:0 24px;color:var(--muted);font-size:12px}
+    .member-summary-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:16px 24px}
+    .member-summary-stat{padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);text-align:center}
+    .member-summary-stat strong{display:block;font-size:18px}
+    .member-summary-stat span{font-size:10px;color:var(--muted)}
+    .member-summary-tasks{display:grid;gap:12px;max-height:min(42vh,360px);overflow-y:auto;padding:0 24px 20px}
+    .member-summary-group h3{margin:0 0 6px;font-size:12px}
+    .member-summary-task{padding:7px 9px;border-bottom:1px solid var(--line);font-size:11px}
+    .member-summary-task strong{margin-right:5px}
+    .member-summary-empty{color:var(--muted);font-size:11px}
     .member-progress-track{height:7px;border-radius:999px;overflow:hidden;background:#eef1f6}
     .member-progress-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#6e63df,#3aaf80)}
     .member-progress-value{font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
@@ -347,6 +359,13 @@
       <div class="field"><label for="displayNameInput">Weergavenaam</label><input id="displayNameInput" maxlength="80" autocomplete="name" required><div class="hint">Andere teamleden zien deze naam bij je taken.</div></div>
       <div class="profile-actions"><button class="btn" id="cancelProfileBtn" type="button">Annuleren</button><button class="btn primary" id="saveProfileBtn" type="submit">Opslaan</button></div>
     </form>
+  </dialog>
+
+  <dialog id="memberSummaryDialog" aria-labelledby="memberSummaryTitle">
+    <div class="dialog-head"><div><h2 id="memberSummaryTitle">Teamlid</h2><p>Profiel en toegewezen taken</p></div><button class="close-btn" id="closeMemberSummaryBtn" type="button" aria-label="Venster sluiten">×</button></div>
+    <p class="member-summary-email" id="memberSummaryEmail"></p>
+    <div class="member-summary-stats" id="memberSummaryStats"></div>
+    <div class="member-summary-tasks" id="memberSummaryTasks"></div>
   </dialog>
 
   <div id="authGate" class="auth-gate" hidden>
@@ -938,14 +957,40 @@
     function renderTeamInsights(){
       const active=getActiveTasks();
       $('onlineCount').textContent=onlineUsers.length?`${onlineUsers.length} ${onlineUsers.length===1?'teamlid':'teamleden'}`:'Niemand online';
-      $('onlineMembers').innerHTML=onlineUsers.length?onlineUsers.map(user=>`<span class="online-member" title="Ingelogd en board open"><span class="online-avatar">${escapeHTML(ownerInitial(user.name))}</span><span>${escapeHTML(user.name)}</span><span class="online-dot" aria-label="online"></span></span>`).join(''):'<span class="team-empty">Niemand is momenteel ingelogd met het board open.</span>';
+      $('onlineMembers').innerHTML=onlineUsers.length?onlineUsers.map(user=>`<button class="online-member" type="button" data-member-id="${escapeHTML(user.id)}" title="Bekijk profiel van ${escapeHTML(user.name)}"><span class="online-avatar">${escapeHTML(ownerInitial(user.name))}</span><span>${escapeHTML(user.name)}</span><span class="online-dot" aria-label="online"></span></button>`).join(''):'<span class="team-empty">Niemand is momenteel ingelogd met het board open.</span>';
       const members=[...new Set(active.flatMap(taskAssigneeNames))].sort((a,b)=>a.localeCompare(b,'nl'));
       $('memberProgress').innerHTML=members.length?members.map(name=>{
         const assigned=active.filter(task=>taskAssigneeNames(task).includes(name));
         const completed=assigned.filter(task=>task.status==='Afgerond').length;
         const percent=active.length?Math.round(completed/active.length*100):0;
-        return `<div class="member-progress-row"><span class="member-progress-name" title="${escapeHTML(name)}">${escapeHTML(name)}</span><div class="member-progress-track" role="progressbar" aria-label="Afgerond aandeel van alle actieve taken voor ${escapeHTML(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><div class="member-progress-fill" style="width:${percent}%"></div></div><span class="member-progress-value">${percent}% · ${completed}/${active.length}</span></div>`;
+        const member=teamMembers.find(item=>item.display_name===name);
+        const nameElement=member?`<button class="member-progress-profile" type="button" data-member-id="${escapeHTML(member.user_id)}"><span class="member-progress-name" title="Bekijk profiel van ${escapeHTML(name)}">${escapeHTML(name)}</span></button>`:`<span class="member-progress-name" title="${escapeHTML(name)}">${escapeHTML(name)}</span>`;
+        return `<div class="member-progress-row">${nameElement}<div class="member-progress-track" role="progressbar" aria-label="Afgerond aandeel van alle actieve taken voor ${escapeHTML(name)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><div class="member-progress-fill" style="width:${percent}%"></div></div><span class="member-progress-value">${percent}% · ${completed}/${active.length}</span></div>`;
       }).join(''):'<span class="team-empty">Wijs taken toe om voortgang te zien.</span>';
+    }
+    function openMemberSummary(userId){
+      const member=teamMembers.find(item=>item.user_id===userId);
+      if(!member)return;
+      const assigned=tasks.filter(task=>task.assigneeIds.includes(userId)||task.assignees.includes(member.display_name));
+      const active=assigned.filter(task=>!task.archived);
+      const counts=Object.fromEntries(STATUS_ORDER.map(status=>[status,active.filter(task=>task.status===status).length]));
+      const archived=assigned.filter(task=>task.archived);
+      $('memberSummaryTitle').textContent=member.display_name;
+      $('memberSummaryEmail').textContent=member.email||'Geen e-mailadres beschikbaar';
+      $('memberSummaryStats').innerHTML=[
+        ['Toegewezen',active.length],
+        ['Te doen',counts['To-Do']],
+        ['In behandeling',counts['In behandeling']],
+        ['Afgerond',counts['Afgerond']]
+      ].map(([label,count])=>`<div class="member-summary-stat"><strong>${count}</strong><span>${label}</span></div>`).join('');
+      const groups=[
+        ['Afgerond',active.filter(task=>task.status==='Afgerond')],
+        ['In behandeling',active.filter(task=>task.status==='In behandeling')],
+        ['Te doen',active.filter(task=>task.status==='To-Do')],
+        ['In de prullenmand',archived]
+      ].filter(([,groupTasks])=>groupTasks.length);
+      $('memberSummaryTasks').innerHTML=groups.length?groups.map(([label,groupTasks])=>`<section class="member-summary-group"><h3>${label} · ${groupTasks.length}</h3>${sorted(groupTasks).map(task=>`<div class="member-summary-task"><strong>${escapeHTML(task.taskCode)}</strong>${escapeHTML(task.description)}</div>`).join('')}</section>`).join(''):'<p class="member-summary-empty">Dit teamlid heeft nog geen taken toegewezen gekregen.</p>';
+      $('memberSummaryDialog').showModal();
     }
     function render(){
       const active=getActiveTasks();
@@ -1170,9 +1215,9 @@
       fillFilterOptions();render();
     }
     async function loadTeamMembers(){
-      const {data,error}=await supabaseClient.from('team_members').select('user_id,display_name').order('display_name');
+      const {data,error}=await supabaseClient.from('team_members').select('user_id,display_name,email').order('display_name');
       if(error)throw new Error(`Kan teamleden niet laden. Voer de nieuwste supabase_setup.sql uit in Supabase → SQL Editor. ${error.message}`);
-      teamMembers=(data||[]).map(member=>({user_id:String(member.user_id),display_name:String(member.display_name||'').trim()}));
+      teamMembers=(data||[]).map(member=>({user_id:String(member.user_id),display_name:String(member.display_name||'').trim(),email:String(member.email||'').trim()}));
       if(currentUser&&!teamMembers.some(member=>member.user_id===currentUser.id)){
         throw new Error('Je teamprofiel ontbreekt. Voer de nieuwste supabase_setup.sql uit in Supabase → SQL Editor.');
       }
@@ -1202,10 +1247,10 @@
       if(submitButton.disabled)return;
       submitButton.disabled=true;submitButton.textContent='Opslaan…';
       try{
-        const {data,error}=await supabaseClient.from('team_members').update({display_name:displayName}).eq('user_id',currentUser.id).select('user_id,display_name').maybeSingle();
+        const {data,error}=await supabaseClient.from('team_members').update({display_name:displayName}).eq('user_id',currentUser.id).select('user_id,display_name,email').maybeSingle();
         if(error)throw error;
         if(!data)throw new Error('Je profiel is niet bijgewerkt. Controleer of je teamprofiel bestaat.');
-        teamMembers=teamMembers.map(member=>member.user_id===currentUser.id?{user_id:String(data.user_id),display_name:String(data.display_name)}:member);
+        teamMembers=teamMembers.map(member=>member.user_id===currentUser.id?{user_id:String(data.user_id),display_name:String(data.display_name),email:String(data.email||'')}:member);
         fillFilterOptions();render();
         $('profileDialog').close();
         showToast('Weergavenaam opgeslagen.');
@@ -1304,6 +1349,9 @@
     $('brandMenuToggle').addEventListener('click',()=>setBrandMenuOpen($('brandMenu').hidden));
     document.addEventListener('click',event=>{if(!event.target.closest('.brand-menu-wrap'))setBrandMenuOpen(false);});
     $('profileBtn').addEventListener('click',()=>{setBrandMenuOpen(false);openProfile();});$('profileForm').addEventListener('submit',saveProfile);$('closeProfileDialogBtn').addEventListener('click',()=>$('profileDialog').close());$('cancelProfileBtn').addEventListener('click',()=>$('profileDialog').close());
+    $('closeMemberSummaryBtn').addEventListener('click',()=>$('memberSummaryDialog').close());
+    $('onlineMembers').addEventListener('click',event=>{const memberButton=event.target.closest('[data-member-id]');if(memberButton)openMemberSummary(memberButton.dataset.memberId);});
+    $('memberProgress').addEventListener('click',event=>{const memberButton=event.target.closest('[data-member-id]');if(memberButton)openMemberSummary(memberButton.dataset.memberId);});
     $('trashToggle').addEventListener('click',()=>{trashOpen=!trashOpen;render();});
     $('emptyTrashBtn').addEventListener('click',emptyTrash);
     $('archivedList').addEventListener('click',e=>{

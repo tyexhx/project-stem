@@ -29,13 +29,23 @@ where cardinality(assignees) = 0 and btrim(assignee) <> '';
 
 create table if not exists public.team_members (
   user_id uuid primary key references auth.users(id) on delete cascade,
+  email text not null default '',
   display_name text not null check (char_length(btrim(display_name)) between 1 and 80),
   updated_at timestamptz not null default now()
 );
 
-insert into public.team_members (user_id, display_name)
+alter table public.team_members
+  add column if not exists email text not null default '';
+
+update public.team_members member
+set email = coalesce(auth_user.email, '')
+from auth.users auth_user
+where auth_user.id = member.user_id and member.email is distinct from coalesce(auth_user.email, '');
+
+insert into public.team_members (user_id, email, display_name)
 select
   id,
+  coalesce(email, ''),
   left(coalesce(
     nullif(btrim(raw_user_meta_data->>'display_name'), ''),
     nullif(btrim(raw_user_meta_data->>'full_name'), ''),
@@ -43,7 +53,7 @@ select
     'Teamlid'
   ), 80)
 from auth.users
-on conflict (user_id) do nothing;
+on conflict (user_id) do update set email = excluded.email;
 
 delete from public.team_members member
 where not exists (select 1 from auth.users auth_user where auth_user.id = member.user_id);
@@ -56,9 +66,10 @@ security definer
 set search_path = ''
 as $$
 begin
-  insert into public.team_members (user_id, display_name)
+  insert into public.team_members (user_id, email, display_name)
   values (
     new.id,
+    coalesce(new.email, ''),
     left(coalesce(
       nullif(btrim(new.raw_user_meta_data->>'display_name'), ''),
       nullif(btrim(new.raw_user_meta_data->>'full_name'), ''),
@@ -66,7 +77,7 @@ begin
       'Teamlid'
     ), 80)
   )
-  on conflict (user_id) do nothing;
+  on conflict (user_id) do update set email = excluded.email;
   return new;
 end;
 $$;
@@ -79,7 +90,7 @@ create trigger sync_team_member_profile
 
 alter table public.team_members enable row level security;
 revoke all on table public.team_members from anon, authenticated;
-grant select on table public.team_members to authenticated;
+grant select (user_id, email, display_name) on table public.team_members to authenticated;
 grant update (display_name) on table public.team_members to authenticated;
 
 drop policy if exists "Signed-in team can read member profiles" on public.team_members;
